@@ -2,6 +2,26 @@ import re, os, sys, glob, time, logging, multiprocessing, socket, subprocess, sh
 from optparse import OptionParser
 from common_functions import *
 
+# ---------------------- Cmd Line  -----------------------
+
+# Read options from command line
+usage = "Usage: python %prog filelists [options]"
+parser = OptionParser(usage=usage)
+parser.add_option("--run",         dest="run",         action="store_true", default=False, help="Without this option, script only prints cmds it would otherwise excecute")
+parser.add_option("--batch",       dest="batch",       action="store_true", default=False, help="Send the jobs to batch")
+parser.add_option("--condor",      dest="condor",      action="store_true", default=True,  help="Send the jobs to condor")
+parser.add_option("--nfile",       dest="NFILE",       type="int",          default=-1,    help="Tells how many input files to run in a single job (Default=-1 all)")
+parser.add_option("--sleep",       dest="SLEEP",       type="int",          default=3,     help="Wait for this number of seconds between submitting each batch job (Default 3s)")
+parser.add_option("--useprev",     dest="useprev",     action="store_true", default=False, help="Use previously created temporary filelists")
+parser.add_option("--nproc",       dest="NPROC",       type="int",          default=1,     help="Tells how many parallel interactive jobs to start (Default=3)")
+parser.add_option("--outdir",      dest="OUTDIR",      type="string",       default="",    help="Output directory (Default: results/run_[SUBTIME])")
+parser.add_option("--recover",     dest="recover",     action="store_true", default=False, help="Recover stopped task (eg. due to some error)")
+parser.add_option("--nohadd",      dest="nohadd",      action="store_true", default=False, help="Disable hadding output files")
+parser.add_option("--haddonly",    dest="haddonly",    action="store_true", default=False, help="Do not submit any jobs, only merge output")
+parser.add_option("--update",      dest="update",      action="store_true", default=False, help="Update/Bugfix the PixelHistoMaker code and recompile")
+parser.add_option("--prog",        dest="PROG",        type="string",       default="Phase1PixelHistoMaker", help="The main program to run")
+(opt,args) = parser.parse_args()
+
 # ---------------- Proxy and token ------------------
 
 # Check proxy
@@ -13,7 +33,6 @@ with open('proxy.txt') as proxyfile:
         if not "Proxy not found" in lines[0]:
             timeleft = int(lines[0])
 os.remove('proxy.txt')
-print timeleft
 # Renew if below 2 days
 proxyfile = ""
 if timeleft<172800:
@@ -28,7 +47,9 @@ with open('proxy.txt') as proxyfile:
         if "path" in line:
             proxyfile = line.split()[-1]
 os.remove('proxy.txt')
-private_proxy = os.path.expanduser('~/private/x509up')
+private_proxy= os.path.expanduser('~/private/x509up')
+if not os.path.exists(os.path.dirname(private_proxy)):
+    special_call(["mkdir", "-p", os.path.dirname(private_proxy)], 1)
 shutil.copy(proxyfile, private_proxy)
 print "Proxy file copied to: "+private_proxy
 
@@ -50,26 +71,6 @@ if 'lxplus' in socket.gethostname():
     else:
         special_call(["kinit", "-R"], 1, 0)
     time_last_token = time.time()
-
-# ---------------------- Cmd Line  -----------------------
-
-# Read options from command line
-usage = "Usage: python %prog filelists [options]"
-parser = OptionParser(usage=usage)
-parser.add_option("--run",         dest="run",         action="store_true", default=False, help="Without this option, script only prints cmds it would otherwise excecute")
-parser.add_option("--batch",       dest="batch",       action="store_true", default=False, help="Send the jobs to batch")
-parser.add_option("--condor",      dest="condor",      action="store_true", default=True,  help="Send the jobs to condor")
-parser.add_option("--nfile",       dest="NFILE",       type="int",          default=-1,    help="Tells how many input files to run in a single job (Default=-1 all)")
-parser.add_option("--sleep",       dest="SLEEP",       type="int",          default=3,     help="Wait for this number of seconds between submitting each batch job (Default 3s)")
-parser.add_option("--useprev",     dest="useprev",     action="store_true", default=False, help="Use previously created temporary filelists")
-parser.add_option("--nproc",       dest="NPROC",       type="int",          default=1,     help="Tells how many parallel interactive jobs to start (Default=3)")
-parser.add_option("--outdir",      dest="OUTDIR",      type="string",       default="",    help="Output directory (Default: results/run_[SUBTIME])")
-parser.add_option("--recover",     dest="recover",     action="store_true", default=False, help="Recover stopped task (eg. due to some error)")
-parser.add_option("--nohadd",      dest="nohadd",      action="store_true", default=False, help="Disable hadding output files")
-parser.add_option("--haddonly",    dest="haddonly",    action="store_true", default=False, help="Do not submit any jobs, only merge output")
-parser.add_option("--update",      dest="update",      action="store_true", default=False, help="Update/Bugfix the PixelHistoMaker code and recompile")
-parser.add_option("--prog",        dest="PROG",        type="string",       default="Phase1PixelHistoMaker", help="The main program to run")
-(opt,args) = parser.parse_args()
 
 # ----------------------  Settings -----------------------
 # Some further (usually) fixed settings, should edit them in this file
