@@ -21,6 +21,7 @@
   5 :   v3836 SPLIT 1 + resolution              (2014 Jun 16)
   6 :   v3938 SPLIT 1 + sizeXY always saved     (2016 Apr 27)
   7 :   Phase1 v4 First Phase 1 ntuple version  (2017 May 17)
+  8 :   Redo 2018 Timing Scan (Oz's attempt)    (2021 Oct 5)
 
 */
 
@@ -36,7 +37,7 @@
 #define DCL_MISSING 0.1 // 1000 um
 
 // TimingStudy versions
-#define VER 7
+#define VER 8
 #if VER == -2 // v2928 backported
 #define SPLIT 0
 #define TREEREADER_VER 29
@@ -64,6 +65,9 @@
 #elif VER == 7
 #define TREEREADER_VER 104
 #define DATASTRUCT_VER 105
+#elif VER == 8
+#define TREEREADER_VER 104
+#define DATASTRUCT_VER 109
 #endif
 
 
@@ -257,14 +261,14 @@ int main(int argc, char* argv[]) {
 		     return size_t(e.run==296872||e.run==296873||e.run==296874||e.run==296875||e.run==296876||e.run==296880 ? 0 : -1);
 		   }, "2017Jun14", "Vibias Scan", "1");
   
-  sh.AddNewFillParam("ContrlReg", { .nbin= 33, .bins={  -6.5, 26.5}, .fill=[&e] {
+  sh.AddNewFillParams("ContrlReg", { .nbin= 33, .bins={  -6.5, 26.5}, .fill=[&e] {
 				       if      (e.run==296786) return 16;
 				       else if (e.run==296789) return  0;
 				       else if (e.run==296790) return  8;
 				       else if (e.run==296795) return 24;
 				       else return -9999;
 				     }, .axis_title="ContrlReg"});
-  sh.AddNewFillParam("VcThrShift", { .nbin= 44, .bins={  -40.5, 3.5}, .fill=[&e] {
+  sh.AddNewFillParams("VcThrShift", { .nbin= 44, .bins={  -40.5, 3.5}, .fill=[&e] {
 					// Scan 1
 					if      (e.run==296867) return   0;
 					else if (e.run==296868) return   5;
@@ -285,7 +289,7 @@ int main(int argc, char* argv[]) {
 					else if (e.run==297503) return   0;
 					else return -9999;
 				      }, .axis_title="VcThr shift (wrt default)"});
-  sh.AddNewFillParam("ViBias", { .nbin= 25, .bins={  7.5, 32.5}, .fill=[&e] {
+  sh.AddNewFillParams("ViBias", { .nbin= 25, .bins={  7.5, 32.5}, .fill=[&e] {
 				    if      (e.run==296872) return 16;
 				    else if (e.run==296873) return 18;
 				    else if (e.run==296874) return 22;
@@ -297,112 +301,113 @@ int main(int argc, char* argv[]) {
   
   // Define histo parameters and filling variable
   // X/Y/Z - axis parameters:
-  sh.AddNewFillParam("NVertices",          { .nbin= 50,  .bins={    0.5,   50.5}, .fill=[&e]{ return e.nvtx;          }, .axis_title="N_{Vertices}"});
-  sh.AddNewFillParam("NPileup",            { .nbin=100,  .bins={      0,    100}, .fill=[&v]{ return v.pileup;        }, .axis_title="N_{Pile-up}"});
-  sh.AddNewFillParam("NTracks",            { .nbin=100,  .bins={      0,   1000}, .fill=[&e]{ return e.ntracks;       }, .axis_title="N_{Tracks}"});
-  sh.AddNewFillParam("NTracksLay1",        { .nbin=100,  .bins={      0,   1000}, .fill=[&e]{ return e.ntrackBPix[0]; }, .axis_title="N_{Tracks crossing Layer 1}"});
-  sh.AddNewFillParam("NTracksDsk1",        { .nbin=100,  .bins={      0,   1000}, .fill=[&e]{ return e.ntrackFPix[0]; }, .axis_title="N_{Tracks crossing Disk 1}"});
+  sh.AddNewFillParams("NVertices",          { .nbin= 50,  .bins={    0.5,   50.5}, .fill=[&e]{ return e.nvtx;          }, .axis_title="N_{Vertices}"});
+  sh.AddNewFillParams("NPileup",            { .nbin=100,  .bins={      0,    100}, .fill=[&v]{ return v.pileup;        }, .axis_title="N_{Pile-up}"});
+  sh.AddNewFillParams("NTracks",            { .nbin=100,  .bins={      0,   1000}, .fill=[&e]{ return e.ntracks;       }, .axis_title="N_{Tracks}"});
+  sh.AddNewFillParams("NTracksLay1",        { .nbin=100,  .bins={      0,   1000}, .fill=[&e]{ return e.ntrackBPix[0]; }, .axis_title="N_{Tracks crossing Layer 1}"});
+  sh.AddNewFillParams("NTracksDsk1",        { .nbin=100,  .bins={      0,   1000}, .fill=[&e]{ return e.ntrackFPix[0]; }, .axis_title="N_{Tracks crossing Disk 1}"});
 #if DATASTRUCT_VER > 28
-  sh.AddNewFillParam("NClu",               { .nbin= 80,  .bins={      0,   8000}, .fill=[&v]{ return v.nclu;          }, .axis_title="N_{Clusters}"});
-  sh.AddNewFillParam("NPix",               { .nbin=125,  .bins={      0,  25000}, .fill=[&v]{ return v.npix;          }, .axis_title="N_{Pixels}"});
-  sh.AddNewFillParam("NCluBPix",           { .nbin=100,  .bins={      0,   5000}, .fill=[&v]{ return v.nclu_bpix;     }, .axis_title="N_{Clusters} - BPix"});
-  sh.AddNewFillParam("NPixBPix",           { .nbin=100,  .bins={      0,  20000}, .fill=[&v]{ return v.npix_bpix;     }, .axis_title="N_{Pixels} - BPix"});
-  sh.AddNewFillParam("NCluFPix",           { .nbin=100,  .bins={      0,   2000}, .fill=[&e]{ return e.nclu[0];       }, .axis_title="N_{Clusters} - FPix"});
-  sh.AddNewFillParam("NPixFPix",           { .nbin=100,  .bins={      0,   5000}, .fill=[&e]{ return e.npix[0];       }, .axis_title="N_{Pixels} - FPix"});
+  sh.AddNewFillParams("NClu",               { .nbin= 80,  .bins={      0,   8000}, .fill=[&v]{ return v.nclu;          }, .axis_title="N_{Clusters}"});
+  sh.AddNewFillParams("NPix",               { .nbin=125,  .bins={      0,  25000}, .fill=[&v]{ return v.npix;          }, .axis_title="N_{Pixels}"});
+  sh.AddNewFillParams("NCluBPix",           { .nbin=100,  .bins={      0,   5000}, .fill=[&v]{ return v.nclu_bpix;     }, .axis_title="N_{Clusters} - BPix"});
+  sh.AddNewFillParams("NPixBPix",           { .nbin=100,  .bins={      0,  20000}, .fill=[&v]{ return v.npix_bpix;     }, .axis_title="N_{Pixels} - BPix"});
+  sh.AddNewFillParams("NCluFPix",           { .nbin=100,  .bins={      0,   2000}, .fill=[&e]{ return e.nclu[0];       }, .axis_title="N_{Clusters} - FPix"});
+  sh.AddNewFillParams("NPixFPix",           { .nbin=100,  .bins={      0,   5000}, .fill=[&e]{ return e.npix[0];       }, .axis_title="N_{Pixels} - FPix"});
 #endif
 #if PHASE == 0
-  sh.AddNewFillParam("LayersDisks",      { .nbin=   7, .bins={    0.5,    7.5}, .bin_labels={
+  sh.AddNewFillParams("LayersDisks",      { .nbin=   7, .bins={    0.5,    7.5}, .fill=[&v]{ return v.layers_disks; }, .axis_title="", .def_range={}, .bin_labels={
 					      {1, "Layer 1"}, {2, "Layer 2"}, {3, "Layer 3"}, {4, "Disk -2"},
 					      {5, "Disk -1"}, {6, "Disk +1"}, {7, "Disk +2"}
-					    }, .fill=[&v]{ return v.layers_disks;       }, .axis_title=""});
+					     }});
 #else
-  sh.AddNewFillParam("LayersDisks",      { .nbin=  10, .bins={    0.5,   10.5}, .bin_labels={
-					      {1, "Layer 1"}, {2, "Layer 2"}, { 3, "Layer 3"}, {4, "Layer 4"}, 
-					      {5, "Disk -3"}, {6, "Disk -2"}, { 7, "Disk -1"}, 
-					      {8, "Disk +1"}, {9, "Disk +2"}, {10, "Disk +3"}
-					    }, .fill=[&v]{ return v.layers_disks_phase1; }, .axis_title=""});
+  sh.AddNewFillParams("LayersDisks",      { .nbin=  10, .bins={    0.5,   10.5}, .fill=[&v]{ return v.layers_disks_phase1; }, .axis_title="", .def_range={}, .bin_labels={
+					       {1, "Layer 1"}, {2, "Layer 2"}, { 3, "Layer 3"}, {4, "Layer 4"}, 
+					       {5, "Disk -3"}, {6, "Disk -2"}, { 7, "Disk -1"}, 
+					       {8, "Disk +1"}, {9, "Disk +2"}, {10, "Disk +3"}
+					     }});
 #endif
-  sh.AddNewFillParam("LayersDisksInOut",   { .nbin=   7, .bins={    0.5,    7.5}, .fill=[&v]{ return v.layers_disks;  }, .axis_title=""});
-  sh.AddNewFillParam("DisksInOut",         { .nbin=   4, .bins={    0.5,    4.5}, .fill=[&v]{ return v.disks_inout;   }, .axis_title=""});
-  sh.AddNewFillParam("Ladders",            { .nbin=  45, .bins={  -22.5,   22.5}, .fill=[&v]{ return v.ladder;        }, .axis_title="Ladders"});
-  sh.AddNewFillParam("Modules",            { .nbin=   9, .bins={   -4.5,    4.5}, .fill=[&v]{ return v.module;        }, .axis_title="Modules"});
-  sh.AddNewFillParam("Pileup",             { .nbin=  50, .bins={      0,    100}, .fill=[&v]{ return v.pileup;        }, .axis_title="Pile-up"});
-  sh.AddNewFillParam("InstLumi",           { .nbin=  80, .bins={      0,     20}, .fill=[&v]{ return v.instlumi;      }, .axis_title="Instantaneous luminosity (nb^{-1}s^{-1})"});
-  sh.AddNewFillParam("InstLumi0p5",        { .nbin=  40, .bins={      0,     20}, .fill=[&v]{ return v.instlumi;      }, .axis_title="Instantaneous luminosity (nb^{-1}s^{-1})"});
-  sh.AddNewFillParam("InstLumi1p0",        { .nbin=  21, .bins={   -0.5,   20.5}, .fill=[&v]{ return v.instlumi;      }, .axis_title="Instantaneous luminosity (nb^{-1}s^{-1})"});
-  sh.AddNewFillParam("OnTrkCluSize",       { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&t]{ return t.clu.size;      }, .axis_title="On-Trk Cluster Size (pixel)",      .def_range={0,7}});
-  sh.AddNewFillParam("OnTrkCluSizeX",      { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&t]{ return t.clu.sizeX;      }, .axis_title="On-track cluster size x (pixel)", .def_range={0,3}});
-  sh.AddNewFillParam("OnTrkCluSizeY",      { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&t]{ return t.clu.sizeY;      }, .axis_title="On-track cluster size y (pixel)", .def_range={0,7}});
-  sh.AddNewFillParam("OnTrkCluCharge",     { .nbin= 250, .bins={      0,    500}, .fill=[&v]{ return v.clu_charge;    }, .axis_title="On-Trk Cluster Charge (ke)",    .def_range={0,30}});
-  sh.AddNewFillParam("NormOnTrkCluCharge", { .nbin= 200, .bins={      0,    200}, .fill=[&t]{ return t.norm_charge;   }, .axis_title="Norm. On-Trk Clu. Charge (ke)", .def_range={0,25} });
-  sh.AddNewFillParam("CluSize",            { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&c]{ return c.size;          }, .axis_title="Cluster Size (pixel)",          .def_range={0,5}});
-  sh.AddNewFillParam("CluCharge",          { .nbin= 250, .bins={      0,    500}, .fill=[&c]{ return c.charge/1e3;    }, .axis_title="Cluster Charge (ke)",           .def_range={0,60}});
-  sh.AddNewFillParam("BunchCrossing12",    { .nbin= 300, .bins={      0,   3600}, .fill=[&e]{ return e.bx;            }, .axis_title="Bunch-crossing"});
-  sh.AddNewFillParam("BunchCrossing60",    { .nbin=  60, .bins={      0,   3600}, .fill=[&e]{ return e.bx;            }, .axis_title="Bunch-crossing"});
-  sh.AddNewFillParam("NBxPerTrig",         { .nbin=  80, .bins={      0,   2000}, .fill=[&v]{ return v.nbx_per_trig;  }, .axis_title="Avg. N_{Bunch-crossing} / Trigger latency"});
-  sh.AddNewFillParam("NColPerTrig",        { .nbin= 200, .bins={      0, 100000}, .fill=[&v]{ return v.ncol_per_trig; }, .axis_title="Avg. N_{Collisions} / Trigger latency"});
-  sh.AddNewFillParam("Runs",               { .nbin= 600, .bins={ 233800, 234400}, .fill=[&e]{ return e.run;           }, .axis_title="Runs"});
-  sh.AddNewFillParam("TMuon",              { .nbin=  10, .bins={   -40,      60}, .fill=[&e]{ return e.tmuon;         }, .axis_title="t_{muon} @ Int. Point (ns)"});
-  //sh.AddNewFillParam("Delay",              { .nbin= 101, .bins={ -50.5,    50.5}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-32,23} });
-  //sh.AddNewFillParam("Delay",              { .nbin=  56, .bins={ -32.5,    23.5}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-10,15} });
-  //sh.AddNewFillParam("Delay",              { .nbin=  45, .bins={  -8.25,  14.25}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-8,14} });
-  //sh.AddNewFillParam("Delay",              { .nbin=  81, .bins={  -20.25,  20.25}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-10,10} });
-  //sh.AddNewFillParam("Delay",              { .nbin=  91, .bins={  -25.25,  20.25}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-15,10} });
-  sh.AddNewFillParam("Delay",              { .nbin=  91, .bins={  -25.25,  20.25}, .fill=[&v]{ 
-						if (v.delay!=1.0) return v.delay;
-						else if (v.layer==1||v.layer==2) return 0.5;
-						else return 1.5; }, .axis_title="Time Delay (ns)", .def_range={-15,10} });
-  sh.AddNewFillParam("BiasVoltage",        { .nbin=  61, .bins={  -2.5,   302.5}, .fill=[&v]{ return v.bias_voltage;  }, .axis_title="Bias Voltage (V)"});
-  sh.AddNewFillParam("NCluL1",             { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[1];       }, .axis_title="N_{cluster, L1}"});
-  sh.AddNewFillParam("NCluL2",             { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[2];       }, .axis_title="N_{cluster, L2}"});
-  sh.AddNewFillParam("NCluL3",             { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[3];       }, .axis_title="N_{cluster, L3}"});
-  sh.AddNewFillParam("NCluFPix",           { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[0];       }, .axis_title="N_{cluster, FPix}"});
-  sh.AddNewFillParam("NPixL1",             { .nbin=2000, .bins={  -0.5,  2000.5}, .fill=[&e]{ return e.npix[1];       }, .axis_title="N_{pixel, L1}"});
-  sh.AddNewFillParam("NPixL2",             { .nbin=2000, .bins={  -0.5,  2000.5}, .fill=[&e]{ return e.npix[2];       }, .axis_title="N_{pixel, L2}"});
-  sh.AddNewFillParam("NPixL3",             { .nbin=2000, .bins={  -0.5,  2000.5}, .fill=[&e]{ return e.npix[3];       }, .axis_title="N_{pixel, L3}"});
-  sh.AddNewFillParam("NPixFPix",           { .nbin=2000, .bins={  -0.5,  2000.5}, .fill=[&e]{ return e.npix[0];       }, .axis_title="N_{pixel, FPix}"});
-  sh.AddNewFillParam("LumiSection",        { .nbin=1000, .bins={   0.5,  1000.5}, .fill=[&e]{ return e.ls;            }, .axis_title="LumiSection"});
-  sh.AddNewFillParam("LumiSectionCoarse",  { .nbin= 200, .bins={   0.5,  1000.5}, .fill=[&e]{ return e.ls;            }, .axis_title="LumiSection"});
-  sh.AddNewFillParam("LumiSectionSpecial", { .nbin= 200, .bins={   0.5,  1000.5}, .fill=[&e]{ return e.ls + (e.run>246908)*175 + (e.run>246919)*50 + (e.run>246920)*10 + (e.run>246923)*25 + (e.run>246926)*250 + (e.run>246930)*40; }, .axis_title="LumiSection"});
 
-  sh.AddNewFillParam("TrkPt",            { .nbin=   9, .bins={0, 0.2, 0.4, 0.6, 0.8, 1, 1.5, 2, 5, 20}, .fill=[&t]{ return t.trk.pt; }, .axis_title="Track p_{T} (GeV/c)"});
-  sh.AddNewFillParam("TrkNStrip",        { .nbin=  18, .bins={0, 2, 4, 6, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 35, 50}, .fill=[&t]{ return t.trk.strip; }, .axis_title="N_{strip hits}"});
-  sh.AddNewFillParam("TrkD0",            { .nbin=  11, .bins={0, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 2, 20}, .fill=[&t]{ return fabs(t.trk.d0); }, .axis_title="Track Impact Parameter #Delta0 (cm)"});
-  sh.AddNewFillParam("TrkDZ",            { .nbin=  10, .bins={0, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 2, 20}, .fill=[&t]{ return fabs(t.trk.dz); }, .axis_title="Track Impact Parameter #DeltaZ (cm)"});
-  sh.AddNewFillParam("TrackPt",          { .nbin= 200, .bins={0, 20}, .fill=[&t]{ return t.trk.pt;      }, .axis_title="Track p_{T} (GeV)", .def_range={0,2} });
-  sh.AddNewFillParam("TrackEta",         { .nbin=  52, .bins={-2.6, 2.6}, .fill=[&t]{ return t.trk.eta; }, .axis_title="Track #eta" });
-  sh.AddNewFillParam("TrackNStrip",      { .nbin=  50, .bins={0, 50}, .fill=[&t]{ return t.trk.strip;   }, .axis_title="N_{strip hits}",    .def_range={0,30} });
-  sh.AddNewFillParam("TrackD0",          { .nbin= 100, .bins={0, 1}, .fill=[&t]{ return fabs(t.trk.d0); }, .axis_title="Track Impact Parameter #Delta0 (cm)", .def_range={0, 0.5} });
-  sh.AddNewFillParam("TrackDZ",          { .nbin= 200, .bins={0, 2}, .fill=[&t]{ return fabs(t.trk.dz); }, .axis_title="Track Impact Parameter #DeltaZ (cm)", .def_range={0, 1.0} });
+  sh.AddNewFillParams("LayersDisksInOut",   { .nbin=   7, .bins={    0.5,    7.5}, .fill=[&v]{ return v.layers_disks;  }, .axis_title=""});
+  sh.AddNewFillParams("DisksInOut",         { .nbin=   4, .bins={    0.5,    4.5}, .fill=[&v]{ return v.disks_inout;   }, .axis_title=""});
+  sh.AddNewFillParams("Ladders",            { .nbin=  45, .bins={  -22.5,   22.5}, .fill=[&v]{ return v.ladder;        }, .axis_title="Ladders"});
+  sh.AddNewFillParams("Modules",            { .nbin=   9, .bins={   -4.5,    4.5}, .fill=[&v]{ return v.module;        }, .axis_title="Modules"});
+  sh.AddNewFillParams("Pileup",             { .nbin=  50, .bins={      0,    100}, .fill=[&v]{ return v.pileup;        }, .axis_title="Pile-up"});
+  sh.AddNewFillParams("InstLumi",           { .nbin=  80, .bins={      0,     20}, .fill=[&v]{ return v.instlumi;      }, .axis_title="Instantaneous luminosity (nb^{-1}s^{-1})"});
+  sh.AddNewFillParams("InstLumi0p5",        { .nbin=  40, .bins={      0,     20}, .fill=[&v]{ return v.instlumi;      }, .axis_title="Instantaneous luminosity (nb^{-1}s^{-1})"});
+  sh.AddNewFillParams("InstLumi1p0",        { .nbin=  21, .bins={   -0.5,   20.5}, .fill=[&v]{ return v.instlumi;      }, .axis_title="Instantaneous luminosity (nb^{-1}s^{-1})"});
+  sh.AddNewFillParams("OnTrkCluSize",       { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&t]{ return t.clu.size;      }, .axis_title="On-Trk Cluster Size (pixel)",      .def_range={0,7}});
+  sh.AddNewFillParams("OnTrkCluSizeX",      { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&t]{ return t.clu.sizeX;      }, .axis_title="On-track cluster size x (pixel)", .def_range={0,3}});
+  sh.AddNewFillParams("OnTrkCluSizeY",      { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&t]{ return t.clu.sizeY;      }, .axis_title="On-track cluster size y (pixel)", .def_range={0,7}});
+  sh.AddNewFillParams("OnTrkCluCharge",     { .nbin= 250, .bins={      0,    500}, .fill=[&v]{ return v.clu_charge;    }, .axis_title="On-Trk Cluster Charge (ke)",    .def_range={0,30}});
+  sh.AddNewFillParams("NormOnTrkCluCharge", { .nbin= 200, .bins={      0,    200}, .fill=[&t]{ return t.norm_charge;   }, .axis_title="Norm. On-Trk Clu. Charge (ke)", .def_range={0,25} });
+  sh.AddNewFillParams("CluSize",            { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&c]{ return c.size;          }, .axis_title="Cluster Size (pixel)",          .def_range={0,5}});
+  sh.AddNewFillParams("CluCharge",          { .nbin= 250, .bins={      0,    500}, .fill=[&c]{ return c.charge/1e3;    }, .axis_title="Cluster Charge (ke)",           .def_range={0,60}});
+  sh.AddNewFillParams("BunchCrossing12",    { .nbin= 300, .bins={      0,   3600}, .fill=[&e]{ return e.bx;            }, .axis_title="Bunch-crossing"});
+  sh.AddNewFillParams("BunchCrossing60",    { .nbin=  60, .bins={      0,   3600}, .fill=[&e]{ return e.bx;            }, .axis_title="Bunch-crossing"});
+  sh.AddNewFillParams("NBxPerTrig",         { .nbin=  80, .bins={      0,   2000}, .fill=[&v]{ return v.nbx_per_trig;  }, .axis_title="Avg. N_{Bunch-crossing} / Trigger latency"});
+  sh.AddNewFillParams("NColPerTrig",        { .nbin= 200, .bins={      0, 100000}, .fill=[&v]{ return v.ncol_per_trig; }, .axis_title="Avg. N_{Collisions} / Trigger latency"});
+  sh.AddNewFillParams("Runs",               { .nbin= 600, .bins={ 233800, 234400}, .fill=[&e]{ return e.run;           }, .axis_title="Runs"});
+  sh.AddNewFillParams("TMuon",              { .nbin=  10, .bins={   -40,      60}, .fill=[&e]{ return e.tmuon;         }, .axis_title="t_{muon} @ Int. Point (ns)"});
+  //sh.AddNewFillParams("Delay",              { .nbin= 101, .bins={ -50.5,    50.5}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-32,23} });
+  //sh.AddNewFillParams("Delay",              { .nbin=  56, .bins={ -32.5,    23.5}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-10,15} });
+  //sh.AddNewFillParams("Delay",              { .nbin=  45, .bins={  -8.25,  14.25}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-8,14} });
+  //sh.AddNewFillParams("Delay",              { .nbin=  81, .bins={  -20.25,  20.25}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-10,10} });
+  //sh.AddNewFillParams("Delay",              { .nbin=  91, .bins={  -25.25,  20.25}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-15,10} });
+  sh.AddNewFillParams("Delay",              { .nbin=  91, .bins={  -25.25,  20.25}, .fill=[&v]{ 
+						if (v.delay!=1.0) return v.delay;
+						else if (v.layer==1||v.layer==2) return 0.5f;
+						else return 1.5f; }, .axis_title="Time Delay (ns)", .def_range={-15,10} });
+  sh.AddNewFillParams("BiasVoltage",        { .nbin=  61, .bins={  -2.5,   302.5}, .fill=[&v]{ return v.bias_voltage;  }, .axis_title="Bias Voltage (V)"});
+  sh.AddNewFillParams("NCluL1",             { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[1];       }, .axis_title="N_{cluster, L1}"});
+  sh.AddNewFillParams("NCluL2",             { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[2];       }, .axis_title="N_{cluster, L2}"});
+  sh.AddNewFillParams("NCluL3",             { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[3];       }, .axis_title="N_{cluster, L3}"});
+  sh.AddNewFillParams("NCluFPix",           { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[0];       }, .axis_title="N_{cluster, FPix}"});
+  sh.AddNewFillParams("NPixL1",             { .nbin=2000, .bins={  -0.5,  2000.5}, .fill=[&e]{ return e.npix[1];       }, .axis_title="N_{pixel, L1}"});
+  sh.AddNewFillParams("NPixL2",             { .nbin=2000, .bins={  -0.5,  2000.5}, .fill=[&e]{ return e.npix[2];       }, .axis_title="N_{pixel, L2}"});
+  sh.AddNewFillParams("NPixL3",             { .nbin=2000, .bins={  -0.5,  2000.5}, .fill=[&e]{ return e.npix[3];       }, .axis_title="N_{pixel, L3}"});
+  sh.AddNewFillParams("NPixFPix",           { .nbin=2000, .bins={  -0.5,  2000.5}, .fill=[&e]{ return e.npix[0];       }, .axis_title="N_{pixel, FPix}"});
+  sh.AddNewFillParams("LumiSection",        { .nbin=1000, .bins={   0.5,  1000.5}, .fill=[&e]{ return e.ls;            }, .axis_title="LumiSection"});
+  sh.AddNewFillParams("LumiSectionCoarse",  { .nbin= 200, .bins={   0.5,  1000.5}, .fill=[&e]{ return e.ls;            }, .axis_title="LumiSection"});
+  sh.AddNewFillParams("LumiSectionSpecial", { .nbin= 200, .bins={   0.5,  1000.5}, .fill=[&e]{ return e.ls + (e.run>246908)*175 + (e.run>246919)*50 + (e.run>246920)*10 + (e.run>246923)*25 + (e.run>246926)*250 + (e.run>246930)*40; }, .axis_title="LumiSection"});
+
+  sh.AddNewFillParams("TrkPt",            { .nbin=   9, .bins={0, 0.2, 0.4, 0.6, 0.8, 1, 1.5, 2, 5, 20}, .fill=[&t]{ return t.trk.pt; }, .axis_title="Track p_{T} (GeV/c)"});
+  sh.AddNewFillParams("TrkNStrip",        { .nbin=  18, .bins={0, 2, 4, 6, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 35, 50}, .fill=[&t]{ return t.trk.strip; }, .axis_title="N_{strip hits}"});
+  sh.AddNewFillParams("TrkD0",            { .nbin=  11, .bins={0, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 2, 20}, .fill=[&t]{ return fabs(t.trk.d0); }, .axis_title="Track Impact Parameter #Delta0 (cm)"});
+  sh.AddNewFillParams("TrkDZ",            { .nbin=  10, .bins={0, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 2, 20}, .fill=[&t]{ return fabs(t.trk.dz); }, .axis_title="Track Impact Parameter #DeltaZ (cm)"});
+  sh.AddNewFillParams("TrackPt",          { .nbin= 200, .bins={0, 20}, .fill=[&t]{ return t.trk.pt;      }, .axis_title="Track p_{T} (GeV)", .def_range={0,2} });
+  sh.AddNewFillParams("TrackEta",         { .nbin=  52, .bins={-2.6, 2.6}, .fill=[&t]{ return t.trk.eta; }, .axis_title="Track #eta" });
+  sh.AddNewFillParams("TrackNStrip",      { .nbin=  50, .bins={0, 50}, .fill=[&t]{ return t.trk.strip;   }, .axis_title="N_{strip hits}",    .def_range={0,30} });
+  sh.AddNewFillParams("TrackD0",          { .nbin= 100, .bins={0, 1}, .fill=[&t]{ return fabs(t.trk.d0); }, .axis_title="Track Impact Parameter #Delta0 (cm)", .def_range={0, 0.5} });
+  sh.AddNewFillParams("TrackDZ",          { .nbin= 200, .bins={0, 2}, .fill=[&t]{ return fabs(t.trk.dz); }, .axis_title="Track Impact Parameter #DeltaZ (cm)", .def_range={0, 1.0} });
   
-  //sh.AddNewFillParam("ROCLadders",       { .nbin=  88, .bins={   -22,      22}, .fill=[&v]{ return v.roc_ladder;    }, .axis_title="Ladders"});
-  //sh.AddNewFillParam("ROCModules",       { .nbin=  72, .bins={  -4.5,     4.5}, .fill=[&v]{ return v.roc_module;    }, .axis_title="Modules"});
-  //sh.AddNewFillParam("ROCBladesInner",   { .nbin=  72, .bins={    0.5,   12.5}, .fill=[&v]{ return v.roc_blade;       }, .axis_title="Blades in Inner Halves"});
-  //sh.AddNewFillParam("ROCBladesOuter",   { .nbin=  72, .bins={  -12.5,   -0.5}, .fill=[&v]{ return v.roc_blade;       }, .axis_title="Blades in Outer Halves"});
-  //sh.AddNewFillParam("ROCSideDiskPanel", { .nbin=  72, .bins={  -4.5,     4.5}, .bin_labels={
+  //sh.AddNewFillParams("ROCLadders",       { .nbin=  88, .bins={   -22,      22}, .fill=[&v]{ return v.roc_ladder;    }, .axis_title="Ladders"});
+  //sh.AddNewFillParams("ROCModules",       { .nbin=  72, .bins={  -4.5,     4.5}, .fill=[&v]{ return v.roc_module;    }, .axis_title="Modules"});
+  //sh.AddNewFillParams("ROCBladesInner",   { .nbin=  72, .bins={    0.5,   12.5}, .fill=[&v]{ return v.roc_blade;       }, .axis_title="Blades in Inner Halves"});
+  //sh.AddNewFillParams("ROCBladesOuter",   { .nbin=  72, .bins={  -12.5,   -0.5}, .fill=[&v]{ return v.roc_blade;       }, .axis_title="Blades in Outer Halves"});
+  //sh.AddNewFillParams("ROCSideDiskPanel", { .nbin=  72, .bins={  -4.5,     4.5}, .bin_labels={
   //      				      { 1, "Disk-2 Pnl2"}, { 9, "Disk-2 Pnl1"}, {19, "Disk-1 Pnl2"}, {27, "Disk-1 Pnl1"},
   //      				      {41, "Disk+1 Pnl1"}, {49, "Disk+1 Pnl2"}, {59, "Disk+2 Pnl1"}, {67, "Disk+2 Pnl2"}
   //      				    }, .fill=[&v]{ return v.roc_sdp;         }, .axis_title="" });
 
-  sh.AddNewFillParam("ROC_L1_Ladder",        { .nbin=  26, .bins={  -6.5,     6.5}, .fill=[&v]{ return v.ladder_coord;                  }, .axis_title="Layer 1 - ROC / Ladder"});
-  sh.AddNewFillParam("ROC_L2_Ladder",        { .nbin=  58, .bins={ -14.5,    14.5}, .fill=[&v]{ return v.ladder_coord;                  }, .axis_title="Layer 2 - ROC / Ladder"});
-  sh.AddNewFillParam("ROC_L3_Ladder",        { .nbin=  90, .bins={ -22.5,    22.5}, .fill=[&v]{ return v.ladder_coord;                  }, .axis_title="Layer 3 - ROC / Ladder"});
-  sh.AddNewFillParam("ROC_L4_Ladder",        { .nbin= 130, .bins={ -32.5,    32.5}, .fill=[&v]{ return v.ladder_coord;                  }, .axis_title="Layer 4 - ROC / Ladder"});
-  sh.AddNewFillParam("Module",               { .nbin=  72, .bins={  -4.5,     4.5}, .fill=[&v]{ return v.module_coord;                  }, .axis_title="ROC / Module"});
-  sh.AddNewFillParam("ROC_Ring1_BladePanel", { .nbin=  92, .bins={ -11.5,    11.5}, .fill=[&v]{ return v.blade_panel_coord-v.blade*0.5; }, .axis_title="Ring 1 - ROC / Blade"});
-  sh.AddNewFillParam("ROC_Ring2_BladePanel", { .nbin= 140, .bins={ -17.5,    17.5}, .fill=[&v]{ return v.blade_panel_coord;             }, .axis_title="Ring 2 - ROC / Blade"});
-  sh.AddNewFillParam("Disk",                 { .nbin=  56, .bins={  -3.5,     3.5}, .fill=[&v]{ return v.disk_coord;                    }, .axis_title="ROC / Disk"});
+  sh.AddNewFillParams("ROC_L1_Ladder",        { .nbin=  26, .bins={  -6.5,     6.5}, .fill=[&v]{ return v.ladder_coord;                  }, .axis_title="Layer 1 - ROC / Ladder"});
+  sh.AddNewFillParams("ROC_L2_Ladder",        { .nbin=  58, .bins={ -14.5,    14.5}, .fill=[&v]{ return v.ladder_coord;                  }, .axis_title="Layer 2 - ROC / Ladder"});
+  sh.AddNewFillParams("ROC_L3_Ladder",        { .nbin=  90, .bins={ -22.5,    22.5}, .fill=[&v]{ return v.ladder_coord;                  }, .axis_title="Layer 3 - ROC / Ladder"});
+  sh.AddNewFillParams("ROC_L4_Ladder",        { .nbin= 130, .bins={ -32.5,    32.5}, .fill=[&v]{ return v.ladder_coord;                  }, .axis_title="Layer 4 - ROC / Ladder"});
+  sh.AddNewFillParams("Module",               { .nbin=  72, .bins={  -4.5,     4.5}, .fill=[&v]{ return v.module_coord;                  }, .axis_title="ROC / Module"});
+  sh.AddNewFillParams("ROC_Ring1_BladePanel", { .nbin=  92, .bins={ -11.5,    11.5}, .fill=[&v]{ return v.blade_panel_coord-v.blade*0.5; }, .axis_title="Ring 1 - ROC / Blade"});
+  sh.AddNewFillParams("ROC_Ring2_BladePanel", { .nbin= 140, .bins={ -17.5,    17.5}, .fill=[&v]{ return v.blade_panel_coord;             }, .axis_title="Ring 2 - ROC / Blade"});
+  sh.AddNewFillParams("Disk",                 { .nbin=  56, .bins={  -3.5,     3.5}, .fill=[&v]{ return v.disk_coord;                    }, .axis_title="ROC / Disk"});
 
   // Special Y/Z axis parameters:
   sh.AddSpecial({ .name="HitEfficiency",   .name_plus_1d="ValidHit",  .axis="Hit Efficiency",  .axis_plus_1d="Valid Hit"});
   sh.AddSpecial({ .name="DColEfficiency",  .name_plus_1d="ColParity", .axis="Double Column Efficiency",  .axis_plus_1d="First Pixel Column Parity"});
 #if PHASE == 0
   // Recover missing hits within 500 um
-  sh.AddNewFillParam("HitEfficiency",    { .nbin=   2, .bins={   -0.5,    1.5}, .fill=[&t]{ return t.missing==1 ? t.clust_near : 1; }, .axis_title="Hit Efficiency", .def_range={0, 1} });
+  sh.AddNewFillParams("HitEfficiency",    { .nbin=   2, .bins={   -0.5,    1.5}, .fill=[&t]{ return t.missing==1 ? t.clust_near : 1; }, .axis_title="Hit Efficiency", .def_range={0, 1} });
 #else
   // Recover missing hits within 1 mm - Currently does not work
-  sh.AddNewFillParam("HitEfficiency",    { .nbin=   2, .bins={   -0.5,    1.5}, .fill=[&t]{ return t.missing==1 ? t.d_cl>=0 && t.d_cl<DCL_MISSING : 1; }, .axis_title="Hit Efficiency", .def_range={0.5, 1} });
-  sh.AddNewFillParam("DColEfficiency",   { .nbin=   2, .bins={   -0.5,    1.5}, .fill=[&t]{ if (t.clu.size!=2) return -1; if (((int)t.clu.pix[0][1])%52>=50||((int)t.clu.pix[0][1])%52<2) return -1; return (((int)t.clu.pix[0][1])%52)%2; }, .axis_title="Double Column Efficiency", .def_range={0, 1} });
+  sh.AddNewFillParams("HitEfficiency",    { .nbin=   2, .bins={   -0.5,    1.5}, .fill=[&t]{ return t.missing==1 ? t.d_cl>=0 && t.d_cl<DCL_MISSING : 1; }, .axis_title="Hit Efficiency", .def_range={0.5, 1} });
+  sh.AddNewFillParams("DColEfficiency",   { .nbin=   2, .bins={   -0.5,    1.5}, .fill=[&t]{ if (t.clu.size!=2) return -1; if (((int)t.clu.pix[0][1])%52>=50||((int)t.clu.pix[0][1])%52<2) return -1; return (((int)t.clu.pix[0][1])%52)%2; }, .axis_title="Double Column Efficiency", .def_range={0, 1} });
 #endif
   
   // Define Cuts here:
