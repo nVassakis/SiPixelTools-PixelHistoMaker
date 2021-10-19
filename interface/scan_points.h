@@ -996,23 +996,22 @@ namespace scans {
       // Scan 1 - 17 Apr 2018
       // https://mail.google.com/mail/u/0/#inbox/162d46b69fe1d2ed
     case 314496: return  13.5;
-//  case 314497: return -10.5;
+    case 314497: return -10.5;
     case 314498: return   7.5;
-//  case 314499: return  -4.5;
+    case 314499: return  -4.5;
     case 314500: return   4.5;
-//  case 314501: return  -1.5;
+    case 314501: return  -1.5;
     case 314502: return   3.5;
-//  case 314503: return  -0.5;
+    case 314503: return  -0.5;
     case 314504: return   2.5;
-//  case 314506: return   0.5;
-//  case 314507: return   1.5;
+    case 314506: return   0.5;
+    case 314507: return   1.5;
     case 314508: return   9.5;
-//  case 314509: return  -6.5;
+    case 314509: return  -6.5;
     case 314510: return  11.5;
-//  case 314511: return  -8.5;
+    case 314511: return  -8.5;
     case 314512: return   5.5;
-//  case 314513: return  -2.5;
-//  case 314515: return   1.5;
+    case 314513: return  -2.5;
       // Scan 2 - 17 Apr 2018
       // https://mail.google.com/mail/u/0/#inbox/162d8c0492f37458
     case 314515: return   1.5;

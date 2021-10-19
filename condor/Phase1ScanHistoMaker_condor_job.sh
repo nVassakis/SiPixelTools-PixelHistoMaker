@@ -48,8 +48,8 @@ echo -e "\n----------- Phase1ScanHistoMaker ------------"
 
 echo   "UnixTime-PHMStart: "$(date +%s)
 
-echo -e "\n[7] time ./Phase1ScanHistoMaker -o $cwd/output.root $arguments 2>&1"
-time ./Phase1ScanHistoMaker -o $cwd/output.root $arguments 2>&1
+echo -e "\n[7] time ./Phase1ScanHistoMaker -o $cwd/output.root `cat $filelist` 2>&1"
+time ./Phase1ScanHistoMaker -o $cwd/output.root `cat $filelist` 2>&1
 
 echo   "UnixTime-PHMEnd: "$(date +%s)
 

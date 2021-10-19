@@ -686,7 +686,7 @@ def analysis(phm_arguments, last_known_status, last_condor_jobid, nproc):
                         submittime = int(time.time())
                         #print "condor/submit_condor_task.sh "+private_proxy+" "+site+" "+opt.OUTDIR+"/sandbox-PixelHistoMaker.tar"+" "+joblist_to_submit
                         #sys.exit()
-                        logged_call(["condor/submit_condor_task.sh", private_proxy, site, opt.OUTDIR+"/sandbox-PixelHistoMaker.tar", joblist_to_submit], latest_log_file, opt.run)
+                        logged_call(["condor/submit_condor_task.sh", private_proxy, site, opt.OUTDIR+"/sandbox-PixelHistoMaker.tar", opt.PROG, joblist_to_submit], latest_log_file, opt.run)
                         with open(latest_log_file) as latest_log:
                             for line in latest_log.readlines():
                                 if "submitted to cluster" in line:

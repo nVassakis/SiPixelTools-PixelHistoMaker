@@ -4,11 +4,14 @@ proxy=$1
 region=$2
 input=$3
 
+
 if [[ $region == "EU" ]]; then
-    joblist=$4
-    sed "s;PROXY_PATH;$proxy;;s;JOBLIST;$joblist;;s;SANDBOX;$input;;" condor/condor_task_template_EU.cfg > tmp.cfg
+    prog=$4
+    joblist=$5
+    sed "s;PROXY_PATH;$proxy;;s;JOBLIST;$joblist;;s;SANDBOX;$input;;s;PROG;$prog;;" condor/condor_task_template_EU.cfg > tmp.cfg
 elif [[ $region == "US" ]]; then
-    joblist=$4
+    prog=$4
+    joblist=$5
     sed "s;PROXY_PATH;$proxy;;s;JOBLIST;$joblist;;s;SANDBOX;$input;;" condor/condor_task_template_US.cfg > tmp.cfg
 elif [[ $region == "hadd" ]]; then
     output=$4
