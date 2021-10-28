@@ -12,7 +12,7 @@ if [[ $region == "EU" ]]; then
 elif [[ $region == "US" ]]; then
     prog=$4
     joblist=$5
-    sed "s;PROXY_PATH;$proxy;;s;JOBLIST;$joblist;;s;SANDBOX;$input;;" condor/condor_task_template_US.cfg > tmp.cfg
+    sed "s;PROXY_PATH;$proxy;;s;JOBLIST;$joblist;;s;SANDBOX;$input;;s;PROG;$prog;;" condor/condor_task_template_US.cfg > tmp.cfg
 elif [[ $region == "hadd" ]]; then
     output=$4
     logout=$5

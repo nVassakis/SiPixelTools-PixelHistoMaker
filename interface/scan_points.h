@@ -299,26 +299,26 @@ namespace scans {
       // Scan 1 - 17 Apr 2018
       // https://mail.google.com/mail/u/0/#inbox/162d46b69fe1d2ed
     case 314496: return 39;
-//  case 314497: return 39;
+    case 314497: return 39;
     case 314498: return 39;
-//  case 314499: return 39;
+    case 314499: return 39;
     case 314500: return 39;
-//  case 314501: return 39;
+    case 314501: return 39;
     case 314502: return 39;
-//  case 314503: return 39;
+    case 314503: return 39;
     case 314504: return 39;
-//  case 314506: return 39;
-//  case 314507: return 39;
+    case 314506: return 39;
+    case 314507: return 39;
     case 314508: return 39;
-//  case 314509: return 39;
+    case 314509: return 39;
     case 314510: return 39;
-//  case 314511: return 39;
+    case 314511: return 39;
     case 314512: return 39;
-//  case 314513: return 39;
-//  case 314515: return 39;
+    case 314513: return 39;
+    case 314515: return 39;
       // Scan 2 - 17 Apr 2018
       // https://mail.google.com/mail/u/0/#inbox/162d8c0492f37458
-    case 314515: return 40;
+    //case 314515: return 40;
     case 314524: return 40;
     case 314527: return 40;
       // Scan 3 - 19 Apr 2018 (Additional points, replacing scan 1)
@@ -339,6 +339,19 @@ namespace scans {
     case 317480: return 41;
     case 317481: return 41;
     case 317482: return 41;
+
+    //Run3 pilot beam test scan
+    //https://docs.google.com/spreadsheets/d/1DA62Y2byA5si4hwqeoG3qtNX0-GX9T3FOBf2rlyV7J4/edit?pli=1#gid=1370119800
+    //
+    case 346247: return 42;
+    case 346300: return 42;
+    case 346301: return 42;
+    case 346238: return 42;
+    case 346246: return 42;
+    case 346299: return 42;
+    case 346304: return 42;
+    case 346302: return 42;
+    case 346303: return 42;
 
     default:
       return -1;
@@ -1035,6 +1048,19 @@ namespace scans {
     case 317480: return  8;
     case 317481: return -6;
     case 317482: return  6;
+
+    //Run3 pilot beam test scan
+    //https://docs.google.com/spreadsheets/d/1DA62Y2byA5si4hwqeoG3qtNX0-GX9T3FOBf2rlyV7J4/edit?pli=1#gid=1370119800
+    //
+    case 346247: return 12  ;
+    case 346300: return 12  ;
+    case 346301: return 12  ;
+    case 346238: return 0   ;
+    case 346246: return 0   ;
+    case 346299: return 0   ;
+    case 346304: return 0   ;
+    case 346302: return -12 ;
+    case 346303: return -12 ;
 
       /*
     case 2: 
