@@ -342,15 +342,17 @@ namespace scans {
 
       // 2021
       // Scan 1 - Oct 2021
-    case 346238: return 42;
-    case 346246: return 42;
-    case 346247: return 42;
-    case 346299: return 42;
-    case 346300: return 42;
-    case 346301: return 42;
-    case 346302: return 42;
-    case 346303: return 42;
-    case 346304: return 42;
+      // http://cmsonline.cern.ch/cms-elog/1127350
+    case 346373: return 42;
+    case 346374: return 42;
+    case 346375: return 42;
+    case 346377: return 42;
+    case 346378: return 42;
+    case 346379: return 42;
+    case 346380: return 42;
+    case 346383: return 42;
+    case 346384: return 42;
+    case 346389: return 42;
 
     default:
       return -1;
@@ -1051,15 +1053,17 @@ namespace scans {
 
       // 2021
       // Scan 1 - Oct 2021
-    case 346238: return   0;
-    case 346246: return   0;
-    case 346247: return  12;
-    case 346299: return   0;
-    case 346300: return  12;
-    case 346301: return  12;
-    case 346302: return -12;
-    case 346303: return -12;
-    case 346304: return   0;
+      // http://cmsonline.cern.ch/cms-elog/1127350
+    case 346373: return   0;
+    case 346374: return  12;
+    case 346375: return -12;
+    case 346377: return   6;
+    case 346378: return  -6;
+    case 346379: return   9;
+    case 346380: return  -9;
+    case 346383: return  18;
+    case 346384: return   3;
+    case 346389: return 3.5; // new reference (actually 3, using 3.5 for plotting purposes)
       /*
     case 2: 
       return
