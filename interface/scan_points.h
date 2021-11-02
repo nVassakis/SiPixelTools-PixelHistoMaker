@@ -353,6 +353,23 @@ namespace scans {
     case 346383: return 42;
     case 346384: return 42;
     case 346389: return 42;
+      //-----------------------------------------
+      // Following the scan, the default timing set to +3ns
+      // for all layers/disk after the scan
+      // (http://cmsonline.cern.ch/cms-elog/1127357).
+      // Used in fills 7517-7524
+      //-----------------------------------------
+      // Default changed to +3/6/9/9 ns (L1/L2/L3/L4) and
+      // +9ns for FPix starting from the fill 7525
+      // (http://cmsonline.cern.ch/cms-elog/1127699)
+      //-----------------------------------------
+      // Scan 2 - Nov 2021 mini scan
+      // http://cmsonline.cern.ch/cms-elog/1127922
+    case 346508: return 43;
+    case 346509: return 43;
+    case 346510: return 43;
+    case 346511: return 43;
+    case 346512: return 43;
 
     default:
       return -1;
@@ -1064,6 +1081,24 @@ namespace scans {
     case 346383: return  18;
     case 346384: return   3;
     case 346389: return 3.5; // new reference (actually 3, using 3.5 for plotting purposes)
+      //-----------------------------------------
+      // Following the scan, the default timing set to +3ns
+      // for all layers/disk after the scan
+      // (http://cmsonline.cern.ch/cms-elog/1127357).
+      // Used in fills 7517-7524
+      //-----------------------------------------
+      // Default changed to +3/6/9/9 ns (L1/L2/L3/L4) and
+      // +9ns for FPix starting from the fill 7525
+      // (http://cmsonline.cern.ch/cms-elog/1127699)
+      //-----------------------------------------
+      // Scan 2 - Nov 2021 mini scan
+      // http://cmsonline.cern.ch/cms-elog/1127922
+    case 346508: return  -3;
+    case 346509: return   3;
+    case 346510: return   6;
+    case 346511: return   9;
+    case 346512: return   0;
+
       /*
     case 2: 
       return
