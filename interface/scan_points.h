@@ -340,6 +340,18 @@ namespace scans {
     case 317481: return 41;
     case 317482: return 41;
 
+      // 2021
+      // Scan 1 - Oct 2021
+    case 346238: return 42;
+    case 346246: return 42;
+    case 346247: return 42;
+    case 346299: return 42;
+    case 346300: return 42;
+    case 346301: return 42;
+    case 346302: return 42;
+    case 346303: return 42;
+    case 346304: return 42;
+
     default:
       return -1;
     }
@@ -1037,6 +1049,17 @@ namespace scans {
     case 317481: return -6;
     case 317482: return  6;
 
+      // 2021
+      // Scan 1 - Oct 2021
+    case 346238: return   0;
+    case 346246: return   0;
+    case 346247: return  12;
+    case 346299: return   0;
+    case 346300: return  12;
+    case 346301: return  12;
+    case 346302: return -12;
+    case 346303: return -12;
+    case 346304: return   0;
       /*
     case 2: 
       return

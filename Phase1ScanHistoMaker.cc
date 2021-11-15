@@ -204,8 +204,9 @@ int main(int argc, char* argv[]) {
 		       (e.bx==291||e.bx==1185||e.bx==2079) ? 2 :
 		       (size_t)-1; }, "BXm1;BX0;BXp1", "First BX -1;First BX;First BX +1", "601,418,633");
   
+  sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-42;   }, "2021Oct_Scan1", "27-28 Oct", "1");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-41;   }, "2018Jun05_Scan4", "05 June", "1");
-  sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-39;   }, "2018Apr17_Scan1and3;2018Apr17_Scan2", ";HV400/360", "1,2,");
+  //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-39;   }, "2018Apr17_Scan1and3;2018Apr17_Scan2", ";HV400/360", "1,2,");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-38;   }, "2017Oct27_dac109_prt58", "Oct 27 Scan", "1,");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-36;   }, "2017Sep23_dac103_prt55;2017Sep23_dac103_prt55_Vdd10", "Sep 23 Scan;L1 Vdd 10", "1,2,");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-35;   }, "2017Aug03_dac91_prt48", "", "1,");
