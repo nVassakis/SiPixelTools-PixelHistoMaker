@@ -520,12 +520,12 @@ int main(int argc, char* argv[]) {
   double osx1 =  0, osx2 = 4;
   double ch1  =  0, ch2  = 100;
   double och1 =  0, och2 = 100;
-  double onc1 =  0, onc2 = 50;
+  double onc1 =  0, onc2 = 35;
   double mpv1 =  0, mpv2 = 50;
   std::vector<std::string> plots = {"AvgCluSize","AvgCluCharge", "AvgOnTrkCluSize", "AvgOnTrkCluSizeX", "AvgOnTrkCluSizeY",
 				    "AvgOnTrkCluCharge","AvgNormOnTrkCluCharge", "NormOnTrkCluChargeMPV", "HitEfficiency", "DColEfficiency"};
-  std::vector<double> ymins = {sz1, ch1, osz1, osx1, osz1, och1, onc1, mpv1, 0.0, 0.0};
-  std::vector<double> ymaxs = {sz2, ch2, osz2, osx2, osz2, och2, onc2, mpv2, 1.0, 1.0};
+  std::vector<double> ymins = {sz1, ch1, osz1, osx1, osz1, och1, onc1, mpv1, 0.6, 0.0};
+  std::vector<double> ymaxs = {sz2, ch2, osz2, osx2, osz2, och2, onc2, mpv2, 1.05, 1.0};
 
   for (std::string scan : {"Delay","ContrlReg","VcThrShift","ViBias"}) {
     for (size_t i=0, n=plots.size(); i<n; ++i) if (i>=2 || CLUST_LOOP>0) {
