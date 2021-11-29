@@ -367,8 +367,10 @@ int main(int argc, char* argv[]) {
   //sh.AddNewPostfix("DataYears", [&e]{ if (e.run!=1) return (size_t)0; return (size_t)-1; }, "2018Data", "2018 Data", "1");
   sh.AddNewPostfix("DataYears", [&e]{ 
                      if (e.run==1) return (size_t)-1;
+                     //return (size_t)(e.run>=307510); 
+                   //}, "2017Data;2018Data", "2017 Data;2018 Data", "601,633,");
                      return (size_t)(e.run>=307510); 
-                   }, "2017Data;2018Data", "2017 Data;2018 Data", "601,633,");
+                   }, "2017Data;2021Data", "2017 Data;2021 Data", "601,633,");
   //sh.AddNewPostfix("DataYears", [&e,&v]{ 
   //                   if (e.run==1) return (size_t)-1;
   //                   else if (v.year==2011) return (size_t)0;
@@ -646,8 +648,10 @@ int main(int argc, char* argv[]) {
   sh.AddNewFillParams("OnCluSize",        { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&t]{ return t.clu.size;        }, .axis_title="on-track cluster size [pixel]", .def_range={0,20}});
   sh.AddNewFillParams("OnCluSizeX",       { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&t]{ return t.clu.sizeX;       }, .axis_title="on-track cluster size x [pixel]"});
   sh.AddNewFillParams("OnCluSizeY",       { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&t]{ return t.clu.sizeY;       }, .axis_title="on-track cluster size y [pixel]"});
-  sh.AddNewFillParams("OnCluCharge",      { .nbin=  50, .bins={      0,    500}, .fill=[&v]{ return v.clu_charge;      }, .axis_title="on-track cluster charge [ke]"});
-  sh.AddNewFillParams("OnCluChargeNorm",  { .nbin=  40, .bins={      0,    200}, .fill=[&t]{ return t.norm_charge;     }, .axis_title="norm. on-trk clu. charge [ke]"});
+  //sh.AddNewFillParams("OnCluCharge",      { .nbin=  50, .bins={      0,    500}, .fill=[&v]{ return v.clu_charge;      }, .axis_title="on-track cluster charge [ke]"});
+  //sh.AddNewFillParams("OnCluChargeNorm",  { .nbin=  40, .bins={      0,    200}, .fill=[&t]{ return t.norm_charge;     }, .axis_title="norm. on-trk clu. charge [ke]"});
+  sh.AddNewFillParams("OnCluCharge",      { .nbin=  500, .bins={      0,    500}, .fill=[&v]{ return v.clu_charge;      }, .axis_title="on-track cluster charge [ke]"});
+  sh.AddNewFillParams("OnCluChargeNorm",  { .nbin=  400, .bins={      0,    200}, .fill=[&t]{ return t.norm_charge;     }, .axis_title="norm. on-trk clu. charge [ke]"});
   sh.AddNewFillParams("CluSize",          { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&c]{ return c.size;            }, .axis_title="Cluster size [pixel]"});
   sh.AddNewFillParams("CluSizeX",         { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&c]{ return c.sizeX;           }, .axis_title="Cluster size x [pixel]"});
   sh.AddNewFillParams("CluSizeY",         { .nbin=  26, .bins={   -0.5,   25.5}, .fill=[&c]{ return c.sizeY;           }, .axis_title="Cluster size y [pixel]"});
@@ -724,7 +728,8 @@ int main(int argc, char* argv[]) {
 
   // Special Y/Z axis parameters:
   //sh.AddSpecial({ .name="DColEfficiency", .name_plus_1d="Validhit", .axis="DCol Efficiency", .axis_plus_1d="Valid Hit"});
-  sh.AddSpecial({ .name="HitEfficiency",  .name_plus_1d="ValidHitOld", .axis="Hit Efficiency (old)",  .axis_plus_1d="Valid Hit (old)"});
+  //sh.AddSpecial({ .name="HitEfficiency",  .name_plus_1d="ValidHitOld", .axis="Hit Efficiency (old)",  .axis_plus_1d="Valid Hit (old)"});
+  sh.AddSpecial({ .name="HitEfficiency",  .name_plus_1d="ValidHitOld", .axis="Hit Efficiency",  .axis_plus_1d="Valid Hit"});
   sh.AddSpecial({ .name="DColEfficiency",  .name_plus_1d="ColParity", .axis="Double Column Efficiency",  .axis_plus_1d="First Pixel Column Parity"});
 #if PHASE == 0
   // Recover missing hits within 500 um
@@ -733,7 +738,8 @@ int main(int argc, char* argv[]) {
 #else
   // Recover missing hits within 1 mm - Currently does not work
   //sh.AddNewFillParams("DColEfficiency",   { .nbin=   2, .bins={   -0.5,    1.5}, .fill=[&t]{ return t.missing==1 ? t.d_cl>=0 && t.d_cl<DCL_MISSING : 1; }, .axis_title="DCol Efficiency" });  
-  sh.AddNewFillParams("HitEfficiency",    { .nbin=   2, .bins={   -0.5,    1.5}, .fill=[&t]{ return t.missing==1 ? t.d_cl>=0 && t.d_cl<DCL_MISSING : 1; }, .axis_title="Hit Efficiency (old)", .def_range={0.9, 1} });
+  //sh.AddNewFillParams("HitEfficiency",    { .nbin=   2, .bins={   -0.5,    1.5}, .fill=[&t]{ return t.missing==1 ? t.d_cl>=0 && t.d_cl<DCL_MISSING : 1; }, .axis_title="Hit Efficiency (old)", .def_range={0.9, 1} });
+  sh.AddNewFillParams("HitEfficiency",    { .nbin=   2, .bins={   -0.5,    1.5}, .fill=[&t]{ return t.missing==1 ? t.d_cl>=0 && t.d_cl<DCL_MISSING : 1; }, .axis_title="Hit Efficiency", .def_range={0.9, 1} });
   sh.AddNewFillParams("DColEfficiency",   { .nbin=   2, .bins={   -0.5,    1.5}, .fill=[&t]{ if (t.clu.size!=2) return -1; if (((int)t.clu.pix[0][1])%52>=50||((int)t.clu.pix[0][1])%52<2) return -1; return (((int)t.clu.pix[0][1])%52)%2; }, .axis_title="Double Column Efficiency", .def_range={0, 1} });
 #endif
   sh.AddSpecial({ .name="NewHitEfficiency",  .name_plus_1d="ValidHit", .axis="Hit Efficiency",  .axis_plus_1d="Valid Hit"});
