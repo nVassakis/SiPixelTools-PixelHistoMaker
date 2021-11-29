@@ -1,0 +1,51 @@
+Initial runs with bad beam spot:
+
+/Express
+
+python condor/run_all.py --prog=Phase1ScanHistoMaker --batch --condor --run --outdir=PHM_PHASE1_out/2021Oct_DelayScan_ExpressZeroBiasFilter_`date "+%Y%m%d_%H%M%S"` --nfile=1 2021_DelayScan/2021Oct_DelayScan_ExpressZeroBiasFilter.txt
+
+python condor/run_all.py --prog=Phase1ScanHistoMaker --batch --condor --run --outdir=PHM_PHASE1_out/2021Oct_DelayScan_ExpressPixelClusterFilter_`date "+%Y%m%d_%H%M%S"` --nfile=1 2021_DelayScan/2021Oct_DelayScan_ExpressPixelClusterFilter.txt
+
+
+Full timing scan with good beam spot:
+
+/Express
+
+python condor/run_all.py --prog=Phase1ScanHistoMaker --batch --condor --run --outdir=PHM_PHASE1_out/2021Oct_DelayScan_ExpressZeroBiasFilterGoodBeamSpot_lowstats_`date "+%Y%m%d_%H%M%S"` --nfile=1 2021_DelayScan/2021Oct_DelayScan_ExpressZeroBiasFilterGoodBeamSpot_lowstats.txt
+
+python condor/run_all.py --prog=Phase1ScanHistoMaker --batch --condor --run --outdir=PHM_PHASE1_out/2021Oct_DelayScan_ExpressZeroBiasFilterGoodBeamSpot_`date "+%Y%m%d_%H%M%S"` --nfile=1 2021_DelayScan/2021Oct_DelayScan_ExpressZeroBiasFilterGoodBeamSpot.txt
+
+python condor/run_all.py --prog=Phase1ScanHistoMaker --batch --condor --run --outdir=PHM_PHASE1_out/2021Oct_DelayScan_ExpressPixelClusterFilterGoodBeamSpot_`date "+%Y%m%d_%H%M%S"` --nfile=2 2021_DelayScan/2021Oct_DelayScan_ExpressPixelClusterFilterGoodBeamSpot.txt
+
+/ZeroBias
+
+python condor/run_all.py --prog=Phase1ScanHistoMaker --batch --condor --run --outdir=PHM_PHASE1_out/2021Oct_DelayScan_ZeroBiasGoodBeamSpot_`date "+%Y%m%d_%H%M%S"` --nfile=40 2021_DelayScan/2021Oct_DelayScan_ZeroBiasGoodBeamSpot.txt
+
+
+/Express with online beam spot reco:
+
+python condor/run_all.py --prog=Phase1ScanHistoMaker --batch --condor --run --outdir=PHM_PHASE1_out/2021Oct_DelayScan_ExpressPixelClusterFilterOnlineBeamSpot_`date "+%Y%m%d_%H%M%S"` --nfile=2 2021_DelayScan/2021Oct_DelayScan_ExpressPixelClusterFilterOnlineBeamSpot.txt
+
+
+/ZeroBias with online beam spot reco:
+
+python condor/run_all.py --prog=Phase1ScanHistoMaker --batch --condor --run --outdir=PHM_PHASE1_out/2021Oct_DelayScan_ZeroBiasOnlineBeamSpot_`date "+%Y%m%d_%H%M%S"` --nfile=40 2021_DelayScan/2021Oct_DelayScan_ZeroBiasOnlineBeamSpot.txt
+
+- loose track selection
+python condor/run_all.py --prog=Phase1ScanHistoMaker --batch --condor --run --outdir=PHM_PHASE1_out/2021Oct_DelayScan_ZeroBiasOnlineBeamSpot_looseTrk_`date "+%Y%m%d_%H%M%S"` --nfile=40 2021_DelayScan/2021Oct_DelayScan_ZeroBiasOnlineBeamSpot.txt
+
+
+Mini timing scan:
+
+/Express with online beam spot reco:
+
+python condor/run_all.py --prog=Phase1ScanHistoMaker --batch --condor --run --outdir=PHM_PHASE1_out/2021Nov_DelayScan_ExpressPixelClusterFilterOnlineBeamSpot_MiniTimingScan_`date "+%Y%m%d_%H%M%S"` --nfile=3 2021_DelayScan/2021ONov_DelayScan_ExpressPixelClusterFilterOnlineBeamSpot_MiniTimingScan.txt
+
+python condor/run_all.py --prog=Phase1ScanHistoMaker --batch --condor --run --outdir=PHM_PHASE1_out/2021Nov_DelayScan_ExpressZeroBiasFilterOnlineBeamSpot_MiniTimingScan_`date "+%Y%m%d_%H%M%S"` --nfile=3 2021_DelayScan/2021Nov_DelayScan_ExpressZeroBiasFilterOnlineBeamSpot_MiniTimingScan.txt
+
+/ZeroBias with online beam spot reco:
+
+python condor/run_all.py --prog=Phase1ScanHistoMaker --batch --condor --run --outdir=PHM_PHASE1_out/2021Nov_DelayScan_ZeroBiasOnlineBeamSpot_MiniTimingScan_`date "+%Y%m%d_%H%M%S"` --nfile=20 2021_DelayScan/2021Nov_DelayScan_ZeroBiasOnlineBeamSpot_MiniTimingScan.txt
+
+- plots for LHCC
+./Phase1ScanHistoMaker -o PHM_PHASE1_out/2021Nov_DelayScan_ZeroBiasOnlineBeamSpot_MiniTimingScan_20211104_151037_plots_forLHCC.root -a PHM_PHASE1_out/2021Nov_DelayScan_ZeroBiasOnlineBeamSpot_MiniTimingScan_20211104_151037.root
