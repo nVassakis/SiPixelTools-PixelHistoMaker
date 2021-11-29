@@ -204,7 +204,8 @@ int main(int argc, char* argv[]) {
 		       (e.bx==291||e.bx==1185||e.bx==2079) ? 2 :
 		       (size_t)-1; }, "BXm1;BX0;BXp1", "First BX -1;First BX;First BX +1", "601,418,633");
   
-  sh.AddNewPostfix("DelayScans",          [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-42;   }, "2021Oct_Scan", "28 Oct", "1");
+  sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-43;   }, "2021Nov_MiniScan", "", "1");
+  //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-42;   }, "2021Oct_Scan", "", "1");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-41;   }, "2018Jun05_Scan4", "05 June", "1");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-39;   }, "2018Apr17_Scan1and3;2018Apr17_Scan2", ";HV400/360", "1,2,");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-38;   }, "2017Oct27_dac109_prt58", "Oct 27 Scan", "1,");
@@ -357,7 +358,7 @@ int main(int argc, char* argv[]) {
   sh.AddNewFillParams("Delay",              { .nbin=  91, .bins={  -25.25,  20.25}, .fill=[&v]{ 
 						if (v.delay!=1.0) return v.delay;
 						else if (v.layer==1||v.layer==2) return 0.5f;
-						else return 1.5f; }, .axis_title="Time Delay (ns)", .def_range={-15,15} });
+						else return 1.5f; }, .axis_title="Time Delay (ns)", .def_range={-15,20} });
   sh.AddNewFillParams("BiasVoltage",        { .nbin=  61, .bins={  -2.5,   302.5}, .fill=[&v]{ return v.bias_voltage;  }, .axis_title="Bias Voltage (V)"});
   sh.AddNewFillParams("NCluL1",             { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[1];       }, .axis_title="N_{cluster, L1}"});
   sh.AddNewFillParams("NCluL2",             { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[2];       }, .axis_title="N_{cluster, L2}"});
@@ -519,12 +520,12 @@ int main(int argc, char* argv[]) {
   double osx1 =  0, osx2 = 4;
   double ch1  =  0, ch2  = 100;
   double och1 =  0, och2 = 100;
-  double onc1 =  0, onc2 = 50;
+  double onc1 =  0, onc2 = 35;
   double mpv1 =  0, mpv2 = 50;
   std::vector<std::string> plots = {"AvgCluSize","AvgCluCharge", "AvgOnTrkCluSize", "AvgOnTrkCluSizeX", "AvgOnTrkCluSizeY",
 				    "AvgOnTrkCluCharge","AvgNormOnTrkCluCharge", "NormOnTrkCluChargeMPV", "HitEfficiency", "DColEfficiency"};
-  std::vector<double> ymins = {sz1, ch1, osz1, osx1, osz1, och1, onc1, mpv1, 0.5, 0.0};
-  std::vector<double> ymaxs = {sz2, ch2, osz2, osx2, osz2, och2, onc2, mpv2, 1.0, 1.0};
+  std::vector<double> ymins = {sz1, ch1, osz1, osx1, osz1, och1, onc1, mpv1, 0.6, 0.0};
+  std::vector<double> ymaxs = {sz2, ch2, osz2, osx2, osz2, och2, onc2, mpv2, 1.05, 1.0};
 
   for (std::string scan : {"Delay","ContrlReg","VcThrShift","ViBias"}) {
     for (size_t i=0, n=plots.size(); i<n; ++i) if (i>=2 || CLUST_LOOP>0) {
