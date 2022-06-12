@@ -204,7 +204,8 @@ int main(int argc, char* argv[]) {
 		       (e.bx==291||e.bx==1185||e.bx==2079) ? 2 :
 		       (size_t)-1; }, "BXm1;BX0;BXp1", "First BX -1;First BX;First BX +1", "601,418,633");
   
-  sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-43;   }, "2021Nov_MiniScan", "", "1");
+  sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-44;   }, "2022Jun_MiniScan", "", "1");
+  //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-43;   }, "2021Nov_MiniScan", "", "1");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-42;   }, "2021Oct_Scan", "", "1");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-41;   }, "2018Jun05_Scan4", "05 June", "1");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-39;   }, "2018Apr17_Scan1and3;2018Apr17_Scan2", ";HV400/360", "1,2,");
@@ -229,7 +230,7 @@ int main(int argc, char* argv[]) {
   //sh.AddNewPostfix("FineDelays",        [&v]{ return size_t(v.delay>=20 &&v.delay<=24 ? v.delay-20 : -1); }, "[20to24]nsfine", "[20to24]ns", col6_rainbow_dark);
   //sh.AddNewPostfix("FineDelays",        [&v]{ return size_t(v.delay>=21 &&v.delay<=31 ? v.delay-21 : -1); }, "[21to31]nsfine", "[21to31]ns", col12);
   //sh.AddNewPostfix("FineDelays",        [&v]{ return size_t(v.delay>=0 &&v.delay<=18 ? v.delay : -1); }, "[0to18]nsfine", "[0to18]ns", col18+"1");
-  sh.AddNewPostfix("FineDelays",        [&v]{ return size_t(v.delay>=3 &&v.delay<=9 ? v.delay-3 : -1); }, "[3to9]nsfine", "[3to9]ns", col8);
+  sh.AddNewPostfix("FineDelays",        [&v]{ return size_t(v.delay>=0 &&v.delay<=25 ? v.delay : -1); }, "[0to25]nsfine", "[0to25]ns", col12+col12_rainbow);
   sh.AddNewPostfix("Delays",            [&v]{ 
 		     if      (v.delay== 3) return (size_t)0;
 		     else if (v.delay== 6) return (size_t)1;
@@ -355,10 +356,11 @@ int main(int argc, char* argv[]) {
   //sh.AddNewFillParams("Delay",              { .nbin=  45, .bins={  -8.25,  14.25}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-8,14} });
   //sh.AddNewFillParams("Delay",              { .nbin=  81, .bins={  -20.25,  20.25}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-10,10} });
   //sh.AddNewFillParams("Delay",              { .nbin=  91, .bins={  -25.25,  20.25}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-15,10} });
-  sh.AddNewFillParams("Delay",              { .nbin=  91, .bins={  -25.25,  20.25}, .fill=[&v]{ 
+  sh.AddNewFillParams("Delay",              { .nbin=  101, .bins={  -25.25,  25.25}, .fill=[&v]{ 
 						if (v.delay!=1.0) return v.delay;
 						else if (v.layer==1||v.layer==2) return 0.5f;
-						else return 1.5f; }, .axis_title="Time Delay (ns)", .def_range={-15,20} });
+						else return 1.5f; }, .axis_title="Time Delay (ns)", .def_range={-25,25} });
+  //sh.AddNewFillParams("Delay",              { .nbin= 100, .bins={  -25.,     25.}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-25,25} });
   sh.AddNewFillParams("BiasVoltage",        { .nbin=  61, .bins={  -2.5,   302.5}, .fill=[&v]{ return v.bias_voltage;  }, .axis_title="Bias Voltage (V)"});
   sh.AddNewFillParams("NCluL1",             { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[1];       }, .axis_title="N_{cluster, L1}"});
   sh.AddNewFillParams("NCluL2",             { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[2];       }, .axis_title="N_{cluster, L2}"});
@@ -1020,5 +1022,5 @@ int main(int argc, char* argv[]) {
   f_out->Close();
   std::cout<<"Writing plots to file: "<<f_out->GetName()<<" done.\n";
   
-  return 1;
+  return 0;
 }

@@ -371,6 +371,15 @@ namespace scans {
     case 346511: return 43;
     case 346512: return 43;
 
+      // 2022
+      // Scan 1 - june 2022 mini scan
+      // http://cmsonline.cern.ch/cms-elog/1142142
+    case 352903: return 44;
+    case 352906: return 44;
+    case 352907: return 44;
+    case 352908: return 44;
+    case 352909: return 44;
+
     default:
       return -1;
     }
@@ -1098,6 +1107,15 @@ namespace scans {
     case 346510: return   6;
     case 346511: return   9;
     case 346512: return   0;
+
+      // 2022
+      // Scan 1 - june 2022 mini scan
+      // http://cmsonline.cern.ch/cms-elog/1142142
+    case 352903: return   3.5;
+    case 352906: return   6.5;
+    case 352907: return   9.5;
+    case 352908: return   -2.5; //the elog states 22.5 ns, some configuration tricks were used to achieve a -2.5 ns delay
+    case 352909: return   0.5;
 
       /*
     case 2: 
