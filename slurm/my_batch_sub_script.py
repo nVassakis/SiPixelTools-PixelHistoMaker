@@ -259,6 +259,8 @@ elif opt.resubmit:
                 TASKNAME = fields[1]
             elif fields[0] == "Output dir":
                 OUT_PATH = fields[1]
+    os.chdir(EXEC_PATH) 
+    EXEC_PATH = os.getcwd()
 
     os.system("ls "+OUT_PATH+"/"+TASKNAME+" | grep .root >> output")
     os.system("cat output | sort -u | sed 's;_; ;g;s;\.; ;g' | awk '{ printf \"%d\\n\", $(NF-1) }' > jobnums")
@@ -296,7 +298,7 @@ elif opt.hadd:
 
     os.chdir(EXEC_PATH) 
     EXEC_PATH = os.getcwd()
-    nfile_pj = 10
+    nfile_pj = 35
     if opt.step_2:
         merged_dir = "/merged"
         merg = "merged | grep "  
@@ -308,13 +310,15 @@ elif opt.hadd:
         merged_dir = ""   
     if njobs > 10:
         os.system("ls -l "+OUT_PATH+"/"+TASKNAME+merged_dir+" | grep "+merg+".root | awk '{ print \"/\" $9}' | sed \"s:^:"+OUT_PATH+"/"+TASKNAME+merged_dir+":\" | sed \"s:/pnfs/psi.ch/cms/trivcat/:root\://cms-xrd-global.cern.ch//:\" > filelists/tmp")
-    for i in range(int(njobs/nfile_pj)):
+    else:
+        os.system("ls -l "+OUT_PATH+"/"+TASKNAME+merged_dir+" | grep "+merg+".root | awk '{ print \"/\" $9}' | sed \"s:^:"+OUT_PATH+"/"+TASKNAME+merged_dir+":\" | sed \"s:/pnfs/psi.ch/cms/trivcat/:root\://cms-xrd-global.cern.ch//:\" > filelists/tmp")
+    for i in range(int(njobs/nfile_pj) if int(njobs/nfile_pj) >= 1 else 1):
         os.system("tail -n "+str(nfile_pj)+" filelists/tmp > filelists/merging_"+str(i))
         os.system("head -n -"+str(nfile_pj)+" filelists/tmp > tmptmp")
         os.system("mv tmptmp filelists/tmp")
     os.system("rm filelists/tmp")
 
-    os.system("ls -l filelists | grep merging | awk '{ print $NF }' > filelists/merging_job_list.txt")
+    os.system("ls -l filelists | grep merging | grep -v merging_job_list.txt | awk '{ print $NF }' > filelists/merging_job_list.txt")
                                            #$1              $2      $3      $4     $5       $6
     #sbatch jobname .out .log slurm.sh jobname(redundant) job_ID filelist outdir program --hadd
     os.system("cat -n filelists/merging_job_list.txt | awk '{ printf \"%.4d %s\\n\", $1, $2 }' | awk '{ print \"sbatch --job-name="+TASKNAME+"_MERGING_\"$1\" -o /work/%u/test/.slurm/%x_%A_\"$1\".out -e /work/%u/test/.slurm/%x_%A_\"$1\".err slurm_jobscript.sh "+TASKNAME+"_JOBMERGING\"$1\" \"$1\" "+EXEC_PATH+"/filelists/\"$2\" "+OUT_PATH+"/"+TASKNAME+merged_dir+" "+PROG+" --hadd\"}' > merging_alljobs.sh")
