@@ -188,6 +188,7 @@ public:
   bool effcut_dz;
   bool effcut_d0_dz;
   bool effcut_scans;
+  bool effcut_scans_loose;
   bool effcut_startup;
   bool effcut_ly_fid;
   bool effcut_lx_fid;
@@ -831,6 +832,7 @@ public:
     effcut_dz= 0;
     effcut_d0_dz= 0;
     effcut_scans= 0;
+    effcut_scans_loose= 0;
     effcut_ly_fid= 0;
     effcut_lx_fid= 0;
     effcut_lxly_fid= 0;
@@ -1924,6 +1926,7 @@ public:
     effcut_dz          =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 &&       pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_d0_dz       =       cut_nvtx && cut_federr && hp && pt && nstrip &&             pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_scans       =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 && dz && pixhit           && goodmod            && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
+    effcut_scans_loose =                   cut_federr && hp && pt &&  nstrip &&                                goodmod            && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut; // looser cuts to track selection to be used in case there are missing points in the timing scan as a cross check
     effcut_startup     =       cut_nvtx && cut_federr && hp && pt && nstrip_vloose && d0_vloose && dz_vloose && pixhit &&            lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_raw         =       cut_nvtx &&               hp && pt && nstrip && d0 && dz && pixhit && noscan && goodmod &&            lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_lx_fid      =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 && dz && pixhit && noscan && goodmod && goodroc &&           ly_fid && valmis && hitsep && trk_beta_cut;
