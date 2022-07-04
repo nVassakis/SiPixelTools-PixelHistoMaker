@@ -532,7 +532,7 @@ int main(int argc, char* argv[]) {
   std::vector<double> ymins = {sz1, ch1, osz1, osx1, osz1, och1, onc1, mpv1, 0.6, 0.0, 0.6};
   std::vector<double> ymaxs = {sz2, ch2, osz2, osx2, osz2, och2, onc2, mpv2, 1.05, 1.0, 1.05};
 
-  for (std::string scan : {"Delay"}){,"ContrlReg","VcThrShift","ViBias"}) {
+  for (std::string scan : {"Delay","ContrlReg","VcThrShift","ViBias"}) {
     for (size_t i=0, n=plots.size(); i<n; ++i) if (i>=2 || CLUST_LOOP>0) {
       std::string plot = plots[i];
       double ymin = ymins[i];
