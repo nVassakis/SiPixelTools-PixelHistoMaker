@@ -380,6 +380,36 @@ namespace scans {
     case 352908: return 44;
     case 352909: return 44;
 
+    case 352931: return 44;
+
+      // 2022
+      // Scan 2 - July 2022 full scan
+      // http://cmsonline.cern.ch/cms-elog/1145828
+    case 355103: return 45;
+    case 355104: return 45;
+    case 355105: return 45;
+    case 355106: return 45;
+    case 355107: return 45;
+    case 355108: return 45;
+    case 355109: return 45;
+    case 355110: return 45;
+    case 355111: return 45;
+    case 355112: return 45;
+    case 355113: return 45;
+    case 355114: return 45;
+    case 355117: return 45;
+    case 355118: return 45;
+    case 355119: return 45;
+    case 355120: return 45;
+    case 355121: return 45;
+    case 355122: return 45;
+    case 355123: return 45;
+    case 355124: return 45;
+    case 355127: return 45;
+    case 355128: return 45;
+    case 355129: return 45;
+
+
     default:
       return -1;
     }
@@ -1116,6 +1146,33 @@ namespace scans {
     case 352907: return   9.5;
     case 352908: return   -2.5; //the elog states 22.5 ns, some configuration tricks were used to achieve a -2.5 ns delay
     case 352909: return   0.5;
+
+      // 2022
+      // Scan 2 - July 2022 full scan
+      // http://cmsonline.cern.ch/cms-elog/1145828
+    case 355103: return   0;
+    case 355104: return   -2;
+    case 355105: return   -5;
+    case 355106: return   -9;
+    case 355107: return   -13;
+    case 355108: return   2;
+    case 355109: return   5;
+    case 355110: return   9;
+    case 355111: return   13;
+    case 355112: return   -1;
+    case 355113: return   1;
+    case 355114: return   -3;
+    case 355117: return   -3;
+    case 355118: return   3;
+    case 355119: return   4;
+    case 355120: return   -7;
+    case 355121: return   6;
+    case 355122: return   7;
+    case 355123: return   -11;
+    case 355124: return   11;
+    case 355127: return   -15;
+    case 355128: return   -17;
+    case 355129: return   -19;
 
       /*
     case 2: 
