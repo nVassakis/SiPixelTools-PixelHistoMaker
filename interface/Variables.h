@@ -1667,7 +1667,7 @@ public:
        : DSK==3
        &&  t.trk.validbpix[0]>0 && t.trk.validfpix[0]>0 && t.trk.validfpix[1]>0);// L1 + D1 + D2
 #endif
-    bool val_pixhit = (t.trk.validpixhit[0]+t.trk.validpixhit[1])>=4;
+    bool val_pixhit = (t.trk.validpixhit[0]+t.trk.validpixhit[1])==4;
     
     bool alpha = std::abs(3.1416/2 - std::abs(t.alpha))<0.2;
     bool beta  = std::abs(3.1416/2 - std::abs(t.beta))>=0.35 && std::abs(3.1416/2 - std::abs(t.beta))<0.55;
@@ -1925,7 +1925,7 @@ public:
     effcut_d0          =       cut_nvtx && cut_federr && hp && pt && nstrip &&       dz && pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_dz          =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 &&       pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_d0_dz       =       cut_nvtx && cut_federr && hp && pt && nstrip &&             pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
-    effcut_scans       =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 && dz /*&& pixhit*/       && goodmod            && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
+    effcut_scans       =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 && dz && pixhit           && goodmod            && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_scans_loose =                   cut_federr && hp && pt && nstrip &&                                goodmod             && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut; // looser cuts to track selection to be used in case there are missing points in the timing scan as a cross check
     effcut_startup     =       cut_nvtx && cut_federr && hp && pt && nstrip_vloose && d0_vloose && dz_vloose && pixhit &&            lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_raw         =       cut_nvtx &&               hp && pt && nstrip && d0 && dz && pixhit && noscan && goodmod &&            lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
