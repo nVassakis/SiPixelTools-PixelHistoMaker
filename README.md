@@ -109,4 +109,12 @@ so make sure to have eos mounted or access them from lxplus
 The list of Bad ROCs is contained in the `input/Badroc_List.root` file. This file is updated when the PhaseIPixelHistoMaker script is run on new Runs, to make this update faster the script can be run with the `-b` option before doing a complete analysis. 
 Relevant places in the code concerning this topic are:
 * [interface/TreeLooper.h](https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker/blob/638a1cd9f52cf5783ffb61f6697c390d34558df5/interface/TreeLooper.h#L512): Check if the efficiency of the ROC is above threshold, if old list is not found or equal or more statistics is available make a new bad ROC list.
-* [interface/Variables.h](https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker/blob/638a1cd9f52cf5783ffb61f6697c390d34558df5/interface/Variables.h#L1083): The bad ROC list is uploaded and ROCs are marked as good or bad, a cut for the efficiency to exclude bad ROCs is also produced [`goodroc`](https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker/blob/638a1cd9f52cf5783ffb61f6697c390d34558df5/interface/Variables.h#L1796).
+* [interface/Variables.h](https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker/blob/638a1cd9f52cf5783ffb61f6697c390d34558df5/interface/Variables.h#L1083): The bad ROC list is uploaded and ROCs are marked as good or bad, a cut for the efficiency to exclude bad ROCs is also produced [`goodroc`](https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker/blob/638a1cd9f52cf5783ffb61f6697c390d34558df5/interface/Variables.h#L1796)
+
+## Luminosity information
+To produce performance plots input files contining luminosity informations can be found in the `input` directory. To produce and update this files the following commands (properly changed for the specific needs) can be used:
+```
+brilcalc lumi --byls -u /nb --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_BRIL.json --begin "01/01/22 00:00:00" --end "12/31/25 23:59:59" |& tee brilcalc_Run3.log
+
+cat brilcalc_Run3.log | head -n-8 | tail -n+5 | sed "s;|;;g;s;:; ;g" | awk '{ print $1" "$3" "$(NF-3)" "$(NF-1) }' > run_ls_intlumi_pileup_phase1_Run3.txt
+```
