@@ -2417,5 +2417,5 @@ int main(int argc, char* argv[]) {
   f_out->Close();
   std::cout<<"Writing plots to file: "<<f_out->GetName()<<" done.\n";
   
-  return 1;
+  return 0;
 }
