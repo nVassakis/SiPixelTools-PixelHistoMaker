@@ -907,7 +907,8 @@ public:
     // Phase 1
     tot_intlumi_invnb = 0;
     //input = fopen ("input/run_ls_instlumi_pileup_2017.txt","r");
-    input = fopen ("input/run_ls_instlumi_pileup_phase1.txt","r");
+    //input = fopen ("input/run_ls_instlumi_pileup_phase1.txt","r");
+    input = fopen ("input/run_ls_intlumi_pileup_phase1_Run3.txt","r");
     a = 1;
     while (a==1) {
       a = fscanf (input, "%d", &run);
@@ -1667,7 +1668,7 @@ public:
        : DSK==3
        &&  t.trk.validbpix[0]>0 && t.trk.validfpix[0]>0 && t.trk.validfpix[1]>0);// L1 + D1 + D2
 #endif
-    bool val_pixhit = (t.trk.validpixhit[0]+t.trk.validpixhit[1])==4;
+    bool val_pixhit = (t.trk.validpixhit[0]+t.trk.validpixhit[1])>=4;
     
     bool alpha = std::abs(3.1416/2 - std::abs(t.alpha))<0.2;
     bool beta  = std::abs(3.1416/2 - std::abs(t.beta))>=0.35 && std::abs(3.1416/2 - std::abs(t.beta))<0.55;

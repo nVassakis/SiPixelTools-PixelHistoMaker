@@ -1173,7 +1173,7 @@ int main(int argc, char* argv[]) {
     if (debug) std::cout<<"Phase1PixelHistoMaker - normal cluster plots ok"<<std::endl;
 
     // Time evolution plots (Data)
-    std::vector<std::string> time_types = {"InstLumi", "LowInstLumi", "Pileup", "NCluL24", "LowNCluL24", "IntLumi2017", "IntLumi2017Fine", "IntLumi2018", "Months", "Weeks", "Days"/*, "Runs"*/ };
+    std::vector<std::string> time_types = {"InstLumi", "LowInstLumi", "Pileup", "NCluL24", "LowNCluL24", "IntLumi2017", "IntLumi2017Fine", "IntLumi2018", "IntLumi", "Months", "Weeks", "Days"/*, "Runs"*/ };
     //std::vector<std::string> plot_pfs   = {"LayersDisks", "DisksRings", "AllDisks", "BPixFPix"};
     std::vector<std::string> plot_pfs   = {"Layers", "Disks", "Rings", "DisksRings", "Ring1Disks", "Ring2Disks", "AllDisks", "BPixFPix"};
     std::vector<double> xmins = {  0, 0, 0, 0,  0,  0, 0, 0, 0, 0, 0 };
@@ -1198,7 +1198,7 @@ int main(int argc, char* argv[]) {
 	}
 	// Layers/Disks
 	// All Clusters
-	if (time_types[i]=="IntLumi2017"||time_types[i]=="IntLumi2017Fine"||time_types[i]=="IntLumi2018") {
+	if (time_types[i]=="IntLumi2017"||time_types[i]=="IntLumi2017Fine"||time_types[i]=="IntLumi2018"||time_types[i]=="IntLumi") {
 	  // IntLumi
 	  sh.AddHistos("clust", { .fill=std::string("AvgCluCharge_vs_")+time,       .pfs={plot_pf},  .cuts=AllCluCuts, .draw="PE1", .opt=opts+prelim, .ranges={xmin,xmax,  20, 80, 0.55+x1,0.91} });
 	  sh.AddHistos("clust", { .fill=std::string("CluChargeMPV_vs_")+time,       .pfs={plot_pf},  .cuts=AllCluCuts, .draw="PE1", .opt=opts+prelim, .ranges={xmin,xmax,   0, 60, 0.50+x1,0.80} });
