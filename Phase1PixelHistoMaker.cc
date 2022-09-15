@@ -1188,7 +1188,7 @@ int main(int argc, char* argv[]) {
     // Time evolution plots (Data)
     std::vector<std::string> time_types = {"InstLumi", "LowInstLumi", "Pileup", "NCluL24", "LowNCluL24", "IntLumi2017", "IntLumi2017Fine", "IntLumi2018", "IntLumi", "IntLumiRunIII", "Months", "Weeks", "Days"/*, "Runs"*/ };
     //std::vector<std::string> plot_pfs   = {"LayersDisks", "DisksRings", "AllDisks", "BPixFPix"};
-    std::vector<std::string> plot_pfs   = {"Layers", "Disks", "Rings", "DisksRings", "Ring1Disks", "Ring2Disks", "AllDisks", "BPixFPix", "IntLumiRunIII"};
+    std::vector<std::string> plot_pfs   = {"Layers", "Disks", "Rings", "DisksRings", "Ring1Disks", "Ring2Disks", "AllDisks", "BPixFPix"};
     std::vector<double> xmins = {  0, 0, 0, 0,  0,  0, 0, 0, 0, 0, 0 };
     std::vector<double> xmaxs = {  0, 0, 0, 0,  0,  0, 0, 0, 0, 0, 0 };
     for (size_t i=0, n=time_types.size(); i<n; ++i) {
