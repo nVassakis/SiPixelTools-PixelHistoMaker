@@ -90,8 +90,8 @@ private:
       } else if (f_end!=std::string::npos) {
         std::vector<std::string> part1;
         for (auto& dbl : str_to_vec_dbl_(sub.substr(0,f_end))) {
-	  std::stringstream ss2; ss2<<dbl;
-	  part1.push_back(ss2.str());
+	        std::stringstream ss2; ss2<<dbl;
+	        part1.push_back(ss2.str());
         }
         v_parts.push_back(part1);
         std::vector<std::string> part2;
@@ -995,62 +995,62 @@ public:
       set_histo_options_(h1d_0p_);
     } else {
       for (size_t i=0; i<pfs_[0].vec.size(); ++i) {
-	if (npf_==1) {
-	  if (binsx.size()==2) h1d_1p_.push_back(new TH1D((name+"_"+pfs_[0].vec[i]).c_str(), title.c_str(), nbinsx, binsx[0], binsx[1]));
-	  else h1d_1p_.push_back(new TH1D((name+"_"+pfs_[0].vec[i]).c_str(), title.c_str(), nbinsx, xbins));
-	  set_histo_options_(h1d_1p_[i]);
-	} else {
-	  if (npf_==2) h1d_2p_.push_back(std::vector<TH1D*>());
-	  else if (npf_==3) h1d_3p_.push_back(std::vector<std::vector<TH1D*> > ());
-          else if (npf_==4) h1d_4p_.push_back(std::vector<std::vector<std::vector<TH1D*> > >());
-	  else if (npf_==5) h1d_5p_.push_back(std::vector<std::vector<std::vector<std::vector<TH1D*> > > >());
-	  for (size_t j=0; j<pfs_[1].vec.size(); ++j) {
-	    if (npf_==2) {
-	      if (binsx.size()==2) h1d_2p_[i].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]).c_str(),
-								 title.c_str(), nbinsx, binsx[0], binsx[1]));
-	      else h1d_2p_[i].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]).c_str(),
-								 title.c_str(), nbinsx, xbins));
-	      set_histo_options_(h1d_2p_[i][j]);
-	    } else {
-	      if (npf_==3) h1d_3p_[i].push_back(std::vector<TH1D*>());
-	      else if (npf_==4) h1d_4p_[i].push_back(std::vector<std::vector<TH1D*> >());
-	      else if (npf_==5) h1d_5p_[i].push_back(std::vector<std::vector<std::vector<TH1D*> > >());
-	      for (size_t k=0; k<pfs_[2].vec.size(); ++k) {
-		if (npf_==3) {
-		  if (binsx.size()==2) h1d_3p_[i][j].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]).c_str(),
-									title.c_str(), nbinsx, binsx[0], binsx[1]));
-		  else h1d_3p_[i][j].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]).c_str(),
-									title.c_str(), nbinsx, xbins));
-		  set_histo_options_(h1d_3p_[i][j][k]);
-		} else {
-		  if (npf_==4) h1d_4p_[i][j].push_back(std::vector<TH1D*>());
-		  else if (npf_==5) h1d_5p_[i][j].push_back(std::vector<std::vector<TH1D*> >());
-		  for (size_t l=0; l<pfs_[3].vec.size(); ++l) {
-		    if (npf_==4) {
-		      if (binsx.size()==2) h1d_4p_[i][j][k].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]+"_"+pfs_[3].vec[l]).c_str(),
-									       title.c_str(), nbinsx, binsx[0], binsx[1]));
-		      else h1d_4p_[i][j][k].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]+"_"+pfs_[3].vec[l]).c_str(),
-									       title.c_str(), nbinsx, xbins));
-		      set_histo_options_(h1d_4p_[i][j][k][l]);
-		    } else {
-		      if (npf_==5) h1d_5p_[i][j][k].push_back(std::vector<TH1D*>());
-		      for (size_t m=0; m<pfs_[4].vec.size(); ++m) {
-			if (npf_==5) {
-                          //if (debug) std::cout<<"Adding["<<i<<"]["<<j<<"]["<<k<<"]["<<l<<"]["<<m<<"] TH1D("<<(name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]+"_"+pfs_[3].vec[l]+"_"+pfs_[4].vec[m])<<", "<<title<<", "<<nbinsx<<", "<<binsx[0]<<", "<<binsx[1]<<")"<<std::endl;
-			  if (binsx.size()==2) h1d_5p_[i][j][k][l].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]+"_"+pfs_[3].vec[l]+"_"+pfs_[4].vec[m]).c_str(),
-										      title.c_str(), nbinsx, binsx[0], binsx[1]));
-			  else h1d_5p_[i][j][k][l].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]+"_"+pfs_[3].vec[l]+"_"+pfs_[4].vec[m]).c_str(),
-										      title.c_str(), nbinsx, xbins));
-			  set_histo_options_(h1d_5p_[i][j][k][l][m]);
-			}
-		      }
-		    }
-		  }
-		}
+	      if (npf_==1) {
+	        if (binsx.size()==2) h1d_1p_.push_back(new TH1D((name+"_"+pfs_[0].vec[i]).c_str(), title.c_str(), nbinsx, binsx[0], binsx[1]));
+	        else h1d_1p_.push_back(new TH1D((name+"_"+pfs_[0].vec[i]).c_str(), title.c_str(), nbinsx, xbins));
+	        set_histo_options_(h1d_1p_[i]);
+	      } else {
+	        if (npf_==2) h1d_2p_.push_back(std::vector<TH1D*>());
+	        else if (npf_==3) h1d_3p_.push_back(std::vector<std::vector<TH1D*> > ());
+                else if (npf_==4) h1d_4p_.push_back(std::vector<std::vector<std::vector<TH1D*> > >());
+	        else if (npf_==5) h1d_5p_.push_back(std::vector<std::vector<std::vector<std::vector<TH1D*> > > >());
+	        for (size_t j=0; j<pfs_[1].vec.size(); ++j) {
+	          if (npf_==2) {
+	            if (binsx.size()==2) h1d_2p_[i].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]).c_str(),
+	      							 title.c_str(), nbinsx, binsx[0], binsx[1]));
+	            else h1d_2p_[i].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]).c_str(),
+	      							 title.c_str(), nbinsx, xbins));
+	            set_histo_options_(h1d_2p_[i][j]);
+	          } else {
+	            if (npf_==3) h1d_3p_[i].push_back(std::vector<TH1D*>());
+	            else if (npf_==4) h1d_4p_[i].push_back(std::vector<std::vector<TH1D*> >());
+	            else if (npf_==5) h1d_5p_[i].push_back(std::vector<std::vector<std::vector<TH1D*> > >());
+	            for (size_t k=0; k<pfs_[2].vec.size(); ++k) {
+	      	if (npf_==3) {
+	      	  if (binsx.size()==2) h1d_3p_[i][j].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]).c_str(),
+	      								title.c_str(), nbinsx, binsx[0], binsx[1]));
+	      	  else h1d_3p_[i][j].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]).c_str(),
+	      								title.c_str(), nbinsx, xbins));
+	      	  set_histo_options_(h1d_3p_[i][j][k]);
+	      	} else {
+	      	  if (npf_==4) h1d_4p_[i][j].push_back(std::vector<TH1D*>());
+	      	  else if (npf_==5) h1d_5p_[i][j].push_back(std::vector<std::vector<TH1D*> >());
+	      	  for (size_t l=0; l<pfs_[3].vec.size(); ++l) {
+	      	    if (npf_==4) {
+	      	      if (binsx.size()==2) h1d_4p_[i][j][k].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]+"_"+pfs_[3].vec[l]).c_str(),
+	      								       title.c_str(), nbinsx, binsx[0], binsx[1]));
+	      	      else h1d_4p_[i][j][k].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]+"_"+pfs_[3].vec[l]).c_str(),
+	      								       title.c_str(), nbinsx, xbins));
+	      	      set_histo_options_(h1d_4p_[i][j][k][l]);
+	      	    } else {
+	      	      if (npf_==5) h1d_5p_[i][j][k].push_back(std::vector<TH1D*>());
+	      	      for (size_t m=0; m<pfs_[4].vec.size(); ++m) {
+	      		if (npf_==5) {
+                                //if (debug) std::cout<<"Adding["<<i<<"]["<<j<<"]["<<k<<"]["<<l<<"]["<<m<<"] TH1D("<<(name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]+"_"+pfs_[3].vec[l]+"_"+pfs_[4].vec[m])<<", "<<title<<", "<<nbinsx<<", "<<binsx[0]<<", "<<binsx[1]<<")"<<std::endl;
+	      		  if (binsx.size()==2) h1d_5p_[i][j][k][l].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]+"_"+pfs_[3].vec[l]+"_"+pfs_[4].vec[m]).c_str(),
+	      									      title.c_str(), nbinsx, binsx[0], binsx[1]));
+	      		  else h1d_5p_[i][j][k][l].push_back(new TH1D((name+"_"+pfs_[0].vec[i]+"_"+pfs_[1].vec[j]+"_"+pfs_[2].vec[k]+"_"+pfs_[3].vec[l]+"_"+pfs_[4].vec[m]).c_str(),
+	      									      title.c_str(), nbinsx, xbins));
+	      		  set_histo_options_(h1d_5p_[i][j][k][l][m]);
+	      		}
+	      	      }
+	      	    }
+	      	  }
+	      	}
+	            }
+	          }
+	        }
 	      }
-	    }
-	  }
-	}
       }
     }
   }  

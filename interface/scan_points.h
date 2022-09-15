@@ -1159,8 +1159,8 @@ namespace scans {
     case 355109: return   5;
     case 355110: return   9;
     case 355111: return   13;
-    case 355112: return   -1;
-    case 355113: return   1;
+    case 355112: return   -1.;
+    case 355113: return   1.;
     case 355114: return   -3;
     case 355117: return   -3;
     case 355118: return   3;
