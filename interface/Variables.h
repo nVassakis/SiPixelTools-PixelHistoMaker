@@ -546,11 +546,11 @@ public:
 
     if (e.evt!=lastevt) {
       if (lastevt==0||e.run!=lastrun) {
-	l1rate = -1;
-	ncoll_per_trig = -1;
+	      l1rate = -1;
+	      ncoll_per_trig = -1;
       } else {
-	l1rate = (e.evt - lastevt)/((e.orb - lastorb + (e.bx - lastbx)/3564.0)*0.089482); // (kHz) orbit time: l_lhc (26.658883) / c (299792.458) = 0.089482 ms
-	ncoll_per_trig = instlumi * xsec_mb / l1rate;
+	      l1rate = (e.evt - lastevt)/((e.orb - lastorb + (e.bx - lastbx)/3564.0)*0.089482); // (kHz) orbit time: l_lhc (26.658883) / c (299792.458) = 0.089482 ms
+	      ncoll_per_trig = instlumi * xsec_mb / l1rate;
       }
       if (l1rate<0) l1rate = 0;
       //std::cout<<e.run<<" "<<e.ls<<" "<<e.evt<<" "<<lastevt<<" "<<e.orb<<" "<<lastorb<<" "<<l1rate<<std::endl;
@@ -1790,8 +1790,10 @@ public:
 	!(BmI && BLD== 5 && PNL==2 && RNG==1 && m.roc< 8) &&
 	!(BpI && BLD== 9 && PNL==1 && RNG==2 && m.roc< 8) &&
 	!(BpI && BLD==11 && PNL==1 && RNG==1 && m.roc==2) );
+
+    bool goodmod_RunIII_phase1 = 1;
     
-    goodmod = (e.run==1) ? 1 : e.run<238474 ? goodmod_RunI : e.run<285000 ? goodmod_RunII_phase0 : goodmod_RunII_phase1;
+    goodmod = (e.run==1) ? 1 : e.run<238474 ? goodmod_RunI : e.run<285000 ? goodmod_RunII_phase0 : e.run<355095 ? goodmod_RunII_phase1 : goodmod_RunIII_phase1;
     
     // Good roc selecton
     goodroc = (e.run==1) ? 1: goodroc_list[p1_rocid][p2_rocid][p3_rocid];
