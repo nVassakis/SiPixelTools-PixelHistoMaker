@@ -24,7 +24,7 @@
   8 :   Redo 2018 Timing Scan (Oz's attempt)    (2021 Oct 5)
 
 */
-
+//
 // Set on which trees you want to run on
 // For now, only select 1, set others to 0
 #define EVT_LOOP 1
@@ -358,10 +358,12 @@ int main(int argc, char* argv[]) {
   //sh.AddNewFillParams("Delay",              { .nbin=  45, .bins={  -8.25,  14.25}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-8,14} });
   //sh.AddNewFillParams("Delay",              { .nbin=  81, .bins={  -20.25,  20.25}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-10,10} });
   //sh.AddNewFillParams("Delay",              { .nbin=  91, .bins={  -25.25,  20.25}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-15,10} });
-  sh.AddNewFillParams("Delay",              { .nbin=  101, .bins={  -25.25,  25.25}, .fill=[&v]{ 
-						if (v.delay!=1.0) return v.delay;
-						else if (v.layer==1||v.layer==2) return 0.5f;
-						else return 1.5f; }, .axis_title="Time Delay (ns)", .def_range={-25,25} });
+  sh.AddNewFillParams("Delay",              { .nbin=  101, .bins={  -25.25,  25.25}, .fill=[&v]{ return v.delay; }, .axis_title="Time Delay (ns)", .def_range={-25,25} });
+  // commented by Tiziano to try to fix point at 1 ns delay showing up at 0.5
+  ////sh.AddNewFillParams("Delay",              { .nbin=  101, .bins={  -25.25,  25.25}, .fill=[&v]{ 
+	////					if (v.delay!=1.0) return v.delay;
+	////					else if (v.layer==1||v.layer==2) return 0.5f;
+	////					else return 1.5f; }, .axis_title="Time Delay (ns)", .def_range={-25,25} });
   //sh.AddNewFillParams("Delay",              { .nbin= 100, .bins={  -25.,     25.}, .fill=[&v]{ return v.delay;         }, .axis_title="Time Delay (ns)", .def_range={-25,25} });
   sh.AddNewFillParams("BiasVoltage",        { .nbin=  61, .bins={  -2.5,   302.5}, .fill=[&v]{ return v.bias_voltage;  }, .axis_title="Bias Voltage (V)"});
   sh.AddNewFillParams("NCluL1",             { .nbin=1000, .bins={  -0.5, 10000.5}, .fill=[&e]{ return e.nclu[1];       }, .axis_title="N_{cluster, L1}"});
