@@ -907,8 +907,8 @@ public:
     // Phase 1
     tot_intlumi_invnb = 0;
     //input = fopen ("input/run_ls_instlumi_pileup_2017.txt","r");
-    //input = fopen ("input/run_ls_instlumi_pileup_phase1.txt","r");
-    input = fopen ("input/run_ls_intlumi_pileup_phase1_Run3.txt","r");
+    input = fopen ("input/run_ls_instlumi_pileup_phase1.txt","r");
+    //input = fopen ("input/run_ls_intlumi_pileup_phase1_Run3.txt","r");
     a = 1;
     while (a==1) {
       a = fscanf (input, "%d", &run);
@@ -1791,7 +1791,51 @@ public:
 	!(BpI && BLD== 9 && PNL==1 && RNG==2 && m.roc< 8) &&
 	!(BpI && BLD==11 && PNL==1 && RNG==1 && m.roc==2) );
 
-    bool goodmod_RunIII_phase1 = 1;
+    bool goodmod_RunIII_phase1 = m.det==0 ? 
+      ( LYR==2 ?
+	!(BmI && LDR== 1 && MOD==4 && m.roc< 8) &&
+	!(BmI && LDR== 3 && MOD==3 && m.roc< 8) &&
+	!(BmI && LDR== 4 && MOD==1 && m.roc>=8) &&
+	!(BmI && LDR== 7 && MOD==1) &&
+	!(BmI && LDR== 7 && MOD==2 && m.roc< 8) &&
+	!(BmO && LDR== 2 && MOD==1) &&
+	!(BmO && LDR== 9 && MOD==2 && m.roc< 8) &&
+	!(BpI && LDR== 2 && MOD==2 && m.roc>=8) &&
+	!(BpI && LDR==14 && MOD==1 && m.roc>=8) &&
+	!(BpI && LDR==14 && MOD==2 && m.roc< 8) &&
+	!(BpI && SEC==5) &&
+	!(BpO && LDR==  1 && MOD==1) :
+	LYR==3 ?
+	!(BmI && LDR==18 && MOD==2) &&
+	!(BmI && LDR==20 && MOD==2) &&
+	!(BpI && LDR== 9 && MOD==2) &&
+	!(BpI && LDR==19 && MOD==4 && m.roc< 8) &&
+	!(BpO && LDR== 3 && MOD==2 && m.roc>=8) :
+	LYR==4 &&
+	!(BmI && LDR== 2 && MOD==2) &&
+	!(BmI && LDR== 6 && MOD==4 && m.roc< 8) &&
+	!(BmI && LDR==10 && MOD==2) &&
+	!(BmI && LDR==24 && MOD==1 && m.roc< 8) &&
+	!(BmI && LDR==19 && MOD==3 && (m.roc<4||m.roc>=12)) &&
+	!(BpI && LDR==10 && MOD==3) &&
+	!(BpI && LDR==14 && MOD==2 && m.roc< 8) &&
+	!(BpI && LDR==32 && MOD==2) &&
+	!(BpO && LDR==32 && MOD==2 && m.roc>=8) &&
+	!(BpO && LDR==18 && MOD==2 && m.roc>=8) ) :
+      ( DSK==1 ? 	
+	!(BpI && BLD==11 && PNL==1 && RNG==1 && m.roc==2) &&
+	!(BpO && BLD==10 && PNL==1 && RNG==1) &&
+	!(BpO && BLD==13 && PNL==1 && RNG==2 && m.roc< 8) &&
+	!(BpI && BLD==11 && PNL==1 && RNG==1 && m.roc==2) :
+	DSK==2 ? 
+	!(BmI && BLD== 1 && PNL==1 && RNG==1 && m.roc>=8) &&
+	!(BmI && BLD== 6 && PNL==1 && RNG==2 && m.roc>=8) &&
+	!(BpI && BLD== 1 && PNL==2 && RNG==1 && m.roc< 8) &&
+	!(BpI && BLD==11 && PNL==1 && RNG==1 && m.roc==2) :
+	DSK==3 &&
+	!(BmI && BLD== 5 && PNL==2 && RNG==1 && m.roc< 8) &&
+	!(BpI && BLD== 9 && PNL==1 && RNG==2 && m.roc< 8) &&
+	!(BpI && BLD==11 && PNL==1 && RNG==1 && m.roc==2) );
     
     goodmod = (e.run==1) ? 1 : e.run<238474 ? goodmod_RunI : e.run<285000 ? goodmod_RunII_phase0 : e.run<355095 ? goodmod_RunII_phase1 : goodmod_RunIII_phase1;
     
