@@ -371,7 +371,7 @@ class TreeLooper {
     if (succ!=-1) {
       if (debug) { std::cout<<"successful read ok\n"; }
       sh->Fill("traj");
-      if (var_->effcut_allmod) {
+      if (var_->effcut_badroc) {
 	int validhit = (tr_->traj().missing==1 ? tr_->traj().d_cl>=0 && tr_->traj().d_cl<DCL_MISSING : 1);
 	++run_rocid_validhit_[tr_->traj_evt().run][var_->rocid][validhit];
       }

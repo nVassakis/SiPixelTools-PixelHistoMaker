@@ -162,6 +162,7 @@ public:
   bool goodmod;
   bool goodmod_scans;
   bool goodroc;
+  bool goodroc_scan;
   // Module/ROC Fiducial Region Selections
   bool lx_fid;
   bool ly_fid;
@@ -178,6 +179,7 @@ public:
   // Merged Cuts
   bool effcut_all;
   bool effcut_allmod;
+  bool effcut_badroc;
   bool effcut_trig;
   bool effcut_nvtx;
   bool effcut_federr;
@@ -269,12 +271,14 @@ public:
   bool is_fpix;
   bool is_fpix_inner;
   bool is_fpix_outer;
+  unsigned int fpix_roc_radius; //0 - bpix, 1 - innermost, 8 - outermost
   
   // Variables
   int layers_disks;
   int layers_disks_phase1;
   int layers_disks_inout;
   int disks_inout;
+  int fpix_roc_inout;
   int side;
   int layer;
   int ladder;
@@ -308,6 +312,9 @@ public:
   size_t pf_outer;
   size_t pf_ring_rog;
   size_t pf_new_modules;
+  size_t pf_fpix_roc_inout;
+  size_t pf_bpix_l1_new_2018;
+  size_t pf_l1_hv_scanned;
   
   // ************ Event variables  **********
   // Cuts
@@ -372,6 +379,8 @@ public:
   int pf_delay;
   int pf_voltage;
   int pf_hv_scan;
+  int pf_hv_scan_year;
+  int badroc_runnumber;
   
  private:
   
@@ -577,6 +586,17 @@ public:
     is_fpix_inner = m.det && (m.blade>0);
     is_fpix_outer = m.det && (m.blade<0);
     is_l1 = m.layer==1;
+    if (is_fpix) {
+      if (m.roc==0 || m.roc==15) fpix_roc_radius = 8;
+      else if (m.roc==1 || m.roc==14) fpix_roc_radius = 7;
+      else if (m.roc==2 || m.roc==13) fpix_roc_radius = 6;
+      else if (m.roc==3 || m.roc==12) fpix_roc_radius = 5;
+      else if (m.roc==4 || m.roc==11) fpix_roc_radius = 4;
+      else if (m.roc==5 || m.roc==10) fpix_roc_radius = 3;
+      else if (m.roc==6 || m.roc==9) fpix_roc_radius = 2;
+      else if (m.roc==7 || m.roc==8) fpix_roc_radius = 1;
+    }
+    else fpix_roc_radius = 0;
     
     //_____________________________________
     //              Variables
@@ -584,17 +604,38 @@ public:
     layers_disks_phase1 = (m.det==0) ? m.layer :  7 + m.disk + (m.disk<0);
     layers_disks_inout = (m.det==0) ? m.layer :  3 + abs(m.disk)*2 - ((m.panel+m.module)<4);
     disks_inout = (m.det==0) ? (size_t)-1 :  abs(m.disk)*2 - ((m.panel+m.module)<4);
+    fpix_roc_inout= (m.det==0) ? (size_t)-1 : fpix_roc_radius;
     side    = m.side;
     layer   = (m.det==1) ? NOVAL_I : m.layer;
     ladder  = m.ladder;
     module  = m.module;
+    pf_l1_hv_scanned = (size_t)-1;
+    /*
+    if (layer==1) {
+      if (ladder==-1 && module==-1) pf_l1_hv_scanned = 0; //BPix_BmO_SEC2_LYR1_LDR1_MOD1
+      if (ladder==-2 && module==-3) pf_l1_hv_scanned = 1; //BPix_BmO_SEC2_LYR1_LDR2_MOD3
+      if (ladder==-2 && module==-4) pf_l1_hv_scanned = 2; //BPix_BmO_SEC2_LYR1_LDR2_MOD4
+    }
+    */
+    if (layer==1) {
+      if (ladder==-5 && module==-1) pf_l1_hv_scanned = 0; //BPix_BmO_SEC2_LYR1_LDR5_MOD1
+      if (ladder==-5 && module==-2) pf_l1_hv_scanned = 1; //BPix_BmO_SEC2_LYR1_LDR5_MOD2
+      if (ladder==-6 && module==-4) pf_l1_hv_scanned = 2; //BPix_BmO_SEC2_LYR1_LDR6_MOD4
+    }
+    pf_bpix_l1_new_2018  = m.rawid == 303054876||
+                      m.rawid == 303063068||
+                      m.rawid == 303054864||
+                      m.rawid == 303054856||
+                      m.rawid == 303063056||
+                      m.rawid == 303071248 ? 1 : 0;
     // Timing and HV Scans
     pf_delay_scan = scans::delay_scan_no(e.run, e.ls);
     delay = scans::delay(e.run, e.ls, e.orb);
     pf_hv_scan = scans::hv_scan_no(e.run);
-    bias_voltage = scans::bias_voltage(pf_hv_scan, e.run, e.ls, e.orb, m.det, m.layer, abs(m.disk));
-    is_one_hv_group_scan = scans::is_one_hv_group_scan(pf_hv_scan, bias_voltage, m.det, m.layer, m.ladder, m.module, m.disk, m.blade, m.panel);
-    is_full_hv_scan = scans::is_full_hv_scan(pf_hv_scan);
+    pf_hv_scan_year = (pf_hv_scan>=42) ? pf_hv_scan-42 : (pf_hv_scan>=29) ? pf_hv_scan-29 : (pf_hv_scan>=23) ? pf_hv_scan-23 : (pf_hv_scan>=19) ? pf_hv_scan-19 : (pf_hv_scan>=17) ? pf_hv_scan-17 : pf_hv_scan; 
+    bias_voltage = scans::bias_voltage(pf_hv_scan, e.run, e.ls, e.orb, m.det, m.layer, abs(m.disk), pf_bpix_l1_new_2018);
+    is_one_hv_group_scan = scans::is_one_hv_group_scan(pf_hv_scan, bias_voltage, m.det, m.layer, m.ladder, m.module, m.disk, m.blade, m.panel, m.ring);
+    is_full_hv_scan = scans::is_full_hv_scan(pf_hv_scan, sector, pf_shell);
     pf_delay = (delay>=10&&delay<=30&&(int(delay))%2==0) ? (int(delay) -10)/2 : -1;
     pf_voltage = bias_voltage < 20 ? bias_voltage / 5 : 2 + bias_voltage / 10;
     // Sector
@@ -812,6 +853,7 @@ public:
     noscan = 0;
     goodmod = 0;
     goodroc = 0;
+    goodroc_scan = 0;
     lx_fid = 0;
     ly_fid = 0;
     valmis = 0;
@@ -1185,14 +1227,15 @@ public:
     // else if (r!=1) { lumi_totlumi = 0; }
     
     // Load new ROC selection
+    badroc_runnumber = scans::hv_scan_badroc_runnumber(lumi.run); //use specific predefined run for bad roc selection instead of the "current" run
 #ifndef EXPRESS
     if (lumi.run<238474) { 
       // Run I
-      if (lumi_fill!=lumi_lastfill_) load_roc_sel_(lumi_fill, lumi.run, 1);
+      if (lumi_fill!=lumi_lastfill_) (badroc_runnumber) ? load_roc_sel_(lumi_fill, badroc_runnumber, 1) : load_roc_sel_(lumi_fill, lumi.run, 1);
       if (lumi_fill==-1) std::cout<<"run not defined as any fill: "<<run_corr<<std::endl;
     } else {
       // New Simplified run dependent Bad ROC list
-      load_roc_sel_(lumi_fill, lumi.run, 2);
+      (badroc_runnumber) ? load_roc_sel_(lumi_fill, badroc_runnumber, 2) : load_roc_sel_(lumi_fill, lumi.run, 2);
     }
     lumi_lastfill_ = lumi_fill;
 #endif
@@ -1264,14 +1307,15 @@ public:
       //  #endif
 
       // Load new ROC selection
+    badroc_runnumber = scans::hv_scan_badroc_runnumber(e.run); //use specific predefined run for bad roc selection instead of the "current" run
 #ifndef EXPRESS
       if (e.run<238474) { 
 	// Run I
-	if (lumi_fill!=lumi_lastfill_) load_roc_sel_(lumi_fill, e.run, 1);
+	if (lumi_fill!=lumi_lastfill_) (badroc_runnumber) ? load_roc_sel_(lumi_fill, badroc_runnumber, 1) : load_roc_sel_(lumi_fill, e.run, 1);
 	if (lumi_fill==-1) std::cout<<"run not defined as any fill: "<<e.run<<std::endl;
       } else {
 	// New Simplified run dependent Bad ROC list
-	load_roc_sel_(0, e.run, 2);
+	(badroc_runnumber) ? load_roc_sel_(lumi_fill, badroc_runnumber, 2) : load_roc_sel_(0, e.run, 2);
       }
       lumi_lastfill_ = lumi_fill;
 #endif
@@ -1417,7 +1461,7 @@ public:
       run_bin = 0;
       if ((run_index.count(e.run))) run_bin = run_index[e.run];
 #ifdef EXPRESS
-      load_roc_sel_(0, e.run, 2);
+      (badroc_runnumber) ? load_roc_sel_(lumi_fill, badroc_runnumber, 2) : load_roc_sel_(0, e.run, 2);
 #endif
     }
     evt_lastrun_ = e.run;
@@ -1677,7 +1721,7 @@ public:
     //                                 Bad Module/ROC Exclusions
     
     // Exclude Modules affected by Timing and HV Scans
-    bool excl_hv = (pf_hv_scan == -1);
+    bool excl_hv = (bias_voltage == NOVAL_I);
     bool excl_delay = ( pf_delay_scan == -1 ||
 			(e.run==272762 && delay==24 ) ||
 			(e.run<238474 && delay==13) || 
@@ -1795,6 +1839,7 @@ public:
     
     // Good roc selecton
     goodroc = (e.run==1) ? 1: goodroc_list[p1_rocid][p2_rocid][p3_rocid];
+    goodroc_scan = (badroc_runnumber==-1) ? 1: goodroc_list[p1_rocid][p2_rocid][p3_rocid];
     
     //__________________________________________________________________________________________
     //                          Module/ROC Fiducial Region Selections:
@@ -1914,10 +1959,11 @@ public:
     // noscan - can stay, but Good-LS JSON takes care of this, needto update for fresh data if modules fail
     // goodmod - should update in Run II, remove repaired modules, add new failing modules (but ReReco will take care of this)
     // goodroc - have to analyse fill efficiencies to remove SEU-s, until the SEU-s are dealt with during tracking
-    
+
     //                   zb,   nvtx,       federr,       hp,   pt,   nstrip,   d0,   dz,   pixhit,   noscan,   goodmod,   goodroc,   lx_fid,   ly_fid,   valmis,   hitsep
     effcut_all         =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 && dz && pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_allmod      =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 && dz && pixhit                                 && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
+    effcut_badroc      =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 && dz && pixhit && noscan                       && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_trig        =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 && dz && pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_nvtx        =                   cut_federr && hp && pt && nstrip && d0 && dz && pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_federr      =       cut_nvtx &&               hp && pt && nstrip && d0 && dz && pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
@@ -1926,7 +1972,7 @@ public:
     effcut_d0          =       cut_nvtx && cut_federr && hp && pt && nstrip &&       dz && pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_dz          =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 &&       pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_d0_dz       =       cut_nvtx && cut_federr && hp && pt && nstrip &&             pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
-    effcut_scans       =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 && dz && pixhit           && goodmod            && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
+    effcut_scans       =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 && dz && pixhit           && goodmod && goodroc_scan && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_scans_loose =                   cut_federr && hp && pt && nstrip &&                                goodmod             && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut; // looser cuts to track selection to be used in case there are missing points in the timing scan as a cross check
     effcut_startup     =       cut_nvtx && cut_federr && hp && pt && nstrip_vloose && d0_vloose && dz_vloose && pixhit &&            lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_raw         =       cut_nvtx &&               hp && pt && nstrip && d0 && dz && pixhit && noscan && goodmod &&            lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
