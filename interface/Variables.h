@@ -907,8 +907,8 @@ public:
     // Phase 1
     tot_intlumi_invnb = 0;
     //input = fopen ("input/run_ls_instlumi_pileup_2017.txt","r");
-    input = fopen ("input/run_ls_instlumi_pileup_phase1.txt","r");
-    //input = fopen ("input/run_ls_intlumi_pileup_phase1_Run3.txt","r");
+    //input = fopen ("input/run_ls_instlumi_pileup_phase1.txt","r");
+    input = fopen ("input/run_ls_intlumi_pileup_phase1_Run3.txt","r");
     a = 1;
     while (a==1) {
       a = fscanf (input, "%d", &run);
