@@ -45,6 +45,7 @@ if [[ ${USERDIR} == /pnfs/* ]]; then
       gfal-mkdir -p root://t3dcachedb.psi.ch:1094/$USERDIR
       gfal-mkdir -p root://t3dcachedb.psi.ch:1094/$USERDIR/logs
       gfal-mkdir -p root://t3dcachedb.psi.ch:1094/$USERDIR/merged
+      gfal-mkdir -p root://t3dcachedb.psi.ch:1094/$USERDIR/badrocs
       sleep 5
     )
 else
@@ -100,6 +101,7 @@ echo "                               Starting JOB ["$2"]"
 echo
 if [[ $6 != --hadd ]]; then
     echo ./$5 -o PHM_PHASE1_out/$output $3 
+    ./$5 -o PHM_PHASE1_out/badcomponentsrun.root -b `cat $3`
     ./$5 -o PHM_PHASE1_out/$output `cat $3`
 else
     output="merged_histos_"$2".root"
@@ -124,6 +126,7 @@ echo
 if [[ ${USERDIR} == /pnfs/* ]]; then
     if [[ $6 != --hadd ]]; then
         xrdcp -f -N PHM_PHASE1_out/$output root://t3dcachedb.psi.ch:1094//$USERDIR/$output
+        xrdcp -f -N input/Badroc_List.root root://t3dcachedb.psi.ch:1094//$USERDIR/badrocs/Badroc_List_${2}.root
     else
         xrdcp -f -N PHM_PHASE1_out/$output root://t3dcachedb.psi.ch:1094//$USERDIR/merged/$output
     fi

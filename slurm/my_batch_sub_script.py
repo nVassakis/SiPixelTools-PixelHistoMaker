@@ -2,7 +2,7 @@
 # Script to submit Phase1PixelHistoMaker jobs to slurm, tested on PSI tier3 
 # The script that is run in the jobs require a consistent amount of memory, a small number of input files per job is suggested
 
-import re, os, sys, glob, time, logging, multiprocessing, socket, subprocess, shlex, getpass, math, shutil, ROOT
+import re, os, sys, glob, time, logging, multiprocessing, socket, subprocess, shlex, getpass, math, shutil, math
 from optparse import OptionParser
 
 # ---------------------- A few helping functions  ----------------------
@@ -20,10 +20,10 @@ def KILL(log):
     raise RuntimeError('\n '+colored_text('@@@ FATAL', ['1','91'])+' -- '+log+'\n')
 
 def WARNING(log):
-    print '\n '+colored_text('@@@ WARNING', ['1','93'])+' -- '+log+'\n'
+    print ('\n '+colored_text('@@@ WARNING', ['1','93'])+' -- '+log+'\n')
 
 def MKDIRP(dirpath, verbose=False, dry_run=False):
-    if verbose: print '\033[1m'+'>'+'\033[0m'+' os.mkdirs("'+dirpath+'")'
+    if verbose: print ('\033[1m'+'>'+'\033[0m'+' os.mkdirs("'+dirpath+'")')
     if dry_run: return
     try:
       os.makedirs(dirpath)
@@ -33,7 +33,7 @@ def MKDIRP(dirpath, verbose=False, dry_run=False):
     return
 
 def EXE(cmd, suspend=True, verbose=False, dry_run=False):
-    if verbose: print '\033[1m'+'>'+'\033[0m'+' '+cmd
+    if verbose: print ('\033[1m'+'>'+'\033[0m'+' '+cmd)
     if dry_run: return
 
     _exitcode = os.system(cmd)
@@ -44,17 +44,29 @@ def EXE(cmd, suspend=True, verbose=False, dry_run=False):
 
     return _exitcode
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-#- USAGE: --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-#- python my_batch_sub_script.py --taskname [taskname] --input [txt file with list of input files] --nfile [number of files per job] --prog [program to execute] --outdir [directory to save output to] --create -#
-#- python my_batch_sub_script.py --taskname [taskname] --status --------------------------------------------------------------------------------------------------------------------------------------------------#
-#- python my_batch_sub_script.py --taskname [taskname] --submit --------------------------------------------------------------------------------------------------------------------------------------------------#
-#- python my_batch_sub_script.py --taskname [taskname] --resubmit ------------------------------------------------------------------------------------------------------------------------------------------------#
-#- python my_batch_sub_script.py --taskname [taskname] --missing -------------------------------------------------------------------------------------------------------------------------------------------------#
-#- python my_batch_sub_script.py --taskname [taskname] --hadd ----------------------------------------------------------------------------------------------------------------------------------------------------#
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+color_dict = {
+    "cyan": '\033[96m',
+    "green": '\033[92m',
+    "red": '\033[91m',
+    "yellow": '\33[33m',
+    "blue": '\33[34m',
+    "white": '\033[37m',
+    "bold": '\033[01m',
+    "end": '\033[0m'    
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#- USAGE: ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#- python3 my_batch_sub_script.py --taskname [taskname] --input [txt file with list of input files] --nfile [number of files per job] --prog [program to execute] --outdir [directory to save output to] --create -#
+#- python3 my_batch_sub_script.py --taskname [taskname] --status --------------------------------------------------------------------------------------------------------------------------------------------------#
+#- python3 my_batch_sub_script.py --taskname [taskname] --submit --------------------------------------------------------------------------------------------------------------------------------------------------#
+#- python3 my_batch_sub_script.py --taskname [taskname] --resubmit ------------------------------------------------------------------------------------------------------------------------------------------------#
+#- python3 my_batch_sub_script.py --taskname [taskname] --missing -------------------------------------------------------------------------------------------------------------------------------------------------#
+#- python3 my_batch_sub_script.py --taskname [taskname] --hadd ----------------------------------------------------------------------------------------------------------------------------------------------------#
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 # Read options from command line
 usage = "Usage: python %prog filelists [options]"
@@ -70,8 +82,11 @@ parser.add_option("--status",      dest="status",      action="store_true", defa
 parser.add_option("--missing",     dest="missing",     action="store_true", default=False, help="look for missing jobs")
 parser.add_option("--hadd",        dest="hadd",        action="store_true", default=False, help="Submit hadding job")
 parser.add_option("--step_two",    dest="step_2",      action="store_true", default=False, help="Option to merge merged outputs")
+parser.add_option("--step_three",  dest="step_3",      action="store_true", default=False, help="Option to merge merged merged outputs")
 parser.add_option("--debug",       dest="debug",       action="store_true", default=False, help="Debug verbosity and skip removing of some intermediate files")
 parser.add_option("--outdir",      dest="OUTDIR",      type="string",       default="/pnfs/psi.ch/cms/trivcat/store/user/bevila_t/test2/phys/xpluscharm/pixeltest", help="Output directory (Default: pnfs/.../pxeltest)")
+parser.add_option("--queue",       dest="queue",       type="string",       default="standard", help="slurm queue to submit jobs to, default: standard, if this needs to be changed one should also have a look at the --time option")
+parser.add_option("--time",        dest="time",        type="string",       default="12:00:00", help="slurm job time limit, default: 12:00:00, make sure not to exceed time limit for each partition (for limits ref to https://wiki.chipp.ch/twiki/bin/view/CmsTier3/SlurmUsage) ")
 parser.add_option("--taskname",    dest="TASKNAME",    type="string",       default="HISTO_MAKER_DEFAULT", help="Output directory (Default: HISTO_MAKER_DEFAULT)")
 parser.add_option("--prog",        dest="PROG",        type="string",       default="Phase1PixelHistoMaker", help="The main program to run")
 (opt,args) = parser.parse_args()
@@ -86,15 +101,15 @@ with open('proxy.txt') as proxyfile:
             timeleft = int(lines[0])
 os.remove('proxy.txt')
 if timeleft<172800:
-    print "-"*60
-    print "New proxy needed"
-    print "suggest to use: voms-proxy-init -voms cms -valid 168:00"
-    print "-"*60
+    print ("-"*60)
+    print ("New proxy needed")
+    print ("suggest to use: voms-proxy-init -voms cms -valid 168:00")
+    print ("-"*60)
     raise RuntimeError("PROXY ERROR")
 else:
-    print "-"*60
-    print "Current proxy is long enough"
-    print "-"*60
+    print ("-"*60)
+    print ("Current proxy is long enough")
+    print ("-"*60)
 
 # ----------------------  Settings -----------------------
 # Some further (usually) fixed settings, should edit them in this file
@@ -135,10 +150,10 @@ if opt.create:
     # Create filelist dir and filelists files to divide input files to jobs
     with open(opt.input) as fl:
         files = fl.readlines()
-        njobs = len(files)/opt.NFILE
+        njobs = int(len(files)/opt.NFILE)
         print ("-"*60)
-        print "number of jobs: "+str(njobs)
-        print "total input files: "+str(len(files))
+        print ("number of jobs: "+str(njobs))
+        print ("total input files: "+str(len(files)))
 
         # Summary file 
         os.system("echo \"Number of files per job: "+str(opt.NFILE)+"\" >> "+EXEC_PATH+"/summary.txt" )
@@ -147,31 +162,38 @@ if opt.create:
         os.system("echo \"Program to run: "+opt.PROG+"\" >> "+EXEC_PATH+"/summary.txt")
 
         for i, filename in enumerate(files):
+            #idx = (int((i/(float(len(files))/100)) // 1) if (len(files) > 2) else 100)
             idx = int(i/opt.NFILE)
             ash = int(100.0/(njobs)*idx)
-            space = int(100.0/(njobs)*(njobs-idx))
-            print "preparing file lists ["+"#"*ash+" "*space+"]"+"  \r",
-            sys.stdout.flush()
-            EXE("echo "+filename[:-1]+" | awk '{ print $1 }' >> filelists/filelist_"+str(idx)+".txt")
-        print "\nprepared "+str(njobs)+" temporary filelists at: "
-        print os.getcwd()+"/filelists"
+            print ("preparing file lists "+color_dict["cyan"]+"|"+"#"*ash+" "*(99-ash)+"|"+color_dict["end"], end="\r")
+            EXE("echo "+filename[:-1]+" | awk '{ print $1 }' >> filelists/filelist_"+f'{idx:04}'+".txt")
+        print ("\nprepared "+str(njobs)+" temporary filelists at: ")
+        print (os.getcwd()+"/filelists")
+
+    #change queue and execution time if needed
+    if opt.queue != "standard":
+        os.system("sed \"s;\#SBATCH --partition=standard;\#SBATCH --partition="+opt.queue+";g\" slurm_jobscript.sh > tmp")
+        os.system("mv tmp slurm_jobscript.sh")
+    if opt.time != "12:00:00":
+        os.system("sed -E \"s;\#SBATCH --time=([0-9]+):00:00;\#SBATCH --time="+opt.time+";g\" "+EXEC_PATH+"/slurm_jobscript.sh > tmp")
+        os.system("mv tmp slurm_jobscript.sh")
     
     # Prepare submission script with "sbatch [job name] [out-log] [out-err] slurm_jobscript.sh [stringa inutile] [job_label] [input_files_list] [output dir] [executable_name]  
     print ("")
-    print "Job Script file: "+opt.job_template
+    print ("Job Script file: "+opt.job_template)
     os.system("ls -l filelists | awk '{ print $NF }' | tail -n +2 | head -n -1 > filelists/job_list.txt")
     os.system("cat -n filelists/job_list.txt | awk '{ printf \"%.4d %s\\n\", $1, $2 }' | awk '{ print \"sbatch --job-name="+opt.TASKNAME+"_\"$1\" -o /work/%u/test/.slurm/%x_%A_\"$1\".out -e /work/%u/test/.slurm/%x_%A_\"$1\".err slurm_jobscript.sh "+opt.TASKNAME+"_JOB\"$1\" \"$1\" "+EXEC_PATH+"/filelists/\"$2\" "+OUT_PATH+"/"+opt.TASKNAME+" "+opt.PROG+"\"}' > alljobs.sh")
     os.system("head -1 alljobs.sh | sed \"s;0001;test;g;\" > test.sh")
     print 
-    print "jobs prepared at:", os.getcwd() 
-    print "as: alljobs.sh" 
-    print "or test 1 job with: test.sh"
+    print ("jobs prepared at:", os.getcwd() )
+    print ("as: alljobs.sh" )
+    print ("or test 1 job with: test.sh")
     print ("-"*60)
 
     print ("-"*60)
 
     # Option to submit jobs right away
-    answ = raw_input("Do you want to directly submit the jobs to slurm (all jobs or 1 test job)? (y/n/test) \n")
+    answ = input("Do you want to directly submit the jobs to slurm (all jobs or 1 test job)? (y/n/test) \n")
     if str(answ) == "y":
         os.system("wc -l alljobs.sh | awk '{print \"submitting \"$1\" jobs from \"$2\" ...\"}'")
         EXE("sh alljobs.sh")   
@@ -185,7 +207,7 @@ elif opt.submit:
     os.chdir(EXEC_PATH) 
     EXEC_PATH = os.getcwd()
     print ("-"*60)
-    answ = raw_input("Do you want to directly submit the jobs to slurm (all jobs or 1 test job)? (y/n/test) \n")
+    answ = input("Do you want to directly submit the jobs to slurm (all jobs or 1 test job)? (y/n/test) \n")
     if str(answ) == "y":
         os.system("wc -l alljobs.sh | awk '{print \"submitting \"$1\" jobs from \"$2\" ...\"}'")
         EXE("sh alljobs.sh")   
@@ -262,6 +284,13 @@ elif opt.resubmit:
     os.chdir(EXEC_PATH) 
     EXEC_PATH = os.getcwd()
 
+    if opt.queue != "standard":
+        os.system("sed \"s;\#SBATCH --partition=standard;\#SBATCH --partition="+opt.queue+";g\" slurm_jobscript.sh > tmp")
+        os.system("mv tmp slurm_jobscript.sh")
+    if opt.time != "12:00:00":
+        os.system("sed -E \"s;\#SBATCH --time=([0-9]+):00:00;\#SBATCH --time="+opt.time+";g\" "+EXEC_PATH+"/slurm_jobscript.sh > tmp")
+        os.system("mv tmp slurm_jobscript.sh")
+
     os.system("ls "+OUT_PATH+"/"+TASKNAME+" | grep .root >> output")
     os.system("cat output | sort -u | sed 's;_; ;g;s;\.; ;g' | awk '{ printf \"%d\\n\", $(NF-1) }' > jobnums")
     os.system("seq 1 "+str(njobs)+" > Seq")
@@ -273,11 +302,11 @@ elif opt.resubmit:
         for i,job in enumerate(files):
             if job == '': break
             idx = int(i/(float(len(files))/100))
-            print "preparing resubmission jobs list ["+"#"*idx+" "*(100-idx)+"]"+"  \r",
-            sys.stdout.flush()
+            print ("preparing resubmission jobs list ["+"#"*idx+" "*(100-idx)+"]"+"  \r",
+            sys.stdout.flush())
             os.system("grep "+job+" "+EXEC_PATH+"/alljobs.sh >> "+EXEC_PATH+"/resubmit.sh")
     os.system("rm Seq jobnums output resubmit")
-    print"\nDone: resubmit.sh file created at "+EXEC_PATH+"/resubmit.sh"
+    print("\nDone: resubmit.sh file created at "+EXEC_PATH+"/resubmit.sh")
     print ("-"*60) 
 
 # Submit hadd job for files in the output directory
@@ -298,24 +327,37 @@ elif opt.hadd:
 
     os.chdir(EXEC_PATH) 
     EXEC_PATH = os.getcwd()
-    nfile_pj = 35
+    nfile_pj = 11
+    if opt.NFILE != 1:
+        nfile_pj = opt.NFILE
     if opt.step_2:
         merged_dir = "/merged"
-        merg = "merged | grep "  
-        os.system("rm filelists/merging* ")
-        njobs = int(njobs/10)
-        nfile_pj = 5
+        merg = "merged | grep "
+        import subprocess as sp  
+        if int(sp.getoutput('ls -l filelists | grep merging | wc -l')) > 0: 
+            print("removing old filelists")
+            os.system("rm filelists/merging* ")
+        njobs = int(sp.getoutput('ls -l '+OUT_PATH+'/'+TASKNAME+merged_dir+' | grep .root | wc -l'))
+    elif opt.step_3:
+        merged_dir = "/merged/merged"
+        merg = "merged | grep "
+        import subprocess as sp  
+        if int(sp.getoutput('ls -l filelists | grep merging | wc -l')) > 0: 
+            print("removing old filelists")
+            os.system("rm filelists/merging* ")
+        njobs = int(sp.getoutput('ls -l '+OUT_PATH+'/'+TASKNAME+merged_dir+' | grep .root | wc -l'))
     else:
         merg = ""  
         merged_dir = ""   
     if njobs > 10:
-        os.system("ls -l "+OUT_PATH+"/"+TASKNAME+merged_dir+" | grep "+merg+".root | awk '{ print \"/\" $9}' | sed \"s:^:"+OUT_PATH+"/"+TASKNAME+merged_dir+":\" | sed \"s:/pnfs/psi.ch/cms/trivcat/:root\://cms-xrd-global.cern.ch//:\" > filelists/tmp")
+        os.system("ls -l "+OUT_PATH+"/"+TASKNAME+merged_dir+" | grep "+merg+".root | awk '{ print \"/\" $9}' | sed \"s:^:"+OUT_PATH+"/"+TASKNAME+merged_dir+":\" | sed \"s:/pnfs/psi.ch/cms/trivcat/:root\://t3se01.psi.ch//:\" > filelists/tmp")
     else:
-        os.system("ls -l "+OUT_PATH+"/"+TASKNAME+merged_dir+" | grep "+merg+".root | awk '{ print \"/\" $9}' | sed \"s:^:"+OUT_PATH+"/"+TASKNAME+merged_dir+":\" | sed \"s:/pnfs/psi.ch/cms/trivcat/:root\://cms-xrd-global.cern.ch//:\" > filelists/tmp")
-    for i in range(int(njobs/nfile_pj) if int(njobs/nfile_pj) >= 1 else 1):
+        os.system("ls -l "+OUT_PATH+"/"+TASKNAME+merged_dir+" | grep "+merg+".root | awk '{ print \"/\" $9}' | sed \"s:^:"+OUT_PATH+"/"+TASKNAME+merged_dir+":\" | sed \"s:/pnfs/psi.ch/cms/trivcat/:root\://t3se01.psi.ch//:\" > filelists/tmp")
+    for i in range(int(math.ceil(float(njobs)/float(nfile_pj))) if math.ceil(njobs/nfile_pj) >= 1 else 1):
         os.system("tail -n "+str(nfile_pj)+" filelists/tmp > filelists/merging_"+str(i))
         os.system("head -n -"+str(nfile_pj)+" filelists/tmp > tmptmp")
         os.system("mv tmptmp filelists/tmp")
+    
     os.system("rm filelists/tmp")
 
     os.system("ls -l filelists | grep merging | grep -v merging_job_list.txt | awk '{ print $NF }' > filelists/merging_job_list.txt")
@@ -323,8 +365,15 @@ elif opt.hadd:
     #sbatch jobname .out .log slurm.sh jobname(redundant) job_ID filelist outdir program --hadd
     os.system("cat -n filelists/merging_job_list.txt | awk '{ printf \"%.4d %s\\n\", $1, $2 }' | awk '{ print \"sbatch --job-name="+TASKNAME+"_MERGING_\"$1\" -o /work/%u/test/.slurm/%x_%A_\"$1\".out -e /work/%u/test/.slurm/%x_%A_\"$1\".err slurm_jobscript.sh "+TASKNAME+"_JOBMERGING\"$1\" \"$1\" "+EXEC_PATH+"/filelists/\"$2\" "+OUT_PATH+"/"+TASKNAME+merged_dir+" "+PROG+" --hadd\"}' > merging_alljobs.sh")
     os.system("head -1 merging_alljobs.sh | sed \"s;0001;test;g;\" > merging_test.sh")
+
+    if opt.queue != "standard":
+        os.system("sed \"s;\#SBATCH --partition=standard;\#SBATCH --partition="+opt.queue+";g\" slurm_jobscript.sh > tmp")
+        os.system("mv tmp slurm_jobscript.sh")
+    if opt.time != "12:00:00":
+        os.system("sed -E \"s;\#SBATCH --time=([0-9]+):00:00;\#SBATCH --time="+opt.time+";g\" "+EXEC_PATH+"/slurm_jobscript.sh > tmp")
+        os.system("mv tmp slurm_jobscript.sh")
     
-    answ = raw_input("Do you want to directly submit the jobs to slurm (all jobs or 1 test job)? (y/n/test) \n")
+    answ = input("Do you want to directly submit the jobs to slurm (all jobs or 1 test job)? (y/n/test) \n")
     if str(answ) == "y":
         os.system("wc -l merging_alljobs.sh | awk '{print \"submitting \"$1\" jobs from \"$2\" ...\"}'")
         EXE("sh merging_alljobs.sh")   
