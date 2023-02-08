@@ -44,7 +44,7 @@
 
 #define PU_REWEIGHT_MC 0 // Using [0,60] flat distribution, reweight to Fill 6677
 #define MAX_PU 60
-
+//
 // TimingStudy versions
 #define VER 9
 #if VER == -2 // v2928 backported
@@ -525,7 +525,7 @@ int main(int argc, char* argv[]) {
   //const char* main12 = "VersionCompare";
   const char* main12 = "ALCARECOTight";
   //const char* main12 = "ALCARECO";
-
+  
   // Define histo parameters and filling variable
   // X/Y/Z - axis parameters:
   sh.AddNewFillParams("NVertices",        { .nbin=MAX_PU, .bins={    0, MAX_PU}, .fill=[&e]{ return e.nvtx; }, .axis_title="N_{Vertices}"});
@@ -769,8 +769,8 @@ int main(int argc, char* argv[]) {
 
   // Define Cuts here:
   sh.AddNewCut("Nvtx",                [&v]{ return v.cut_nvtx;             });
-  sh.AddNewCut("ZeroBias",            [&v]{ return v.cut_zb;               });
-  //sh.AddNewCut("ZeroBias",            [&v]{ return 1;                      });
+  //sh.AddNewCut("ZeroBias",            [&v]{ return v.cut_zb;               });
+  sh.AddNewCut("ZeroBias",            [&v]{ return 1;                      });
   sh.AddNewCut("Random",              [&e]{ return (e.trig>>2)&1;          });
   sh.AddNewCut("EffCuts",             [&v]{ return v.effcut_all;           });
   sh.AddNewCut("EffCutsAllROC",       [&v]{ return v.effcut_allmod;        });

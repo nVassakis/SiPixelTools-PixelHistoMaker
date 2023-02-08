@@ -1792,7 +1792,8 @@ public:
 	!(BpI && BLD==11 && PNL==1 && RNG==1 && m.roc==2) );
 
     bool goodmod_RunIII_phase1 = m.det==0 ? 
-      ( LYR==2 ?
+      ( LYR==1 ? 1 :
+  LYR==2 ?
 	!(BmI && LDR== 1 && MOD==4 && m.roc< 8) &&
 	!(BmI && LDR== 3 && MOD==3 && m.roc< 8) &&
 	!(BmI && LDR== 4 && MOD==1 && m.roc>=8) &&
@@ -1993,7 +1994,7 @@ public:
     dcol_effcut_allmod =       cut_nvtx && val_pixhit && hp && pt_dcol && d0_dcol && dz_dcol &&                                      alpha && beta && dcol_clu_cuts;
 
 #if DATASTRUCT_VER >= 108
-    new_effcut_presel = cut_nvtx && cut_federr && hp &&                                     pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis;
+    new_effcut_presel = cut_nvtx && cut_federr && hp &&                                     pixhit && noscan &&/* goodmod &&*/ goodroc && lx_fid && ly_fid && valmis;
     new_effcut_all    = new_effcut_presel && pt_new && nstrip && d0_new && dz_new && t.trk.muon_id_tight>0 && t.trk.muon_iso_pf>0 && hitsep_new;
     new_effcut_pt     = new_effcut_presel &&           nstrip && d0_new && dz_new && t.trk.muon_id_tight>0 && t.trk.muon_iso_pf>0 && hitsep_new;
     new_effcut_nstrip = new_effcut_presel && pt_new &&           d0_new && dz_new && t.trk.muon_id_tight>0 && t.trk.muon_iso_pf>0 && hitsep_new;
