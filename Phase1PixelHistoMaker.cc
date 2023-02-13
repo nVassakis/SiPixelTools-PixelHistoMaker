@@ -1535,9 +1535,9 @@ int main(int argc, char* argv[]) {
 #if DATASTRUCT_VER >= 108
     // PLOTS for Marton, added by Tiziano 31-01-23
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_LayersDisks",   .pfs={"DcolScan"},                  .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Ladders",       .pfs={"DcolScan"},                  .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Modules",       .pfs={"DcolScan"},                  .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Ladders_vs_Modules",   .pfs={"DcolScan"},           .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Ladders",       .pfs={"Layers","DcolScan"},         .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Modules",       .pfs={"Layers","DcolScan"},         .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Ladders_vs_Modules",   .pfs={"Layers","DcolScan"},  .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
     // New Efficiency N-1 plots
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkNStrip",     .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoNStrip"},     .draw="PE1",  .opt="",     .ranges={0,30,  0.7,1, 0.4,0.4} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkNStrip",     .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoNStrip"},     .draw="PE1",  .opt="TwoCol43",     .ranges={0,30,  0.7,1, 0.4,0.4} });
