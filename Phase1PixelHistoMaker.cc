@@ -1007,7 +1007,6 @@ int main(int argc, char* argv[]) {
     //__________________________________________________________________________________
     //                           New Hit Efficiency Plots
     
-    sh.SetHistoWeights({});
 #if DATASTRUCT_VER >= 108
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_LayersDisks", .pfs={},       .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_LayersDisks", .pfs={main12}, .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
