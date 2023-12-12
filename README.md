@@ -31,6 +31,42 @@ Also, edit this file Phase1ScanHistoMaker.cc
 
 You might want to modify the "DelayScans" or "HVBiasScans" postfix to set a proper name for you scan
 
+### HVBiasScan
+Ntuplize the scan data with https://github.com/CMSTrackerDPG/SiPixelTools-PhaseIPixelNtuplizer
+Download elog output  (e.g.:  ```minihvscan_20230716-110535.txt``` from http://cmsonline.cern.ch/cms-elog/1191016 )
+Format output txt
+  ```cat minihvscan_20230716-110535.txt grep timestamp >HVscan.txt```
+  Delete all commas (search & replace in your favourite editor)
+Problems during data taking
+  If there were problems during taking the data, there could be scan points in the txt which were started twice but finished only once. You have to edit by hand to get rid of these anomalies.
+Use AWK to get scan point information
+  command.awk -> choose desired Layer/Disk:  ```whichDet=1 #Layers [1..4], Disks [5..7]```
+  ```awk -f command.awk HVscan.txt >Lay1.h```
+  ---better to double-check the results by eye, just to make sure
+  Repeat this for all relevant layers/disks
+Edit interface/scan_points.h
+  number of HV scan: fill new line with run number and give a number to the scan in ```hv_scan_no``` function
+  Copy the output of the awk (e.g. Lay1.h) to function ```hv_l1```
+  Repeat for all relevant detector parts
+  Full/Mini scan: If full scan, put HV scan number to ```is_full_hv_scan``` function. If mini scan then put HV scan number to ```is_one_hv_group_scan``` function
+Edit Phase1ScanHistoMaker.cc
+  Turn on HV scan ```#define HV_Scan     1```
+  Add new scan to HVBiasScans postfix, e.g.:
+  ```sh.AddNewPostfix("HVBiasScans_2023",  [&v]{ return (size_t)v.pf_hv_scan_year; }, "HV[1to10]", "06/04 42fb^{-1};22/04 42fb^{-1};09/05 44.9fb^{-1};18/05 50.2fb^{-1};01/06 53.9fb^{-1};09/06 58.1fb^{-1};05/07 62.6fb^{-1};16/07 73.2fb^{-1};01/09 73.4fb^{-1};26/10 73.4fb^{-1} (HeavyIon)", col12+col12_rainbow+col12);```
+  Increase the number of scans: ```"HV[1to11]"```
+  Add legend information: ```;24/12 999fb^{-1} (example of a new scan)``` (you can calculate delivered luminosity with brilcalc)
+  Updated postfix should look like this
+  ```sh.AddNewPostfix("HVBiasScans_2023",  [&v]{ return (size_t)v.pf_hv_scan_year; }, "HV[1to11]", "06/04 42fb^{-1};22/04 42fb^{-1};09/05 44.9fb^{-1};18/05 50.2fb^{-1};01/06 53.9fb^{-1};09/06 58.1fb^{-1};05/07 62.6fb^{-1};16/07 73.2fb^{-1};01/09 73.4fb^{-1};26/10 73.4fb^{-1} (HeavyIon);24/12 999fb^{-1} (example of a new scan)", col12+col12_rainbow+col12);```
+  If you're starting a new year, you need to create a brand new postfix (e.g. "HVBiasScans_2024") and search & replace all histograms with occurance of previous postfix
+  Also you need to change ```pf_hv_scan_year``` variable in interface/Variables.h to have the proper number propagated to the new postfix (be aware that the hv_scan number coming from scan_points.h is from 0 to X, while the postfix is from 1 to y)
+Run ScanHistoMaker
+```
+make clean; make Phase1ScanHistoMaker
+Phase1ScanHistoMaker -o PHM_out/output.root /foo/bar/input*.root
+```
+Note on badROC exclusion: it is only relevant for the hit efficiency plots, which are the least important plots for HV scans. Even after the badROC exclusion the plots don't change much. If you want to use the badROC exclusion, you have to run it beforehand the Phase1ScanHistoMaker but after you've edited interface/scan_points.h, this way the exclusion will use data from the scan runs, but automatically excluding the scan data. (There's also an option in scan_points.h that you assign a specific run number to the scan run to use as the source of the badROC exclusion, but this is not used anymore)
+
+
 ## Checkout recipe
 ```bash
 cmsrel CMSSW_10_2_16_UL
