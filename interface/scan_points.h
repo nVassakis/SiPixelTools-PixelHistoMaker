@@ -1308,6 +1308,23 @@ namespace scans {
     case 362087: return 53; //2022 Nov 15 - FullScan Layer 1 http://cmsonline.cern.ch/cms-elog/1167096
     case 362617: return 54; //2022 Nov 24 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1169428
     case 362696: return 55; //2022 Nov 26 - FullScan Layer 1 http://cmsonline.cern.ch/cms-elog/1169673
+    case 365775: return 56; //2023 Apr 06 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1177336
+    case 366450: return 57; //2023 Apr 22 - FullScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1179231
+    case 366451: return 57; //2023 Apr 22 - FullScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1179231
+    case 367262: return 58; //2023 May 09 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1181802
+    case 367691: return 59; //2023 May 18 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1183189
+    case 367693: return 59; //2023 May 18 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1183189
+    case 367696: return 59; //2023 May 18 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1183189
+    case 368318: return 60; //2023 Jun 01 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1185055
+    case 368320: return 60; //2023 Jun 01 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1185055
+    case 368636: return 61; //2023 Jun 09 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1186157
+    case 370169: return 62; //2023 Jul 05 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1189385
+    case 370772: return 63; //2023 Jul 16 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1191016
+    case 372597: return 64; //2023 Sep 01 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1194078
+    case 372598: return 64; //2023 Sep 01 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1194078
+    case 372601: return 64; //2023 Sep 01 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1194078
+    case 372602: return 64; //2023 Sep 01 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1194078
+    case 375697: return 65; //2023 Oct 26 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1200756
 
     default: return -1;
     }
@@ -2352,6 +2369,254 @@ namespace scans {
 	    : orbit>= 301114630 && orbit<= 302000022 ? 550
 	    : orbit>= 302320347 && orbit<= 303312565 ? 400
 	      : NOVAL_I;
+	case 365775:
+	  return
+	    orbit>= 11674141 && orbit<= 14429083 ? 225
+	    : orbit>= 14589392 && orbit<= 17324633 ? 250
+	    : orbit>= 17510902 && orbit<= 20196585 ? 275
+	    : orbit>= 20383796 && orbit<= 23092362 ? 300
+	    : orbit>= 23253989 && orbit<= 25982133 ? 325
+	    : orbit>= 26197706 && orbit<= 29103790 ? 350
+	    : orbit>= 29319343 && orbit<= 32255384 ? 375
+	    : orbit>= 32444673 && orbit<= 35145650 ? 425
+	    : orbit>= 35334294 && orbit<= 38017264 ? 450
+	    : orbit>= 38180097 && orbit<= 40924604 ? 475
+	    : orbit>= 41087244 && orbit<= 43808026 ? 500
+	    : orbit>= 44514502 && orbit<= 47198988 ? 10
+	    : orbit>= 47361806 && orbit<= 50091213 ? 25
+	    : orbit>= 50255317 && orbit<= 52961410 ? 50
+	    : orbit>= 53152818 && orbit<= 55865611 ? 75
+	    : orbit>= 56057509 && orbit<= 59001403 ? 100
+	    : orbit>= 59192755 && orbit<= 61877774 ? 125
+	    : orbit>= 62043689 && orbit<= 64774124 ? 150
+	    : orbit>= 64884831 && orbit<= 67653732 ? 175
+	    : orbit>= 67791500 && orbit<= 70538399 ? 200
+	    : orbit>= 70818655 && orbit<= 73668482 ? 400
+	      : NOVAL_I;
+	case 366450:
+	  return
+	    orbit>= 3249843 && orbit<= 6054733 ? 10
+	    : orbit>= 6249344 && orbit<= 9188144 ? 60
+	    : orbit>= 9411787 && orbit<= 12352195 ? 110
+	    : orbit>= 12578698 && orbit<= 15475579 ? 160
+	    : orbit>= 15699624 && orbit<= 18641555 ? 210
+	    : orbit>= 18838421 && orbit<= 21766746 ? 250
+	    : orbit>= 21991073 && orbit<= 24923285 ? 290
+	    : orbit>= 25147852 && orbit<= 28080078 ? 320
+	    : orbit>= 28275810 && orbit<= 31228110 ? 350
+	    : orbit>= 31397341 && orbit<= 34102130 ? 375
+	    : orbit>= 34300328 && orbit<= 37257188 ? 425
+	    : orbit>= 37398520 && orbit<= 40133300 ? 450
+	    : orbit>= 40358690 && orbit<= 43279480 ? 480
+	    : orbit>= 43499524 && orbit<= 46431814 ? 510
+	    : orbit>= 46737562 && orbit<= 49564805 ? 400
+	      : NOVAL_I;
+	case 367262:
+	  return
+	    orbit>= 7099870 && orbit<= 9973319 ? 10
+	    : orbit>= 10169046 && orbit<= 12852101 ? 25
+	    : orbit>= 13040868 && orbit<= 15739671 ? 50
+	    : orbit>= 15959748 && orbit<= 18892548 ? 75
+	    : orbit>= 19083998 && orbit<= 21766757 ? 100
+	    : orbit>= 21931959 && orbit<= 24652329 ? 125
+	    : orbit>= 24817938 && orbit<= 27542550 ? 150
+	    : orbit>= 27734239 && orbit<= 30417342 ? 175
+	    : orbit>= 30608624 && orbit<= 33313703 ? 200
+	    : orbit>= 33505478 && orbit<= 36453885 ? 225
+	    : orbit>= 36587559 && orbit<= 39346964 ? 250
+	    : orbit>= 39511702 && orbit<= 42230281 ? 275
+	    : orbit>= 42366690 && orbit<= 45102527 ? 300
+	    : orbit>= 45240256 && orbit<= 47984863 ? 325
+	    : orbit>= 48176143 && orbit<= 50887425 ? 350
+	    : orbit>= 51050647 && orbit<= 53762229 ? 375
+	    : orbit>= 53954281 && orbit<= 56911774 ? 425
+	    : orbit>= 57075795 && orbit<= 59793547 ? 450
+	    : orbit>= 59929631 && orbit<= 62659588 ? 475
+	    : orbit>= 62878057 && orbit<= 65827762 ? 500
+	    : orbit>= 66128316 && orbit<= 68970973 ? 400
+	      : NOVAL_I;
+	case 367691:
+	  return
+	    orbit>= 38093805 && orbit<= 40915552 ? 10
+	    : orbit>= 41110913 && orbit<= 44047646 ? 25
+	    : orbit>= 44186753 && orbit<= 46929565 ? 50
+	    : orbit>= 47125589 && orbit<= 49838059 ? 75
+	    : orbit>= 50003212 && orbit<= 52705357 ? 100
+	    : orbit>= 52896569 && orbit<= 55580803 ? 125
+	      : NOVAL_I;
+	case 367693:
+	  return
+	    orbit>= 1098110 && orbit<= 3945219 ? 125
+	    : orbit>= 4135366 && orbit<= 6829305 ? 150
+	      : NOVAL_I;
+	case 367696:
+	  return
+	    orbit>= 3506414 && orbit<= 6308118 ? 175
+	    : orbit>= 6506342 && orbit<= 9468137 ? 200
+	    : orbit>= 9637017 && orbit<= 12338491 ? 225
+	    : orbit>= 12533908 && orbit<= 15483844 ? 250
+	    : orbit>= 15653641 && orbit<= 18355679 ? 275
+	    : orbit>= 18555832 && orbit<= 21245305 ? 300
+	    : orbit>= 21385589 && orbit<= 24127787 ? 325
+	    : orbit>= 24298863 && orbit<= 27024565 ? 350
+	    : orbit>= 27136462 && orbit<= 29892124 ? 375
+	    : orbit>= 30062691 && orbit<= 32789318 ? 425
+	    : orbit>= 32929346 && orbit<= 35656656 ? 450
+	    : orbit>= 35826537 && orbit<= 38555859 ? 475
+	    : orbit>= 38755411 && orbit<= 41712687 ? 500
+	    : orbit>= 42025627 && orbit<= 44837160 ? 400
+	      : NOVAL_I;
+	case 368318:
+	  return
+	    orbit>= 38680055 && orbit<= 41436877 ? 10
+	    : orbit>= 41571843 && orbit<= 44311348 ? 25
+	    : orbit>= 44502309 && orbit<= 47205698 ? 50
+	    : orbit>= 47421959 && orbit<= 50347521 ? 75
+	    : orbit>= 50508280 && orbit<= 53224276 ? 100
+	    : orbit>= 53385408 && orbit<= 56124453 ? 125
+	    : orbit>= 56286132 && orbit<= 58997544 ? 150
+	    : orbit>= 59161176 && orbit<= 61882440 ? 175
+	    : orbit>= 62071686 && orbit<= 64759415 ? 200
+	    : orbit>= 64977629 && orbit<= 67907945 ? 225
+	    : orbit>= 68097540 && orbit<= 70786060 ? 250
+	    : orbit>= 70948149 && orbit<= 73673465 ? 275
+	    : orbit>= 73863541 && orbit<= 76551518 ? 300
+	    : orbit>= 76713898 && orbit<= 79436967 ? 325
+	    : orbit>= 79601241 && orbit<= 82331790 ? 350
+	      : NOVAL_I;
+	case 368320:
+	  return
+	    orbit>= 7296034 && orbit<= 10245784 ? 375
+	    : orbit>= 10436831 && orbit<= 13120570 ? 425
+	    : orbit>= 13256620 && orbit<= 16014083 ? 450
+	    : orbit>= 16205744 && orbit<= 19147750 ? 475
+	    : orbit>= 19340819 && orbit<= 22029462 ? 500
+	    : orbit>= 22359114 && orbit<= 25197863 ? 400
+	      : NOVAL_I;
+	case 368636:
+	  return
+	    orbit>= 33385564 && orbit<= 36207914 ? 10
+	    : orbit>= 36371515 && orbit<= 39085596 ? 25
+	    : orbit>= 39249532 && orbit<= 41952787 ? 50
+	    : orbit>= 42143811 && orbit<= 44832462 ? 75
+	    : orbit>= 44995928 && orbit<= 47737091 ? 100
+	    : orbit>= 47899342 && orbit<= 50615477 ? 125
+	    : orbit>= 50751769 && orbit<= 53490218 ? 150
+	    : orbit>= 53653665 && orbit<= 56365742 ? 175
+	    : orbit>= 56528473 && orbit<= 59270226 ? 200
+	    : orbit>= 59461047 && orbit<= 62411805 ? 225
+	    : orbit>= 62548295 && orbit<= 65290140 ? 250
+	    : orbit>= 65425227 && orbit<= 68169459 ? 275
+	    : orbit>= 68331785 && orbit<= 71070912 ? 300
+	    : orbit>= 71234301 && orbit<= 73930658 ? 325
+	    : orbit>= 74121783 && orbit<= 76837685 ? 350
+	    : orbit>= 76973011 && orbit<= 79706299 ? 375
+	    : orbit>= 79868802 && orbit<= 82607141 ? 425
+	    : orbit>= 82768510 && orbit<= 85484677 ? 450
+	    : orbit>= 85646605 && orbit<= 88362620 ? 475
+	    : orbit>= 88525784 && orbit<= 91244037 ? 500
+	    : orbit>= 91540489 && orbit<= 94394769 ? 400
+	      : NOVAL_I;
+	case 370169:
+	  return
+	    orbit>= 40342105 && orbit<= 43280163 ? 10
+	    : orbit>= 43446024 && orbit<= 46163964 ? 25
+	    : orbit>= 46360986 && orbit<= 49310460 ? 50
+	    : orbit>= 49475797 && orbit<= 52185788 ? 75
+	    : orbit>= 52352339 && orbit<= 55071756 ? 100
+	    : orbit>= 55239247 && orbit<= 57948217 ? 125
+	    : orbit>= 58115174 && orbit<= 60824770 ? 150
+	    : orbit>= 60992420 && orbit<= 63706944 ? 175
+	    : orbit>= 63845307 && orbit<= 66614001 ? 200
+	    : orbit>= 66782084 && orbit<= 69473855 ? 225
+	    : orbit>= 69641850 && orbit<= 72375108 ? 250
+	    : orbit>= 72571092 && orbit<= 75528087 ? 275
+	    : orbit>= 75722880 && orbit<= 78653907 ? 300
+	    : orbit>= 78849747 && orbit<= 81532531 ? 325
+	    : orbit>= 81672588 && orbit<= 84442221 ? 350
+	    : orbit>= 84637613 && orbit<= 87569623 ? 375
+	    : orbit>= 87737354 && orbit<= 90457916 ? 425
+	    : orbit>= 90623611 && orbit<= 93355955 ? 450
+	    : orbit>= 93522339 && orbit<= 96229970 ? 475
+	    : orbit>= 96368015 && orbit<= 99098219 ? 500
+	    : orbit>= 99434925 && orbit<= 102250856 ? 450
+	      : NOVAL_I;
+	case 370772:
+	  return
+	    orbit>= 52470445 && orbit<= 55333639 ? 10
+	    : orbit>= 55472333 && orbit<= 58213155 ? 25
+	    : orbit>= 58377241 && orbit<= 61089932 ? 50
+	    : orbit>= 61256076 && orbit<= 63986325 ? 75
+	    : orbit>= 64151875 && orbit<= 66856984 ? 100
+	    : orbit>= 67024241 && orbit<= 69745556 ? 125
+	    : orbit>= 69882848 && orbit<= 72642643 ? 150
+	    : orbit>= 72780104 && orbit<= 75513072 ? 175
+	    : orbit>= 75705636 && orbit<= 78389735 ? 200
+	    : orbit>= 78527331 && orbit<= 81287919 ? 225
+	    : orbit>= 81481429 && orbit<= 84417782 ? 250
+	    : orbit>= 84582153 && orbit<= 87299914 ? 275
+	    : orbit>= 87493915 && orbit<= 90188367 ? 300
+	    : orbit>= 90382679 && orbit<= 93075344 ? 325
+	    : orbit>= 93240739 && orbit<= 95958111 ? 350
+	    : orbit>= 96127506 && orbit<= 98855902 ? 375
+	    : orbit>= 98995097 && orbit<= 101722000 ? 400
+	    : orbit>= 101919990 && orbit<= 104619178 ? 425
+	    : orbit>= 104813521 && orbit<= 107747043 ? 475
+	    : orbit>= 107916236 && orbit<= 110656907 ? 500
+	    : orbit>= 110966804 && orbit<= 113797510 ? 450
+	      : NOVAL_I;
+	case 372597:
+	  return
+	    orbit>= 7903752 && orbit<= 13394769 ? 10
+	    : orbit>= 13557899 && orbit<= 18905971 ? 25
+	    : orbit>= 19067942 && orbit<= 24398996 ? 50
+	    : orbit>= 24559026 && orbit<= 29910640 ? 75
+	    : orbit>= 30098947 && orbit<= 35673648 ? 100
+	    : orbit>= 35834767 && orbit<= 41184922 ? 125
+	    : orbit>= 41347438 && orbit<= 46668343 ? 150
+	    : orbit>= 46855827 && orbit<= 52173231 ? 175
+	      : NOVAL_I;
+	case 372598:
+	  return
+	    orbit>= 2746350 && orbit<= 8139349 ? 200
+	    : orbit>= 8273753 && orbit<= 13650923 ? 225
+	    : orbit>= 15111512 && orbit<= 20472285 ? 250
+	      : NOVAL_I;
+	case 372601:
+	  return
+	    orbit>= 490474 && orbit<= 6042138 ? 275
+	    : orbit>= 6176244 && orbit<= 11549929 ? 300
+	      : NOVAL_I;
+	case 372602:
+	  return
+	    orbit>= 361535 && orbit<= 5785597 ? 325
+	    : orbit>= 5948983 && orbit<= 11296711 ? 350
+	    : orbit>= 11459733 && orbit<= 16786650 ? 375
+	    : orbit>= 16923122 && orbit<= 22312993 ? 400
+	    : orbit>= 22477745 && orbit<= 27808336 ? 425
+	    : orbit>= 28000123 && orbit<= 33564939 ? 475
+	    : orbit>= 33759233 && orbit<= 39083698 ? 500
+	    : orbit>= 39385415 && orbit<= 44853027 ? 450
+	      : NOVAL_I;
+	case 375697:
+	  return
+	    orbit>= 14181054 && orbit<= 17056109 ? 10
+	    : orbit>= 17275876 && orbit<= 20193293 ? 50
+	    : orbit>= 20388031 && orbit<= 23095530 ? 100
+	    : orbit>= 23289806 && orbit<= 26236248 ? 150
+	    : orbit>= 26403276 && orbit<= 29104372 ? 200
+	    : orbit>= 29271858 && orbit<= 32013840 ? 250
+	    : orbit>= 32126302 && orbit<= 34880439 ? 275
+	    : orbit>= 35047818 && orbit<= 37760914 ? 300
+	    : orbit>= 37929290 && orbit<= 40658642 ? 325
+	    : orbit>= 40852199 && orbit<= 43809979 ? 350
+	    : orbit>= 43977324 && orbit<= 46666746 ? 375
+	    : orbit>= 46832244 && orbit<= 49562209 ? 400
+	    : orbit>= 49759108 && orbit<= 52723019 ? 425
+	    : orbit>= 52860920 && orbit<= 55597269 ? 475
+	    : orbit>= 55790859 && orbit<= 58751634 ? 500
+	    : orbit>= 59029356 && orbit<= 61896178 ? 450
+	      : NOVAL_I;
     default:
       return NOVAL_I;
     }
@@ -3088,6 +3353,254 @@ namespace scans {
 	    : orbit>= 53643704 && orbit<= 56368187 ? 400
 	    : orbit>= 56499465 && orbit<= 59266913 ? 425
 	    : orbit>= 59529205 && orbit<= 62409575 ? 300
+	      : NOVAL_I;
+	case 365775:
+	  return
+	    orbit>= 11674141 && orbit<= 14429083 ? 200
+	    : orbit>= 14589392 && orbit<= 17324633 ? 220
+	    : orbit>= 17510902 && orbit<= 20196585 ? 240
+	    : orbit>= 20383796 && orbit<= 23092362 ? 260
+	    : orbit>= 23253989 && orbit<= 25982133 ? 280
+	    : orbit>= 26197706 && orbit<= 29103790 ? 320
+	    : orbit>= 29319343 && orbit<= 32255384 ? 340
+	    : orbit>= 32444673 && orbit<= 35145650 ? 360
+	    : orbit>= 35334294 && orbit<= 38017264 ? 380
+	    : orbit>= 38180097 && orbit<= 40924604 ? 400
+	    : orbit>= 41087244 && orbit<= 43808026 ? 425
+	    : orbit>= 44514502 && orbit<= 47198988 ? 10
+	    : orbit>= 47361806 && orbit<= 50091213 ? 25
+	    : orbit>= 50255317 && orbit<= 52961410 ? 50
+	    : orbit>= 53152818 && orbit<= 55865611 ? 75
+	    : orbit>= 56057509 && orbit<= 59001403 ? 100
+	    : orbit>= 59192755 && orbit<= 61877774 ? 120
+	    : orbit>= 62043689 && orbit<= 64774124 ? 140
+	    : orbit>= 64884831 && orbit<= 67653732 ? 160
+	    : orbit>= 67791500 && orbit<= 70538399 ? 180
+	    : orbit>= 70818655 && orbit<= 73668482 ? 300
+	      : NOVAL_I;
+	case 366451:
+	  return
+	    orbit>= 11427179 && orbit<= 14160940 ? 10
+	    : orbit>= 14382455 && orbit<= 17324839 ? 40
+	    : orbit>= 17573565 && orbit<= 20460932 ? 80
+	    : orbit>= 20710526 && orbit<= 23611692 ? 120
+	    : orbit>= 23862063 && orbit<= 26749131 ? 160
+	    : orbit>= 26969444 && orbit<= 29902584 ? 200
+	    : orbit>= 30175576 && orbit<= 33058196 ? 230
+	    : orbit>= 33332287 && orbit<= 36185466 ? 260
+	    : orbit>= 36408444 && orbit<= 39337900 ? 280
+	    : orbit>= 39558702 && orbit<= 42481928 ? 320
+	    : orbit>= 42732455 && orbit<= 45642756 ? 340
+	    : orbit>= 45914551 && orbit<= 48781132 ? 370
+	    : orbit>= 49056415 && orbit<= 51921275 ? 400
+	    : orbit>= 52194942 && orbit<= 55078899 ? 430
+	    : orbit>= 55408643 && orbit<= 58210178 ? 300
+	      : NOVAL_I;
+	case 367262:
+	  return
+	    orbit>= 7099870 && orbit<= 9973319 ? 10
+	    : orbit>= 10169046 && orbit<= 12852101 ? 25
+	    : orbit>= 13040868 && orbit<= 15739671 ? 50
+	    : orbit>= 15959748 && orbit<= 18892548 ? 75
+	    : orbit>= 19083998 && orbit<= 21766757 ? 100
+	    : orbit>= 21931959 && orbit<= 24652329 ? 120
+	    : orbit>= 24817938 && orbit<= 27542550 ? 140
+	    : orbit>= 27734239 && orbit<= 30417342 ? 160
+	    : orbit>= 30608624 && orbit<= 33313703 ? 180
+	    : orbit>= 33505478 && orbit<= 36453885 ? 200
+	    : orbit>= 36587559 && orbit<= 39346964 ? 220
+	    : orbit>= 39511702 && orbit<= 42230281 ? 240
+	    : orbit>= 42366690 && orbit<= 45102527 ? 260
+	    : orbit>= 45240256 && orbit<= 47984863 ? 280
+	    : orbit>= 48176143 && orbit<= 50887425 ? 320
+	    : orbit>= 51050647 && orbit<= 53762229 ? 340
+	    : orbit>= 53954281 && orbit<= 56911774 ? 360
+	    : orbit>= 57075795 && orbit<= 59793547 ? 380
+	    : orbit>= 59929631 && orbit<= 62659588 ? 400
+	    : orbit>= 62878057 && orbit<= 65827762 ? 425
+	    : orbit>= 66128316 && orbit<= 68970973 ? 300
+	      : NOVAL_I;
+	case 367691:
+	  return
+	    orbit>= 38093805 && orbit<= 40915552 ? 10
+	    : orbit>= 41110913 && orbit<= 44047646 ? 25
+	    : orbit>= 44186753 && orbit<= 46929565 ? 50
+	    : orbit>= 47125589 && orbit<= 49838059 ? 75
+	    : orbit>= 50003212 && orbit<= 52705357 ? 100
+	    : orbit>= 52896569 && orbit<= 55580803 ? 120
+	      : NOVAL_I;
+	case 367693:
+	  return
+	    orbit>= 1098110 && orbit<= 3945219 ? 120
+	    : orbit>= 4135366 && orbit<= 6829305 ? 140
+	      : NOVAL_I;
+	case 367696:
+	  return
+	    orbit>= 3506414 && orbit<= 6308118 ? 160
+	    : orbit>= 6506342 && orbit<= 9468137 ? 180
+	    : orbit>= 9637017 && orbit<= 12338491 ? 200
+	    : orbit>= 12533908 && orbit<= 15483844 ? 220
+	    : orbit>= 15653641 && orbit<= 18355679 ? 240
+	    : orbit>= 18555832 && orbit<= 21245305 ? 260
+	    : orbit>= 21385589 && orbit<= 24127787 ? 280
+	    : orbit>= 24298863 && orbit<= 27024565 ? 320
+	    : orbit>= 27136462 && orbit<= 29892124 ? 340
+	    : orbit>= 30062691 && orbit<= 32789318 ? 360
+	    : orbit>= 32929346 && orbit<= 35656656 ? 380
+	    : orbit>= 35826537 && orbit<= 38555859 ? 400
+	    : orbit>= 38755411 && orbit<= 41712687 ? 425
+	    : orbit>= 42025627 && orbit<= 44837160 ? 300
+	      : NOVAL_I;
+	case 368318:
+	  return
+	    orbit>= 38680055 && orbit<= 41436877 ? 10
+	    : orbit>= 41571843 && orbit<= 44311348 ? 25
+	    : orbit>= 44502309 && orbit<= 47205698 ? 50
+	    : orbit>= 47421959 && orbit<= 50347521 ? 75
+	    : orbit>= 50508280 && orbit<= 53224276 ? 100
+	    : orbit>= 53385408 && orbit<= 56124453 ? 120
+	    : orbit>= 56286132 && orbit<= 58997544 ? 140
+	    : orbit>= 59161176 && orbit<= 61882440 ? 160
+	    : orbit>= 62071686 && orbit<= 64759415 ? 180
+	    : orbit>= 64977629 && orbit<= 67907945 ? 200
+	    : orbit>= 68097540 && orbit<= 70786060 ? 220
+	    : orbit>= 70948149 && orbit<= 73673465 ? 240
+	    : orbit>= 73863541 && orbit<= 76551518 ? 260
+	    : orbit>= 76713898 && orbit<= 79436967 ? 280
+	    : orbit>= 79601241 && orbit<= 82331790 ? 320
+	      : NOVAL_I;
+	case 368320:
+	  return
+	    orbit>= 7296034 && orbit<= 10245784 ? 340
+	    : orbit>= 10436831 && orbit<= 13120570 ? 360
+	    : orbit>= 13256620 && orbit<= 16014083 ? 380
+	    : orbit>= 16205744 && orbit<= 19147750 ? 400
+	    : orbit>= 19340819 && orbit<= 22029462 ? 425
+	    : orbit>= 22359114 && orbit<= 25197863 ? 300
+	      : NOVAL_I;
+	case 368636:
+	  return
+	    orbit>= 33385564 && orbit<= 36207914 ? 10
+	    : orbit>= 36371515 && orbit<= 39085596 ? 25
+	    : orbit>= 39249532 && orbit<= 41952787 ? 50
+	    : orbit>= 42143811 && orbit<= 44832462 ? 75
+	    : orbit>= 44995928 && orbit<= 47737091 ? 100
+	    : orbit>= 47899342 && orbit<= 50615477 ? 120
+	    : orbit>= 50751769 && orbit<= 53490218 ? 140
+	    : orbit>= 53653665 && orbit<= 56365742 ? 160
+	    : orbit>= 56528473 && orbit<= 59270226 ? 180
+	    : orbit>= 59461047 && orbit<= 62411805 ? 200
+	    : orbit>= 62548295 && orbit<= 65290140 ? 220
+	    : orbit>= 65425227 && orbit<= 68169459 ? 240
+	    : orbit>= 68331785 && orbit<= 71070912 ? 260
+	    : orbit>= 71234301 && orbit<= 73930658 ? 280
+	    : orbit>= 74121783 && orbit<= 76837685 ? 320
+	    : orbit>= 76973011 && orbit<= 79706299 ? 340
+	    : orbit>= 79868802 && orbit<= 82607141 ? 360
+	    : orbit>= 82768510 && orbit<= 85484677 ? 380
+	    : orbit>= 85646605 && orbit<= 88362620 ? 400
+	    : orbit>= 88525784 && orbit<= 91244037 ? 425
+	    : orbit>= 91540489 && orbit<= 94394769 ? 300
+	      : NOVAL_I;
+	case 370169:
+	  return
+	    orbit>= 40342105 && orbit<= 43280163 ? 10
+	    : orbit>= 43446024 && orbit<= 46163964 ? 25
+	    : orbit>= 46360986 && orbit<= 49310460 ? 50
+	    : orbit>= 49475797 && orbit<= 52185788 ? 75
+	    : orbit>= 52352339 && orbit<= 55071756 ? 100
+	    : orbit>= 55239247 && orbit<= 57948217 ? 120
+	    : orbit>= 58115174 && orbit<= 60824770 ? 140
+	    : orbit>= 60992420 && orbit<= 63706944 ? 160
+	    : orbit>= 63845307 && orbit<= 66614001 ? 180
+	    : orbit>= 66782084 && orbit<= 69473855 ? 200
+	    : orbit>= 69641850 && orbit<= 72375108 ? 220
+	    : orbit>= 72571092 && orbit<= 75528087 ? 240
+	    : orbit>= 75722880 && orbit<= 78653907 ? 260
+	    : orbit>= 78849747 && orbit<= 81532531 ? 280
+	    : orbit>= 81672588 && orbit<= 84442221 ? 320
+	    : orbit>= 84637613 && orbit<= 87569623 ? 340
+	    : orbit>= 87737354 && orbit<= 90457916 ? 360
+	    : orbit>= 90623611 && orbit<= 93355955 ? 380
+	    : orbit>= 93522339 && orbit<= 96229970 ? 400
+	    : orbit>= 96368015 && orbit<= 99098219 ? 425
+	    : orbit>= 99434925 && orbit<= 102250856 ? 350
+	      : NOVAL_I;
+	case 370772:
+	  return
+	    orbit>= 52470445 && orbit<= 55333639 ? 10
+	    : orbit>= 55472333 && orbit<= 58213155 ? 25
+	    : orbit>= 58377241 && orbit<= 61089932 ? 50
+	    : orbit>= 61256076 && orbit<= 63986325 ? 75
+	    : orbit>= 64151875 && orbit<= 66856984 ? 100
+	    : orbit>= 67024241 && orbit<= 69745556 ? 120
+	    : orbit>= 69882848 && orbit<= 72642643 ? 140
+	    : orbit>= 72780104 && orbit<= 75513072 ? 160
+	    : orbit>= 75705636 && orbit<= 78389735 ? 180
+	    : orbit>= 78527331 && orbit<= 81287919 ? 200
+	    : orbit>= 81481429 && orbit<= 84417782 ? 220
+	    : orbit>= 84582153 && orbit<= 87299914 ? 240
+	    : orbit>= 87493915 && orbit<= 90188367 ? 260
+	    : orbit>= 90382679 && orbit<= 93075344 ? 280
+	    : orbit>= 93240739 && orbit<= 95958111 ? 300
+	    : orbit>= 96127506 && orbit<= 98855902 ? 325
+	    : orbit>= 98995097 && orbit<= 101722000 ? 375
+	    : orbit>= 101919990 && orbit<= 104619178 ? 400
+	    : orbit>= 104813521 && orbit<= 107747043 ? 425
+	    : orbit>= 107916236 && orbit<= 110656907 ? 450
+	    : orbit>= 110966804 && orbit<= 113797510 ? 350
+	      : NOVAL_I;
+	case 372597:
+	  return
+	    orbit>= 7903752 && orbit<= 13394769 ? 10
+	    : orbit>= 13557899 && orbit<= 18905971 ? 25
+	    : orbit>= 19067942 && orbit<= 24398996 ? 50
+	    : orbit>= 24559026 && orbit<= 29910640 ? 75
+	    : orbit>= 30098947 && orbit<= 35673648 ? 100
+	    : orbit>= 35834767 && orbit<= 41184922 ? 120
+	    : orbit>= 41347438 && orbit<= 46668343 ? 140
+	    : orbit>= 46855827 && orbit<= 52173231 ? 160
+	      : NOVAL_I;
+	case 372598:
+	  return
+	    orbit>= 2746350 && orbit<= 8139349 ? 180
+	    : orbit>= 8273753 && orbit<= 13650923 ? 200
+	    : orbit>= 15111512 && orbit<= 20472285 ? 220
+	      : NOVAL_I;
+	case 372601:
+	  return
+	    orbit>= 490474 && orbit<= 6042138 ? 240
+	    : orbit>= 6176244 && orbit<= 11549929 ? 260
+	      : NOVAL_I;
+	case 372602:
+	  return
+	    orbit>= 361535 && orbit<= 5785597 ? 280
+	    : orbit>= 5948983 && orbit<= 11296711 ? 300
+	    : orbit>= 11459733 && orbit<= 16786650 ? 325
+	    : orbit>= 16923122 && orbit<= 22312993 ? 375
+	    : orbit>= 22477745 && orbit<= 27808336 ? 400
+	    : orbit>= 28000123 && orbit<= 33564939 ? 425
+	    : orbit>= 33759233 && orbit<= 39083698 ? 450
+	    : orbit>= 39385415 && orbit<= 44853027 ? 350
+	      : NOVAL_I;
+	case 375697:
+	  return
+	    orbit>= 14181054 && orbit<= 17056109 ? 10
+	    : orbit>= 17275876 && orbit<= 20193293 ? 50
+	    : orbit>= 20388031 && orbit<= 23095530 ? 100
+	    : orbit>= 23289806 && orbit<= 26236248 ? 140
+	    : orbit>= 26403276 && orbit<= 29104372 ? 180
+	    : orbit>= 29271858 && orbit<= 32013840 ? 220
+	    : orbit>= 32126302 && orbit<= 34880439 ? 240
+	    : orbit>= 35047818 && orbit<= 37760914 ? 260
+	    : orbit>= 37929290 && orbit<= 40658642 ? 280
+	    : orbit>= 40852199 && orbit<= 43809979 ? 300
+	    : orbit>= 43977324 && orbit<= 46666746 ? 325
+	    : orbit>= 46832244 && orbit<= 49562209 ? 375
+	    : orbit>= 49759108 && orbit<= 52723019 ? 400
+	    : orbit>= 52860920 && orbit<= 55597269 ? 425
+	    : orbit>= 55790859 && orbit<= 58751634 ? 450
+	    : orbit>= 59029356 && orbit<= 61896178 ? 350
 	      : NOVAL_I;
     default:
       return NOVAL_I;
@@ -3852,6 +4365,254 @@ namespace scans {
 	    : orbit>= 56499465 && orbit<= 59266913 ? 400
 	    : orbit>= 59529205 && orbit<= 62409575 ? 250
 	      : NOVAL_I;
+	case 365775:
+	  return
+	    orbit>= 11674141 && orbit<= 14429083 ? 200
+	    : orbit>= 14589392 && orbit<= 17324633 ? 220
+	    : orbit>= 17510902 && orbit<= 20196585 ? 240
+	    : orbit>= 20383796 && orbit<= 23092362 ? 260
+	    : orbit>= 23253989 && orbit<= 25982133 ? 280
+	    : orbit>= 26197706 && orbit<= 29103790 ? 300
+	    : orbit>= 29319343 && orbit<= 32255384 ? 320
+	    : orbit>= 32444673 && orbit<= 35145650 ? 340
+	    : orbit>= 35334294 && orbit<= 38017264 ? 360
+	    : orbit>= 38180097 && orbit<= 40924604 ? 380
+	    : orbit>= 41087244 && orbit<= 43808026 ? 400
+	    : orbit>= 44514502 && orbit<= 47198988 ? 10
+	    : orbit>= 47361806 && orbit<= 50091213 ? 25
+	    : orbit>= 50255317 && orbit<= 52961410 ? 50
+	    : orbit>= 53152818 && orbit<= 55865611 ? 75
+	    : orbit>= 56057509 && orbit<= 59001403 ? 100
+	    : orbit>= 59192755 && orbit<= 61877774 ? 120
+	    : orbit>= 62043689 && orbit<= 64774124 ? 140
+	    : orbit>= 64884831 && orbit<= 67653732 ? 160
+	    : orbit>= 67791500 && orbit<= 70538399 ? 180
+	    : orbit>= 70818655 && orbit<= 73668482 ? 250
+	      : NOVAL_I;
+	case 366451:
+	  return
+	    orbit>= 58699848 && orbit<= 61609564 ? 10
+	    : orbit>= 61855050 && orbit<= 64768771 ? 40
+	    : orbit>= 65015489 && orbit<= 67906385 ? 80
+	    : orbit>= 68180112 && orbit<= 71046519 ? 120
+	    : orbit>= 71291153 && orbit<= 74213289 ? 160
+	    : orbit>= 74483037 && orbit<= 77340829 ? 200
+	    : orbit>= 77582257 && orbit<= 80500459 ? 220
+	    : orbit>= 80768423 && orbit<= 83635242 ? 240
+	    : orbit>= 83903748 && orbit<= 86778734 ? 260
+	    : orbit>= 86994641 && orbit<= 89925879 ? 280
+	    : orbit>= 90166981 && orbit<= 93066380 ? 300
+	    : orbit>= 93280876 && orbit<= 95967751 ? 330
+	    : orbit>= 96237367 && orbit<= 99108516 ? 360
+	    : orbit>= 99379543 && orbit<= 102262964 ? 400
+	    : orbit>= 102641354 && orbit<= 105413326 ? 250
+	      : NOVAL_I;
+	case 367262:
+	  return
+	    orbit>= 7099870 && orbit<= 9973319 ? 10
+	    : orbit>= 10169046 && orbit<= 12852101 ? 25
+	    : orbit>= 13040868 && orbit<= 15739671 ? 50
+	    : orbit>= 15959748 && orbit<= 18892548 ? 75
+	    : orbit>= 19083998 && orbit<= 21766757 ? 100
+	    : orbit>= 21931959 && orbit<= 24652329 ? 120
+	    : orbit>= 24817938 && orbit<= 27542550 ? 140
+	    : orbit>= 27734239 && orbit<= 30417342 ? 160
+	    : orbit>= 30608624 && orbit<= 33313703 ? 180
+	    : orbit>= 33505478 && orbit<= 36453885 ? 200
+	    : orbit>= 36587559 && orbit<= 39346964 ? 220
+	    : orbit>= 39511702 && orbit<= 42230281 ? 240
+	    : orbit>= 42366690 && orbit<= 45102527 ? 260
+	    : orbit>= 45240256 && orbit<= 47984863 ? 280
+	    : orbit>= 48176143 && orbit<= 50887425 ? 300
+	    : orbit>= 51050647 && orbit<= 53762229 ? 320
+	    : orbit>= 53954281 && orbit<= 56911774 ? 340
+	    : orbit>= 57075795 && orbit<= 59793547 ? 360
+	    : orbit>= 59929631 && orbit<= 62659588 ? 380
+	    : orbit>= 62878057 && orbit<= 65827762 ? 400
+	    : orbit>= 66128316 && orbit<= 68970973 ? 250
+	      : NOVAL_I;
+	case 367691:
+	  return
+	    orbit>= 38093805 && orbit<= 40915552 ? 10
+	    : orbit>= 41110913 && orbit<= 44047646 ? 25
+	    : orbit>= 44186753 && orbit<= 46929565 ? 50
+	    : orbit>= 47125589 && orbit<= 49838059 ? 75
+	    : orbit>= 50003212 && orbit<= 52705357 ? 100
+	    : orbit>= 52896569 && orbit<= 55580803 ? 120
+	      : NOVAL_I;
+	case 367693:
+	  return
+	    orbit>= 1098110 && orbit<= 3945219 ? 120
+	    : orbit>= 4135366 && orbit<= 6829305 ? 140
+	      : NOVAL_I;
+	case 367696:
+	  return
+	    orbit>= 3506414 && orbit<= 6308118 ? 160
+	    : orbit>= 6506342 && orbit<= 9468137 ? 180
+	    : orbit>= 9637017 && orbit<= 12338491 ? 200
+	    : orbit>= 12533908 && orbit<= 15483844 ? 220
+	    : orbit>= 15653641 && orbit<= 18355679 ? 240
+	    : orbit>= 18555832 && orbit<= 21245305 ? 260
+	    : orbit>= 21385589 && orbit<= 24127787 ? 280
+	    : orbit>= 24298863 && orbit<= 27024565 ? 300
+	    : orbit>= 27136462 && orbit<= 29892124 ? 320
+	    : orbit>= 30062691 && orbit<= 32789318 ? 340
+	    : orbit>= 32929346 && orbit<= 35656656 ? 360
+	    : orbit>= 35826537 && orbit<= 38555859 ? 380
+	    : orbit>= 38755411 && orbit<= 41712687 ? 400
+	    : orbit>= 42025627 && orbit<= 44837160 ? 250
+	      : NOVAL_I;
+	case 368318:
+	  return
+	    orbit>= 38680055 && orbit<= 41436877 ? 10
+	    : orbit>= 41571843 && orbit<= 44311348 ? 25
+	    : orbit>= 44502309 && orbit<= 47205698 ? 50
+	    : orbit>= 47421959 && orbit<= 50347521 ? 75
+	    : orbit>= 50508280 && orbit<= 53224276 ? 100
+	    : orbit>= 53385408 && orbit<= 56124453 ? 120
+	    : orbit>= 56286132 && orbit<= 58997544 ? 140
+	    : orbit>= 59161176 && orbit<= 61882440 ? 160
+	    : orbit>= 62071686 && orbit<= 64759415 ? 180
+	    : orbit>= 64977629 && orbit<= 67907945 ? 200
+	    : orbit>= 68097540 && orbit<= 70786060 ? 220
+	    : orbit>= 70948149 && orbit<= 73673465 ? 240
+	    : orbit>= 73863541 && orbit<= 76551518 ? 260
+	    : orbit>= 76713898 && orbit<= 79436967 ? 280
+	    : orbit>= 79601241 && orbit<= 82331790 ? 300
+	      : NOVAL_I;
+	case 368320:
+	  return
+	    orbit>= 7296034 && orbit<= 10245784 ? 320
+	    : orbit>= 10436831 && orbit<= 13120570 ? 340
+	    : orbit>= 13256620 && orbit<= 16014083 ? 360
+	    : orbit>= 16205744 && orbit<= 19147750 ? 380
+	    : orbit>= 19340819 && orbit<= 22029462 ? 400
+	    : orbit>= 22359114 && orbit<= 25197863 ? 250
+	      : NOVAL_I;
+	case 368636:
+	  return
+	    orbit>= 33385564 && orbit<= 36207914 ? 10
+	    : orbit>= 36371515 && orbit<= 39085596 ? 25
+	    : orbit>= 39249532 && orbit<= 41952787 ? 50
+	    : orbit>= 42143811 && orbit<= 44832462 ? 75
+	    : orbit>= 44995928 && orbit<= 47737091 ? 100
+	    : orbit>= 47899342 && orbit<= 50615477 ? 120
+	    : orbit>= 50751769 && orbit<= 53490218 ? 140
+	    : orbit>= 53653665 && orbit<= 56365742 ? 160
+	    : orbit>= 56528473 && orbit<= 59270226 ? 180
+	    : orbit>= 59461047 && orbit<= 62411805 ? 200
+	    : orbit>= 62548295 && orbit<= 65290140 ? 220
+	    : orbit>= 65425227 && orbit<= 68169459 ? 240
+	    : orbit>= 68331785 && orbit<= 71070912 ? 260
+	    : orbit>= 71234301 && orbit<= 73930658 ? 280
+	    : orbit>= 74121783 && orbit<= 76837685 ? 300
+	    : orbit>= 76973011 && orbit<= 79706299 ? 320
+	    : orbit>= 79868802 && orbit<= 82607141 ? 340
+	    : orbit>= 82768510 && orbit<= 85484677 ? 360
+	    : orbit>= 85646605 && orbit<= 88362620 ? 380
+	    : orbit>= 88525784 && orbit<= 91244037 ? 400
+	    : orbit>= 91540489 && orbit<= 94394769 ? 250
+	      : NOVAL_I;
+	case 370169:
+	  return
+	    orbit>= 40342105 && orbit<= 43280163 ? 10
+	    : orbit>= 43446024 && orbit<= 46163964 ? 25
+	    : orbit>= 46360986 && orbit<= 49310460 ? 50
+	    : orbit>= 49475797 && orbit<= 52185788 ? 75
+	    : orbit>= 52352339 && orbit<= 55071756 ? 100
+	    : orbit>= 55239247 && orbit<= 57948217 ? 120
+	    : orbit>= 58115174 && orbit<= 60824770 ? 140
+	    : orbit>= 60992420 && orbit<= 63706944 ? 160
+	    : orbit>= 63845307 && orbit<= 66614001 ? 180
+	    : orbit>= 66782084 && orbit<= 69473855 ? 200
+	    : orbit>= 69641850 && orbit<= 72375108 ? 220
+	    : orbit>= 72571092 && orbit<= 75528087 ? 240
+	    : orbit>= 75722880 && orbit<= 78653907 ? 260
+	    : orbit>= 78849747 && orbit<= 81532531 ? 280
+	    : orbit>= 81672588 && orbit<= 84442221 ? 300
+	    : orbit>= 84637613 && orbit<= 87569623 ? 320
+	    : orbit>= 87737354 && orbit<= 90457916 ? 340
+	    : orbit>= 90623611 && orbit<= 93355955 ? 360
+	    : orbit>= 93522339 && orbit<= 96229970 ? 380
+	    : orbit>= 96368015 && orbit<= 99098219 ? 400
+	    : orbit>= 99434925 && orbit<= 102250856 ? 250
+	      : NOVAL_I;
+	case 370772:
+	  return
+	    orbit>= 52470445 && orbit<= 55333639 ? 10
+	    : orbit>= 55472333 && orbit<= 58213155 ? 25
+	    : orbit>= 58377241 && orbit<= 61089932 ? 50
+	    : orbit>= 61256076 && orbit<= 63986325 ? 75
+	    : orbit>= 64151875 && orbit<= 66856984 ? 100
+	    : orbit>= 67024241 && orbit<= 69745556 ? 120
+	    : orbit>= 69882848 && orbit<= 72642643 ? 140
+	    : orbit>= 72780104 && orbit<= 75513072 ? 160
+	    : orbit>= 75705636 && orbit<= 78389735 ? 180
+	    : orbit>= 78527331 && orbit<= 81287919 ? 200
+	    : orbit>= 81481429 && orbit<= 84417782 ? 220
+	    : orbit>= 84582153 && orbit<= 87299914 ? 240
+	    : orbit>= 87493915 && orbit<= 90188367 ? 260
+	    : orbit>= 90382679 && orbit<= 93075344 ? 280
+	    : orbit>= 93240739 && orbit<= 95958111 ? 300
+	    : orbit>= 96127506 && orbit<= 98855902 ? 320
+	    : orbit>= 98995097 && orbit<= 101722000 ? 340
+	    : orbit>= 101919990 && orbit<= 104619178 ? 360
+	    : orbit>= 104813521 && orbit<= 107747043 ? 380
+	    : orbit>= 107916236 && orbit<= 110656907 ? 400
+	    : orbit>= 110966804 && orbit<= 113797510 ? 250
+	      : NOVAL_I;
+	case 372597:
+	  return
+	    orbit>= 7903752 && orbit<= 13394769 ? 10
+	    : orbit>= 13557899 && orbit<= 18905971 ? 25
+	    : orbit>= 19067942 && orbit<= 24398996 ? 50
+	    : orbit>= 24559026 && orbit<= 29910640 ? 75
+	    : orbit>= 30098947 && orbit<= 35673648 ? 100
+	    : orbit>= 35834767 && orbit<= 41184922 ? 120
+	    : orbit>= 41347438 && orbit<= 46668343 ? 140
+	    : orbit>= 46855827 && orbit<= 52173231 ? 160
+	      : NOVAL_I;
+	case 372598:
+	  return
+	    orbit>= 2746350 && orbit<= 8139349 ? 180
+	    : orbit>= 8273753 && orbit<= 13650923 ? 200
+	    : orbit>= 15111512 && orbit<= 20472285 ? 220
+	      : NOVAL_I;
+	case 372601:
+	  return
+	    orbit>= 490474 && orbit<= 6042138 ? 240
+	    : orbit>= 6176244 && orbit<= 11549929 ? 260
+	      : NOVAL_I;
+	case 372602:
+	  return
+	    orbit>= 361535 && orbit<= 5785597 ? 280
+	    : orbit>= 5948983 && orbit<= 11296711 ? 300
+	    : orbit>= 11459733 && orbit<= 16786650 ? 320
+	    : orbit>= 16923122 && orbit<= 22312993 ? 340
+	    : orbit>= 22477745 && orbit<= 27808336 ? 360
+	    : orbit>= 28000123 && orbit<= 33564939 ? 380
+	    : orbit>= 33759233 && orbit<= 39083698 ? 400
+	    : orbit>= 39385415 && orbit<= 44853027 ? 250
+	      : NOVAL_I;
+	case 375697:
+	  return
+	    orbit>= 14181054 && orbit<= 17056109 ? 10
+	    : orbit>= 17275876 && orbit<= 20193293 ? 50
+	    : orbit>= 20388031 && orbit<= 23095530 ? 100
+	    : orbit>= 23289806 && orbit<= 26236248 ? 140
+	    : orbit>= 26403276 && orbit<= 29104372 ? 180
+	    : orbit>= 29271858 && orbit<= 32013840 ? 220
+	    : orbit>= 32126302 && orbit<= 34880439 ? 240
+	    : orbit>= 35047818 && orbit<= 37760914 ? 260
+	    : orbit>= 37929290 && orbit<= 40658642 ? 280
+	    : orbit>= 40852199 && orbit<= 43809979 ? 300
+	    : orbit>= 43977324 && orbit<= 46666746 ? 320
+	    : orbit>= 46832244 && orbit<= 49562209 ? 340
+	    : orbit>= 49759108 && orbit<= 52723019 ? 360
+	    : orbit>= 52860920 && orbit<= 55597269 ? 380
+	    : orbit>= 55790859 && orbit<= 58751634 ? 400
+	    : orbit>= 59029356 && orbit<= 61896178 ? 250
+	      : NOVAL_I;
     default:
       return NOVAL_I;
     }
@@ -4434,13 +5195,261 @@ namespace scans {
 	    : orbit>= 56499465 && orbit<= 59266913 ? 400
 	    : orbit>= 59529205 && orbit<= 62409575 ? 250
 	      : NOVAL_I;
+	case 365775:
+	  return
+	    orbit>= 11674141 && orbit<= 14429083 ? 200
+	    : orbit>= 14589392 && orbit<= 17324633 ? 220
+	    : orbit>= 17510902 && orbit<= 20196585 ? 240
+	    : orbit>= 20383796 && orbit<= 23092362 ? 260
+	    : orbit>= 23253989 && orbit<= 25982133 ? 280
+	    : orbit>= 26197706 && orbit<= 29103790 ? 300
+	    : orbit>= 29319343 && orbit<= 32255384 ? 320
+	    : orbit>= 32444673 && orbit<= 35145650 ? 340
+	    : orbit>= 35334294 && orbit<= 38017264 ? 360
+	    : orbit>= 38180097 && orbit<= 40924604 ? 380
+	    : orbit>= 41087244 && orbit<= 43808026 ? 400
+	    : orbit>= 44514502 && orbit<= 47198988 ? 10
+	    : orbit>= 47361806 && orbit<= 50091213 ? 25
+	    : orbit>= 50255317 && orbit<= 52961410 ? 50
+	    : orbit>= 53152818 && orbit<= 55865611 ? 75
+	    : orbit>= 56057509 && orbit<= 59001403 ? 100
+	    : orbit>= 59192755 && orbit<= 61877774 ? 120
+	    : orbit>= 62043689 && orbit<= 64774124 ? 140
+	    : orbit>= 64884831 && orbit<= 67653732 ? 160
+	    : orbit>= 67791500 && orbit<= 70538399 ? 180
+	    : orbit>= 70818655 && orbit<= 73668482 ? 250
+	      : NOVAL_I;
+	case 366451:
+	  return
+	    orbit>= 105899907 && orbit<= 108812288 ? 10
+	    : orbit>= 109057182 && orbit<= 111946094 ? 40
+	    : orbit>= 112217754 && orbit<= 115102167 ? 80
+	    : orbit>= 115372336 && orbit<= 118244161 ? 120
+	    : orbit>= 118544068 && orbit<= 121401866 ? 160
+	    : orbit>= 121674019 && orbit<= 124537023 ? 200
+	    : orbit>= 124837506 && orbit<= 127678870 ? 220
+	    : orbit>= 127950483 && orbit<= 130824261 ? 240
+	    : orbit>= 131066318 && orbit<= 133963750 ? 260
+	    : orbit>= 134236191 && orbit<= 137114959 ? 280
+	    : orbit>= 137360095 && orbit<= 140269143 ? 300
+	    : orbit>= 140514680 && orbit<= 143425440 ? 330
+	    : orbit>= 143668962 && orbit<= 146550293 ? 360
+	    : orbit>= 146825766 && orbit<= 149705145 ? 400
+	    : orbit>= 150058975 && orbit<= 152838797 ? 250
+	      : NOVAL_I;
+	case 367262:
+	  return
+	    orbit>= 7099870 && orbit<= 9973319 ? 10
+	    : orbit>= 10169046 && orbit<= 12852101 ? 25
+	    : orbit>= 13040868 && orbit<= 15739671 ? 50
+	    : orbit>= 15959748 && orbit<= 18892548 ? 75
+	    : orbit>= 19083998 && orbit<= 21766757 ? 100
+	    : orbit>= 21931959 && orbit<= 24652329 ? 120
+	    : orbit>= 24817938 && orbit<= 27542550 ? 140
+	    : orbit>= 27734239 && orbit<= 30417342 ? 160
+	    : orbit>= 30608624 && orbit<= 33313703 ? 180
+	    : orbit>= 33505478 && orbit<= 36453885 ? 200
+	    : orbit>= 36587559 && orbit<= 39346964 ? 220
+	    : orbit>= 39511702 && orbit<= 42230281 ? 240
+	    : orbit>= 42366690 && orbit<= 45102527 ? 260
+	    : orbit>= 45240256 && orbit<= 47984863 ? 280
+	    : orbit>= 48176143 && orbit<= 50887425 ? 300
+	    : orbit>= 51050647 && orbit<= 53762229 ? 320
+	    : orbit>= 53954281 && orbit<= 56911774 ? 340
+	    : orbit>= 57075795 && orbit<= 59793547 ? 360
+	    : orbit>= 59929631 && orbit<= 62659588 ? 380
+	    : orbit>= 62878057 && orbit<= 65827762 ? 400
+	    : orbit>= 66128316 && orbit<= 68970973 ? 250
+	      : NOVAL_I;
+	case 367691:
+	  return
+	    orbit>= 38093805 && orbit<= 40915552 ? 10
+	    : orbit>= 41110913 && orbit<= 44047646 ? 25
+	    : orbit>= 44186753 && orbit<= 46929565 ? 50
+	    : orbit>= 47125589 && orbit<= 49838059 ? 75
+	    : orbit>= 50003212 && orbit<= 52705357 ? 100
+	    : orbit>= 52896569 && orbit<= 55580803 ? 120
+	      : NOVAL_I;
+	case 367693:
+	  return
+	    orbit>= 1098110 && orbit<= 3945219 ? 120
+	    : orbit>= 4135366 && orbit<= 6829305 ? 140
+	      : NOVAL_I;
+	case 367696:
+	  return
+	    orbit>= 3506414 && orbit<= 6308118 ? 160
+	    : orbit>= 6506342 && orbit<= 9468137 ? 180
+	    : orbit>= 9637017 && orbit<= 12338491 ? 200
+	    : orbit>= 12533908 && orbit<= 15483844 ? 220
+	    : orbit>= 15653641 && orbit<= 18355679 ? 240
+	    : orbit>= 18555832 && orbit<= 21245305 ? 260
+	    : orbit>= 21385589 && orbit<= 24127787 ? 280
+	    : orbit>= 24298863 && orbit<= 27024565 ? 300
+	    : orbit>= 27136462 && orbit<= 29892124 ? 320
+	    : orbit>= 30062691 && orbit<= 32789318 ? 340
+	    : orbit>= 32929346 && orbit<= 35656656 ? 360
+	    : orbit>= 35826537 && orbit<= 38555859 ? 380
+	    : orbit>= 38755411 && orbit<= 41712687 ? 400
+	    : orbit>= 42025627 && orbit<= 44837160 ? 250
+	      : NOVAL_I;
+	case 368318:
+	  return
+	    orbit>= 38680055 && orbit<= 41436877 ? 10
+	    : orbit>= 41571843 && orbit<= 44311348 ? 25
+	    : orbit>= 44502309 && orbit<= 47205698 ? 50
+	    : orbit>= 47421959 && orbit<= 50347521 ? 75
+	    : orbit>= 50508280 && orbit<= 53224276 ? 100
+	    : orbit>= 53385408 && orbit<= 56124453 ? 120
+	    : orbit>= 56286132 && orbit<= 58997544 ? 140
+	    : orbit>= 59161176 && orbit<= 61882440 ? 160
+	    : orbit>= 62071686 && orbit<= 64759415 ? 180
+	    : orbit>= 64977629 && orbit<= 67907945 ? 200
+	    : orbit>= 68097540 && orbit<= 70786060 ? 220
+	    : orbit>= 70948149 && orbit<= 73673465 ? 240
+	    : orbit>= 73863541 && orbit<= 76551518 ? 260
+	    : orbit>= 76713898 && orbit<= 79436967 ? 280
+	    : orbit>= 79601241 && orbit<= 82331790 ? 300
+	      : NOVAL_I;
+	case 368320:
+	  return
+	    orbit>= 7296034 && orbit<= 10245784 ? 320
+	    : orbit>= 10436831 && orbit<= 13120570 ? 340
+	    : orbit>= 13256620 && orbit<= 16014083 ? 360
+	    : orbit>= 16205744 && orbit<= 19147750 ? 380
+	    : orbit>= 19340819 && orbit<= 22029462 ? 400
+	    : orbit>= 22359114 && orbit<= 25197863 ? 250
+	      : NOVAL_I;
+	case 368636:
+	  return
+	    orbit>= 33385564 && orbit<= 36207914 ? 10
+	    : orbit>= 36371515 && orbit<= 39085596 ? 25
+	    : orbit>= 39249532 && orbit<= 41952787 ? 50
+	    : orbit>= 42143811 && orbit<= 44832462 ? 75
+	    : orbit>= 44995928 && orbit<= 47737091 ? 100
+	    : orbit>= 47899342 && orbit<= 50615477 ? 120
+	    : orbit>= 50751769 && orbit<= 53490218 ? 140
+	    : orbit>= 53653665 && orbit<= 56365742 ? 160
+	    : orbit>= 56528473 && orbit<= 59270226 ? 180
+	    : orbit>= 59461047 && orbit<= 62411805 ? 200
+	    : orbit>= 62548295 && orbit<= 65290140 ? 220
+	    : orbit>= 65425227 && orbit<= 68169459 ? 240
+	    : orbit>= 68331785 && orbit<= 71070912 ? 260
+	    : orbit>= 71234301 && orbit<= 73930658 ? 280
+	    : orbit>= 74121783 && orbit<= 76837685 ? 300
+	    : orbit>= 76973011 && orbit<= 79706299 ? 320
+	    : orbit>= 79868802 && orbit<= 82607141 ? 340
+	    : orbit>= 82768510 && orbit<= 85484677 ? 360
+	    : orbit>= 85646605 && orbit<= 88362620 ? 380
+	    : orbit>= 88525784 && orbit<= 91244037 ? 400
+	    : orbit>= 91540489 && orbit<= 94394769 ? 250
+	      : NOVAL_I;
+	case 370169:
+	  return
+	    orbit>= 40342105 && orbit<= 43280163 ? 10
+	    : orbit>= 43446024 && orbit<= 46163964 ? 25
+	    : orbit>= 46360986 && orbit<= 49310460 ? 50
+	    : orbit>= 49475797 && orbit<= 52185788 ? 75
+	    : orbit>= 52352339 && orbit<= 55071756 ? 100
+	    : orbit>= 55239247 && orbit<= 57948217 ? 120
+	    : orbit>= 58115174 && orbit<= 60824770 ? 140
+	    : orbit>= 60992420 && orbit<= 63706944 ? 160
+	    : orbit>= 63845307 && orbit<= 66614001 ? 180
+	    : orbit>= 66782084 && orbit<= 69473855 ? 200
+	    : orbit>= 69641850 && orbit<= 72375108 ? 220
+	    : orbit>= 72571092 && orbit<= 75528087 ? 240
+	    : orbit>= 75722880 && orbit<= 78653907 ? 260
+	    : orbit>= 78849747 && orbit<= 81532531 ? 280
+	    : orbit>= 81672588 && orbit<= 84442221 ? 300
+	    : orbit>= 84637613 && orbit<= 87569623 ? 320
+	    : orbit>= 87737354 && orbit<= 90457916 ? 340
+	    : orbit>= 90623611 && orbit<= 93355955 ? 360
+	    : orbit>= 93522339 && orbit<= 96229970 ? 380
+	    : orbit>= 96368015 && orbit<= 99098219 ? 400
+	    : orbit>= 99434925 && orbit<= 102250856 ? 250
+	      : NOVAL_I;
+	case 370772:
+	  return
+	    orbit>= 52470445 && orbit<= 55333639 ? 10
+	    : orbit>= 55472333 && orbit<= 58213155 ? 25
+	    : orbit>= 58377241 && orbit<= 61089932 ? 50
+	    : orbit>= 61256076 && orbit<= 63986325 ? 75
+	    : orbit>= 64151875 && orbit<= 66856984 ? 100
+	    : orbit>= 67024241 && orbit<= 69745556 ? 120
+	    : orbit>= 69882848 && orbit<= 72642643 ? 140
+	    : orbit>= 72780104 && orbit<= 75513072 ? 160
+	    : orbit>= 75705636 && orbit<= 78389735 ? 180
+	    : orbit>= 78527331 && orbit<= 81287919 ? 200
+	    : orbit>= 81481429 && orbit<= 84417782 ? 220
+	    : orbit>= 84582153 && orbit<= 87299914 ? 240
+	    : orbit>= 87493915 && orbit<= 90188367 ? 260
+	    : orbit>= 90382679 && orbit<= 93075344 ? 280
+	    : orbit>= 93240739 && orbit<= 95958111 ? 300
+	    : orbit>= 96127506 && orbit<= 98855902 ? 320
+	    : orbit>= 98995097 && orbit<= 101722000 ? 340
+	    : orbit>= 101919990 && orbit<= 104619178 ? 360
+	    : orbit>= 104813521 && orbit<= 107747043 ? 380
+	    : orbit>= 107916236 && orbit<= 110656907 ? 400
+	    : orbit>= 110966804 && orbit<= 113797510 ? 250
+	      : NOVAL_I;
+	case 372597:
+	  return
+	    orbit>= 7903752 && orbit<= 13394769 ? 10
+	    : orbit>= 13557899 && orbit<= 18905971 ? 25
+	    : orbit>= 19067942 && orbit<= 24398996 ? 50
+	    : orbit>= 24559026 && orbit<= 29910640 ? 75
+	    : orbit>= 30098947 && orbit<= 35673648 ? 100
+	    : orbit>= 35834767 && orbit<= 41184922 ? 120
+	    : orbit>= 41347438 && orbit<= 46668343 ? 140
+	    : orbit>= 46855827 && orbit<= 52173231 ? 160
+	      : NOVAL_I;
+	case 372598:
+	  return
+	    orbit>= 2746350 && orbit<= 8139349 ? 180
+	    : orbit>= 8273753 && orbit<= 13650923 ? 200
+	    : orbit>= 15111512 && orbit<= 20472285 ? 220
+	      : NOVAL_I;
+	case 372601:
+	  return
+	    orbit>= 490474 && orbit<= 6042138 ? 240
+	    : orbit>= 6176244 && orbit<= 11549929 ? 260
+	      : NOVAL_I;
+	case 372602:
+	  return
+	    orbit>= 361535 && orbit<= 5785597 ? 280
+	    : orbit>= 5948983 && orbit<= 11296711 ? 300
+	    : orbit>= 11459733 && orbit<= 16786650 ? 320
+	    : orbit>= 16923122 && orbit<= 22312993 ? 340
+	    : orbit>= 22477745 && orbit<= 27808336 ? 360
+	    : orbit>= 28000123 && orbit<= 33564939 ? 380
+	    : orbit>= 33759233 && orbit<= 39083698 ? 400
+	    : orbit>= 39385415 && orbit<= 44853027 ? 250
+	      : NOVAL_I;
+	case 375697:
+	  return
+	    orbit>= 14181054 && orbit<= 17056109 ? 10
+	    : orbit>= 17275876 && orbit<= 20193293 ? 50
+	    : orbit>= 20388031 && orbit<= 23095530 ? 100
+	    : orbit>= 23289806 && orbit<= 26236248 ? 140
+	    : orbit>= 26403276 && orbit<= 29104372 ? 180
+	    : orbit>= 29271858 && orbit<= 32013840 ? 220
+	    : orbit>= 32126302 && orbit<= 34880439 ? 240
+	    : orbit>= 35047818 && orbit<= 37760914 ? 260
+	    : orbit>= 37929290 && orbit<= 40658642 ? 280
+	    : orbit>= 40852199 && orbit<= 43809979 ? 300
+	    : orbit>= 43977324 && orbit<= 46666746 ? 320
+	    : orbit>= 46832244 && orbit<= 49562209 ? 340
+	    : orbit>= 49759108 && orbit<= 52723019 ? 360
+	    : orbit>= 52860920 && orbit<= 55597269 ? 380
+	    : orbit>= 55790859 && orbit<= 58751634 ? 400
+	    : orbit>= 59029356 && orbit<= 61896178 ? 250
+	      : NOVAL_I;
     default:
       return NOVAL_I;
     }
   } // end hv_l4
   
   // Define Disk 1 Scans below
-  int hv_d1(int run, int ls, int orbit) {
+  int hv_d1(int run, int ls, int orbit, int ring) {
     switch (run) {
       // hv scan 2010 April 05 - L3,FPix modules
     case 132599:
@@ -5278,6 +6287,275 @@ namespace scans {
 	    : orbit>= 56499465 && orbit<= 59266913 ? 450
 	    : orbit>= 59529205 && orbit<= 62409575 ? 350
 	      : NOVAL_I;
+	case 365775:
+	  return
+	    orbit>= 11674141 && orbit<= 14429083 ? 225
+	    : orbit>= 14589392 && orbit<= 17324633 ? 250
+	    : orbit>= 17510902 && orbit<= 20196585 ? 275
+	    : orbit>= 20383796 && orbit<= 23092362 ? 300
+	    : orbit>= 23253989 && orbit<= 25982133 ? 320
+	    : orbit>= 26197706 && orbit<= 29103790 ? 340
+	    : orbit>= 29319343 && orbit<= 32255384 ? 360
+	    : orbit>= 32444673 && orbit<= 35145650 ? 380
+	    : orbit>= 35334294 && orbit<= 38017264 ? 400
+	    : orbit>= 38180097 && orbit<= 40924604 ? 425
+	    : orbit>= 41087244 && orbit<= 43808026 ? 450
+	    : orbit>= 44514502 && orbit<= 47198988 ? 10
+	    : orbit>= 47361806 && orbit<= 50091213 ? 25
+	    : orbit>= 50255317 && orbit<= 52961410 ? 50
+	    : orbit>= 53152818 && orbit<= 55865611 ? 75
+	    : orbit>= 56057509 && orbit<= 59001403 ? 100
+	    : orbit>= 59192755 && orbit<= 61877774 ? 125
+	    : orbit>= 62043689 && orbit<= 64774124 ? 150
+	    : orbit>= 64884831 && orbit<= 67653732 ? 175
+	    : orbit>= 67791500 && orbit<= 70538399 ? 200
+	    : orbit>= 70818655 && orbit<= 73668482 ? 350
+	      : NOVAL_I;
+	case 366451:
+    if (ring==1) {
+	  return
+	    orbit>= 105899907 && orbit<= 108812288 ? 10
+	    : orbit>= 109057182 && orbit<= 111946094 ? 50
+	    : orbit>= 112217754 && orbit<= 115102167 ? 90
+	    : orbit>= 115372336 && orbit<= 118244161 ? 130
+	    : orbit>= 118544068 && orbit<= 121401866 ? 170
+	    : orbit>= 121674019 && orbit<= 124537023 ? 210
+	    : orbit>= 124837506 && orbit<= 127678870 ? 250
+	    : orbit>= 127950483 && orbit<= 130824261 ? 280
+	    : orbit>= 131066318 && orbit<= 133963750 ? 310
+	    : orbit>= 134236191 && orbit<= 137114959 ? 330
+	    : orbit>= 137360095 && orbit<= 140269143 ? 370
+	    : orbit>= 140514680 && orbit<= 143425440 ? 390
+	    : orbit>= 143668962 && orbit<= 146550293 ? 420
+	    : orbit>= 146825766 && orbit<= 149705145 ? 450
+	    : orbit>= 150058975 && orbit<= 152838797 ? 350
+	      : NOVAL_I;
+    }
+    else if (ring==2) {
+	  return
+	    orbit>= 105899907 && orbit<= 108812288 ? 10
+	    : orbit>= 109057182 && orbit<= 111946094 ? 40
+	    : orbit>= 112217754 && orbit<= 115102167 ? 80
+	    : orbit>= 115372336 && orbit<= 118244161 ? 120
+	    : orbit>= 118544068 && orbit<= 121401866 ? 160
+	    : orbit>= 121674019 && orbit<= 124537023 ? 200
+	    : orbit>= 124837506 && orbit<= 127678870 ? 230
+	    : orbit>= 127950483 && orbit<= 130824261 ? 260
+	    : orbit>= 131066318 && orbit<= 133963750 ? 280
+	    : orbit>= 134236191 && orbit<= 137114959 ? 320
+	    : orbit>= 137360095 && orbit<= 140269143 ? 340
+	    : orbit>= 140514680 && orbit<= 143425440 ? 370
+	    : orbit>= 143668962 && orbit<= 146550293 ? 400
+	    : orbit>= 146825766 && orbit<= 149705145 ? 430
+	    : orbit>= 150058975 && orbit<= 152838797 ? 300
+	      : NOVAL_I;
+    }
+	case 367262:
+	  return
+	    orbit>= 7099870 && orbit<= 9973319 ? 10
+	    : orbit>= 10169046 && orbit<= 12852101 ? 25
+	    : orbit>= 13040868 && orbit<= 15739671 ? 50
+	    : orbit>= 15959748 && orbit<= 18892548 ? 75
+	    : orbit>= 19083998 && orbit<= 21766757 ? 100
+	    : orbit>= 21931959 && orbit<= 24652329 ? 125
+	    : orbit>= 24817938 && orbit<= 27542550 ? 150
+	    : orbit>= 27734239 && orbit<= 30417342 ? 175
+	    : orbit>= 30608624 && orbit<= 33313703 ? 200
+	    : orbit>= 33505478 && orbit<= 36453885 ? 225
+	    : orbit>= 36587559 && orbit<= 39346964 ? 250
+	    : orbit>= 39511702 && orbit<= 42230281 ? 275
+	    : orbit>= 42366690 && orbit<= 45102527 ? 300
+	    : orbit>= 45240256 && orbit<= 47984863 ? 320
+	    : orbit>= 48176143 && orbit<= 50887425 ? 340
+	    : orbit>= 51050647 && orbit<= 53762229 ? 360
+	    : orbit>= 53954281 && orbit<= 56911774 ? 380
+	    : orbit>= 57075795 && orbit<= 59793547 ? 400
+	    : orbit>= 59929631 && orbit<= 62659588 ? 425
+	    : orbit>= 62878057 && orbit<= 65827762 ? 450
+	    : orbit>= 66128316 && orbit<= 68970973 ? 350
+	      : NOVAL_I;
+	case 367691:
+	  return
+	    orbit>= 38093805 && orbit<= 40915552 ? 10
+	    : orbit>= 41110913 && orbit<= 44047646 ? 25
+	    : orbit>= 44186753 && orbit<= 46929565 ? 50
+	    : orbit>= 47125589 && orbit<= 49838059 ? 75
+	    : orbit>= 50003212 && orbit<= 52705357 ? 100
+	    : orbit>= 52896569 && orbit<= 55580803 ? 125
+	      : NOVAL_I;
+	case 367693:
+	  return
+	    orbit>= 1098110 && orbit<= 3945219 ? 125
+	    : orbit>= 4135366 && orbit<= 6829305 ? 150
+	      : NOVAL_I;
+	case 367696:
+	  return
+	    orbit>= 3506414 && orbit<= 6308118 ? 175
+	    : orbit>= 6506342 && orbit<= 9468137 ? 200
+	    : orbit>= 9637017 && orbit<= 12338491 ? 225
+	    : orbit>= 12533908 && orbit<= 15483844 ? 250
+	    : orbit>= 15653641 && orbit<= 18355679 ? 275
+	    : orbit>= 18555832 && orbit<= 21245305 ? 300
+	    : orbit>= 21385589 && orbit<= 24127787 ? 320
+	    : orbit>= 24298863 && orbit<= 27024565 ? 340
+	    : orbit>= 27136462 && orbit<= 29892124 ? 360
+	    : orbit>= 30062691 && orbit<= 32789318 ? 380
+	    : orbit>= 32929346 && orbit<= 35656656 ? 400
+	    : orbit>= 35826537 && orbit<= 38555859 ? 425
+	    : orbit>= 38755411 && orbit<= 41712687 ? 450
+	    : orbit>= 42025627 && orbit<= 44837160 ? 350
+	      : NOVAL_I;
+	case 368318:
+	  return
+	    orbit>= 38680055 && orbit<= 41436877 ? 10
+	    : orbit>= 41571843 && orbit<= 44311348 ? 25
+	    : orbit>= 44502309 && orbit<= 47205698 ? 50
+	    : orbit>= 47421959 && orbit<= 50347521 ? 75
+	    : orbit>= 50508280 && orbit<= 53224276 ? 100
+	    : orbit>= 53385408 && orbit<= 56124453 ? 125
+	    : orbit>= 56286132 && orbit<= 58997544 ? 150
+	    : orbit>= 59161176 && orbit<= 61882440 ? 175
+	    : orbit>= 62071686 && orbit<= 64759415 ? 200
+	    : orbit>= 64977629 && orbit<= 67907945 ? 225
+	    : orbit>= 68097540 && orbit<= 70786060 ? 250
+	    : orbit>= 70948149 && orbit<= 73673465 ? 275
+	    : orbit>= 73863541 && orbit<= 76551518 ? 300
+	    : orbit>= 76713898 && orbit<= 79436967 ? 320
+	    : orbit>= 79601241 && orbit<= 82331790 ? 340
+	      : NOVAL_I;
+	case 368320:
+	  return
+	    orbit>= 7296034 && orbit<= 10245784 ? 360
+	    : orbit>= 10436831 && orbit<= 13120570 ? 380
+	    : orbit>= 13256620 && orbit<= 16014083 ? 400
+	    : orbit>= 16205744 && orbit<= 19147750 ? 425
+	    : orbit>= 19340819 && orbit<= 22029462 ? 450
+	    : orbit>= 22359114 && orbit<= 25197863 ? 350
+	      : NOVAL_I;
+	case 368636:
+	  return
+	    orbit>= 33385564 && orbit<= 36207914 ? 10
+	    : orbit>= 36371515 && orbit<= 39085596 ? 25
+	    : orbit>= 39249532 && orbit<= 41952787 ? 50
+	    : orbit>= 42143811 && orbit<= 44832462 ? 75
+	    : orbit>= 44995928 && orbit<= 47737091 ? 100
+	    : orbit>= 47899342 && orbit<= 50615477 ? 125
+	    : orbit>= 50751769 && orbit<= 53490218 ? 150
+	    : orbit>= 53653665 && orbit<= 56365742 ? 175
+	    : orbit>= 56528473 && orbit<= 59270226 ? 200
+	    : orbit>= 59461047 && orbit<= 62411805 ? 225
+	    : orbit>= 62548295 && orbit<= 65290140 ? 250
+	    : orbit>= 65425227 && orbit<= 68169459 ? 275
+	    : orbit>= 68331785 && orbit<= 71070912 ? 300
+	    : orbit>= 71234301 && orbit<= 73930658 ? 320
+	    : orbit>= 74121783 && orbit<= 76837685 ? 340
+	    : orbit>= 76973011 && orbit<= 79706299 ? 360
+	    : orbit>= 79868802 && orbit<= 82607141 ? 380
+	    : orbit>= 82768510 && orbit<= 85484677 ? 400
+	    : orbit>= 85646605 && orbit<= 88362620 ? 425
+	    : orbit>= 88525784 && orbit<= 91244037 ? 450
+	    : orbit>= 91540489 && orbit<= 94394769 ? 350
+	      : NOVAL_I;
+	case 370169:
+	  return
+	    orbit>= 40342105 && orbit<= 43280163 ? 10
+	    : orbit>= 43446024 && orbit<= 46163964 ? 25
+	    : orbit>= 46360986 && orbit<= 49310460 ? 50
+	    : orbit>= 49475797 && orbit<= 52185788 ? 75
+	    : orbit>= 52352339 && orbit<= 55071756 ? 100
+	    : orbit>= 55239247 && orbit<= 57948217 ? 125
+	    : orbit>= 58115174 && orbit<= 60824770 ? 150
+	    : orbit>= 60992420 && orbit<= 63706944 ? 175
+	    : orbit>= 63845307 && orbit<= 66614001 ? 200
+	    : orbit>= 66782084 && orbit<= 69473855 ? 225
+	    : orbit>= 69641850 && orbit<= 72375108 ? 250
+	    : orbit>= 72571092 && orbit<= 75528087 ? 275
+	    : orbit>= 75722880 && orbit<= 78653907 ? 300
+	    : orbit>= 78849747 && orbit<= 81532531 ? 320
+	    : orbit>= 81672588 && orbit<= 84442221 ? 340
+	    : orbit>= 84637613 && orbit<= 87569623 ? 360
+	    : orbit>= 87737354 && orbit<= 90457916 ? 380
+	    : orbit>= 90623611 && orbit<= 93355955 ? 400
+	    : orbit>= 93522339 && orbit<= 96229970 ? 425
+	    : orbit>= 96368015 && orbit<= 99098219 ? 450
+	    : orbit>= 99434925 && orbit<= 102250856 ? 350
+	      : NOVAL_I;
+	case 370772:
+	  return
+	    orbit>= 52470445 && orbit<= 55333639 ? 10
+	    : orbit>= 55472333 && orbit<= 58213155 ? 25
+	    : orbit>= 58377241 && orbit<= 61089932 ? 50
+	    : orbit>= 61256076 && orbit<= 63986325 ? 75
+	    : orbit>= 64151875 && orbit<= 66856984 ? 100
+	    : orbit>= 67024241 && orbit<= 69745556 ? 125
+	    : orbit>= 69882848 && orbit<= 72642643 ? 150
+	    : orbit>= 72780104 && orbit<= 75513072 ? 175
+	    : orbit>= 75705636 && orbit<= 78389735 ? 200
+	    : orbit>= 78527331 && orbit<= 81287919 ? 225
+	    : orbit>= 81481429 && orbit<= 84417782 ? 250
+	    : orbit>= 84582153 && orbit<= 87299914 ? 275
+	    : orbit>= 87493915 && orbit<= 90188367 ? 300
+	    : orbit>= 90382679 && orbit<= 93075344 ? 320
+	    : orbit>= 93240739 && orbit<= 95958111 ? 340
+	    : orbit>= 96127506 && orbit<= 98855902 ? 360
+	    : orbit>= 98995097 && orbit<= 101722000 ? 380
+	    : orbit>= 101919990 && orbit<= 104619178 ? 400
+	    : orbit>= 104813521 && orbit<= 107747043 ? 425
+	    : orbit>= 107916236 && orbit<= 110656907 ? 450
+	    : orbit>= 110966804 && orbit<= 113797510 ? 350
+	      : NOVAL_I;
+	case 372597:
+	  return
+	    orbit>= 7903752 && orbit<= 13394769 ? 10
+	    : orbit>= 13557899 && orbit<= 18905971 ? 25
+	    : orbit>= 19067942 && orbit<= 24398996 ? 50
+	    : orbit>= 24559026 && orbit<= 29910640 ? 75
+	    : orbit>= 30098947 && orbit<= 35673648 ? 100
+	    : orbit>= 35834767 && orbit<= 41184922 ? 125
+	    : orbit>= 41347438 && orbit<= 46668343 ? 150
+	    : orbit>= 46855827 && orbit<= 52173231 ? 175
+	      : NOVAL_I;
+	case 372598:
+	  return
+	    orbit>= 2746350 && orbit<= 8139349 ? 200
+	    : orbit>= 8273753 && orbit<= 13650923 ? 225
+	    : orbit>= 15111512 && orbit<= 20472285 ? 250
+	      : NOVAL_I;
+	case 372601:
+	  return
+	    orbit>= 490474 && orbit<= 6042138 ? 275
+	    : orbit>= 6176244 && orbit<= 11549929 ? 300
+	      : NOVAL_I;
+	case 372602:
+	  return
+	    orbit>= 361535 && orbit<= 5785597 ? 320
+	    : orbit>= 5948983 && orbit<= 11296711 ? 340
+	    : orbit>= 11459733 && orbit<= 16786650 ? 360
+	    : orbit>= 16923122 && orbit<= 22312993 ? 380
+	    : orbit>= 22477745 && orbit<= 27808336 ? 400
+	    : orbit>= 28000123 && orbit<= 33564939 ? 425
+	    : orbit>= 33759233 && orbit<= 39083698 ? 450
+	    : orbit>= 39385415 && orbit<= 44853027 ? 350
+	      : NOVAL_I;
+	case 375697:
+	  return
+	    orbit>= 14181054 && orbit<= 17056109 ? 10
+	    : orbit>= 17275876 && orbit<= 20193293 ? 50
+	    : orbit>= 20388031 && orbit<= 23095530 ? 100
+	    : orbit>= 23289806 && orbit<= 26236248 ? 150
+	    : orbit>= 26403276 && orbit<= 29104372 ? 200
+	    : orbit>= 29271858 && orbit<= 32013840 ? 250
+	    : orbit>= 32126302 && orbit<= 34880439 ? 275
+	    : orbit>= 35047818 && orbit<= 37760914 ? 300
+	    : orbit>= 37929290 && orbit<= 40658642 ? 320
+	    : orbit>= 40852199 && orbit<= 43809979 ? 340
+	    : orbit>= 43977324 && orbit<= 46666746 ? 360
+	    : orbit>= 46832244 && orbit<= 49562209 ? 380
+	    : orbit>= 49759108 && orbit<= 52723019 ? 400
+	    : orbit>= 52860920 && orbit<= 55597269 ? 425
+	    : orbit>= 55790859 && orbit<= 58751634 ? 450
+	    : orbit>= 59029356 && orbit<= 61896178 ? 350
+	      : NOVAL_I;
     default:
       return NOVAL_I;
     }
@@ -5285,7 +6563,7 @@ namespace scans {
   
   
   // Define Disk 2 Scans below
-  int hv_d2(int run, int ls, int orbit) {
+  int hv_d2(int run, int ls, int orbit, int ring) {
     switch (run) {
       // voltage scan 2012 Apr 06 - L1, L2, L3, D1, D2
     case 190595:
@@ -5491,12 +6769,51 @@ namespace scans {
 	    : orbit>= 97984695 && orbit<= 100679171 ? 300
 	    : orbit>= 100731058 && orbit<= 103566025 ? 400
 	      : NOVAL_I;
+	case 366451:
+  if (ring==1) {
+	  return
+	    orbit>= 58699848 && orbit<= 61609564 ? 10
+	    : orbit>= 61855050 && orbit<= 64768771 ? 50
+	    : orbit>= 65015489 && orbit<= 67906385 ? 90
+	    : orbit>= 68180112 && orbit<= 71046519 ? 130
+	    : orbit>= 71291153 && orbit<= 74213289 ? 170
+	    : orbit>= 74483037 && orbit<= 77340829 ? 210
+	    : orbit>= 77582257 && orbit<= 80500459 ? 250
+	    : orbit>= 80768423 && orbit<= 83635242 ? 280
+	    : orbit>= 83903748 && orbit<= 86778734 ? 310
+	    : orbit>= 86994641 && orbit<= 89925879 ? 330
+	    : orbit>= 90166981 && orbit<= 93066380 ? 370
+	    : orbit>= 93280876 && orbit<= 95967751 ? 390
+	    : orbit>= 96237367 && orbit<= 99108516 ? 420
+	    : orbit>= 99379543 && orbit<= 102262964 ? 450
+	    : orbit>= 102641354 && orbit<= 105413326 ? 350
+	      : NOVAL_I;
+  }
+  else if (ring==2) {
+	  return
+	    orbit>= 58699848 && orbit<= 61609564 ? 10
+	    : orbit>= 61855050 && orbit<= 64768771 ? 40
+	    : orbit>= 65015489 && orbit<= 67906385 ? 80
+	    : orbit>= 68180112 && orbit<= 71046519 ? 120
+	    : orbit>= 71291153 && orbit<= 74213289 ? 160
+	    : orbit>= 74483037 && orbit<= 77340829 ? 200
+	    : orbit>= 77582257 && orbit<= 80500459 ? 230
+	    : orbit>= 80768423 && orbit<= 83635242 ? 260
+	    : orbit>= 83903748 && orbit<= 86778734 ? 280
+	    : orbit>= 86994641 && orbit<= 89925879 ? 320
+	    : orbit>= 90166981 && orbit<= 93066380 ? 340
+	    : orbit>= 93280876 && orbit<= 95967751 ? 370
+	    : orbit>= 96237367 && orbit<= 99108516 ? 400
+	    : orbit>= 99379543 && orbit<= 102262964 ? 430
+	    : orbit>= 102641354 && orbit<= 105413326 ? 300
+	      : NOVAL_I;
+  }
     default:
       return NOVAL_I;
     }
   } // end hv_d2
   
-  int hv_d3(int run, int ls, int orbit) {
+  int hv_d3(int run, int ls, int orbit, int ring) {
     switch (run) {
       //2017 May25 - FPix only
     case 295128:
@@ -6050,22 +7367,291 @@ namespace scans {
 	    : orbit>= 56499465 && orbit<= 59266913 ? 425
 	    : orbit>= 59529205 && orbit<= 62409575 ? 300
 	      : NOVAL_I;
+	case 365775:
+	  return
+	    orbit>= 11674141 && orbit<= 14429083 ? 200
+	    : orbit>= 14589392 && orbit<= 17324633 ? 220
+	    : orbit>= 17510902 && orbit<= 20196585 ? 240
+	    : orbit>= 20383796 && orbit<= 23092362 ? 260
+	    : orbit>= 23253989 && orbit<= 25982133 ? 280
+	    : orbit>= 26197706 && orbit<= 29103790 ? 320
+	    : orbit>= 29319343 && orbit<= 32255384 ? 340
+	    : orbit>= 32444673 && orbit<= 35145650 ? 360
+	    : orbit>= 35334294 && orbit<= 38017264 ? 380
+	    : orbit>= 38180097 && orbit<= 40924604 ? 400
+	    : orbit>= 41087244 && orbit<= 43808026 ? 425
+	    : orbit>= 44514502 && orbit<= 47198988 ? 10
+	    : orbit>= 47361806 && orbit<= 50091213 ? 25
+	    : orbit>= 50255317 && orbit<= 52961410 ? 50
+	    : orbit>= 53152818 && orbit<= 55865611 ? 75
+	    : orbit>= 56057509 && orbit<= 59001403 ? 100
+	    : orbit>= 59192755 && orbit<= 61877774 ? 120
+	    : orbit>= 62043689 && orbit<= 64774124 ? 140
+	    : orbit>= 64884831 && orbit<= 67653732 ? 160
+	    : orbit>= 67791500 && orbit<= 70538399 ? 180
+	    : orbit>= 70818655 && orbit<= 73668482 ? 300
+	      : NOVAL_I;
+	case 366451:
+  if (ring==1) {
+	  return
+	    orbit>= 11427179 && orbit<= 14160940 ? 10
+	    : orbit>= 14382455 && orbit<= 17324839 ? 50
+	    : orbit>= 17573565 && orbit<= 20460932 ? 90
+	    : orbit>= 20710526 && orbit<= 23611692 ? 130
+	    : orbit>= 23862063 && orbit<= 26749131 ? 170
+	    : orbit>= 26969444 && orbit<= 29902584 ? 210
+	    : orbit>= 30175576 && orbit<= 33058196 ? 250
+	    : orbit>= 33332287 && orbit<= 36185466 ? 280
+	    : orbit>= 36408444 && orbit<= 39337900 ? 310
+	    : orbit>= 39558702 && orbit<= 42481928 ? 330
+	    : orbit>= 42732455 && orbit<= 45642756 ? 370
+	    : orbit>= 45914551 && orbit<= 48781132 ? 390
+	    : orbit>= 49056415 && orbit<= 51921275 ? 420
+	    : orbit>= 52194942 && orbit<= 55078899 ? 450
+	    : orbit>= 55408643 && orbit<= 58210178 ? 350
+	      : NOVAL_I;
+  }
+  else if (ring==2) {
+	  return
+	    orbit>= 11427179 && orbit<= 14160940 ? 10
+	    : orbit>= 14382455 && orbit<= 17324839 ? 40
+	    : orbit>= 17573565 && orbit<= 20460932 ? 80
+	    : orbit>= 20710526 && orbit<= 23611692 ? 120
+	    : orbit>= 23862063 && orbit<= 26749131 ? 160
+	    : orbit>= 26969444 && orbit<= 29902584 ? 200
+	    : orbit>= 30175576 && orbit<= 33058196 ? 230
+	    : orbit>= 33332287 && orbit<= 36185466 ? 260
+	    : orbit>= 36408444 && orbit<= 39337900 ? 280
+	    : orbit>= 39558702 && orbit<= 42481928 ? 320
+	    : orbit>= 42732455 && orbit<= 45642756 ? 340
+	    : orbit>= 45914551 && orbit<= 48781132 ? 370
+	    : orbit>= 49056415 && orbit<= 51921275 ? 400
+	    : orbit>= 52194942 && orbit<= 55078899 ? 430
+	    : orbit>= 55408643 && orbit<= 58210178 ? 300
+	      : NOVAL_I;
+  }
+	case 367262:
+	  return
+	    orbit>= 7099870 && orbit<= 9973319 ? 10
+	    : orbit>= 10169046 && orbit<= 12852101 ? 25
+	    : orbit>= 13040868 && orbit<= 15739671 ? 50
+	    : orbit>= 15959748 && orbit<= 18892548 ? 75
+	    : orbit>= 19083998 && orbit<= 21766757 ? 100
+	    : orbit>= 21931959 && orbit<= 24652329 ? 120
+	    : orbit>= 24817938 && orbit<= 27542550 ? 140
+	    : orbit>= 27734239 && orbit<= 30417342 ? 160
+	    : orbit>= 30608624 && orbit<= 33313703 ? 180
+	    : orbit>= 33505478 && orbit<= 36453885 ? 200
+	    : orbit>= 36587559 && orbit<= 39346964 ? 220
+	    : orbit>= 39511702 && orbit<= 42230281 ? 240
+	    : orbit>= 42366690 && orbit<= 45102527 ? 260
+	    : orbit>= 45240256 && orbit<= 47984863 ? 280
+	    : orbit>= 48176143 && orbit<= 50887425 ? 320
+	    : orbit>= 51050647 && orbit<= 53762229 ? 340
+	    : orbit>= 53954281 && orbit<= 56911774 ? 360
+	    : orbit>= 57075795 && orbit<= 59793547 ? 380
+	    : orbit>= 59929631 && orbit<= 62659588 ? 400
+	    : orbit>= 62878057 && orbit<= 65827762 ? 425
+	    : orbit>= 66128316 && orbit<= 68970973 ? 300
+	      : NOVAL_I;
+	case 367691:
+	  return
+	    orbit>= 38093805 && orbit<= 40915552 ? 10
+	    : orbit>= 41110913 && orbit<= 44047646 ? 25
+	    : orbit>= 44186753 && orbit<= 46929565 ? 50
+	    : orbit>= 47125589 && orbit<= 49838059 ? 75
+	    : orbit>= 50003212 && orbit<= 52705357 ? 100
+	    : orbit>= 52896569 && orbit<= 55580803 ? 120
+	      : NOVAL_I;
+	case 367693:
+	  return
+	    orbit>= 1098110 && orbit<= 3945219 ? 120
+	    : orbit>= 4135366 && orbit<= 6829305 ? 140
+	      : NOVAL_I;
+	case 367696:
+	  return
+	    orbit>= 3506414 && orbit<= 6308118 ? 160
+	    : orbit>= 6506342 && orbit<= 9468137 ? 180
+	    : orbit>= 9637017 && orbit<= 12338491 ? 200
+	    : orbit>= 12533908 && orbit<= 15483844 ? 220
+	    : orbit>= 15653641 && orbit<= 18355679 ? 240
+	    : orbit>= 18555832 && orbit<= 21245305 ? 260
+	    : orbit>= 21385589 && orbit<= 24127787 ? 280
+	    : orbit>= 24298863 && orbit<= 27024565 ? 320
+	    : orbit>= 27136462 && orbit<= 29892124 ? 340
+	    : orbit>= 30062691 && orbit<= 32789318 ? 360
+	    : orbit>= 32929346 && orbit<= 35656656 ? 380
+	    : orbit>= 35826537 && orbit<= 38555859 ? 400
+	    : orbit>= 38755411 && orbit<= 41712687 ? 425
+	    : orbit>= 42025627 && orbit<= 44837160 ? 300
+	      : NOVAL_I;
+	case 368318:
+	  return
+	    orbit>= 38680055 && orbit<= 41436877 ? 10
+	    : orbit>= 41571843 && orbit<= 44311348 ? 25
+	    : orbit>= 44502309 && orbit<= 47205698 ? 50
+	    : orbit>= 47421959 && orbit<= 50347521 ? 75
+	    : orbit>= 50508280 && orbit<= 53224276 ? 100
+	    : orbit>= 53385408 && orbit<= 56124453 ? 120
+	    : orbit>= 56286132 && orbit<= 58997544 ? 140
+	    : orbit>= 59161176 && orbit<= 61882440 ? 160
+	    : orbit>= 62071686 && orbit<= 64759415 ? 180
+	    : orbit>= 64977629 && orbit<= 67907945 ? 200
+	    : orbit>= 68097540 && orbit<= 70786060 ? 220
+	    : orbit>= 70948149 && orbit<= 73673465 ? 240
+	    : orbit>= 73863541 && orbit<= 76551518 ? 260
+	    : orbit>= 76713898 && orbit<= 79436967 ? 280
+	    : orbit>= 79601241 && orbit<= 82331790 ? 320
+	      : NOVAL_I;
+	case 368320:
+	  return
+	    orbit>= 7296034 && orbit<= 10245784 ? 340
+	    : orbit>= 10436831 && orbit<= 13120570 ? 360
+	    : orbit>= 13256620 && orbit<= 16014083 ? 380
+	    : orbit>= 16205744 && orbit<= 19147750 ? 400
+	    : orbit>= 19340819 && orbit<= 22029462 ? 425
+	    : orbit>= 22359114 && orbit<= 25197863 ? 300
+	      : NOVAL_I;
+	case 368636:
+	  return
+	    orbit>= 33385564 && orbit<= 36207914 ? 10
+	    : orbit>= 36371515 && orbit<= 39085596 ? 25
+	    : orbit>= 39249532 && orbit<= 41952787 ? 50
+	    : orbit>= 42143811 && orbit<= 44832462 ? 75
+	    : orbit>= 44995928 && orbit<= 47737091 ? 100
+	    : orbit>= 47899342 && orbit<= 50615477 ? 120
+	    : orbit>= 50751769 && orbit<= 53490218 ? 140
+	    : orbit>= 53653665 && orbit<= 56365742 ? 160
+	    : orbit>= 56528473 && orbit<= 59270226 ? 180
+	    : orbit>= 59461047 && orbit<= 62411805 ? 200
+	    : orbit>= 62548295 && orbit<= 65290140 ? 220
+	    : orbit>= 65425227 && orbit<= 68169459 ? 240
+	    : orbit>= 68331785 && orbit<= 71070912 ? 260
+	    : orbit>= 71234301 && orbit<= 73930658 ? 280
+	    : orbit>= 74121783 && orbit<= 76837685 ? 320
+	    : orbit>= 76973011 && orbit<= 79706299 ? 340
+	    : orbit>= 79868802 && orbit<= 82607141 ? 360
+	    : orbit>= 82768510 && orbit<= 85484677 ? 380
+	    : orbit>= 85646605 && orbit<= 88362620 ? 400
+	    : orbit>= 88525784 && orbit<= 91244037 ? 425
+	    : orbit>= 91540489 && orbit<= 94394769 ? 300
+	      : NOVAL_I;
+	case 370169:
+	  return
+	    orbit>= 40342105 && orbit<= 43280163 ? 10
+	    : orbit>= 43446024 && orbit<= 46163964 ? 25
+	    : orbit>= 46360986 && orbit<= 49310460 ? 50
+	    : orbit>= 49475797 && orbit<= 52185788 ? 75
+	    : orbit>= 52352339 && orbit<= 55071756 ? 100
+	    : orbit>= 55239247 && orbit<= 57948217 ? 120
+	    : orbit>= 58115174 && orbit<= 60824770 ? 140
+	    : orbit>= 60992420 && orbit<= 63706944 ? 160
+	    : orbit>= 63845307 && orbit<= 66614001 ? 180
+	    : orbit>= 66782084 && orbit<= 69473855 ? 200
+	    : orbit>= 69641850 && orbit<= 72375108 ? 220
+	    : orbit>= 72571092 && orbit<= 75528087 ? 240
+	    : orbit>= 75722880 && orbit<= 78653907 ? 260
+	    : orbit>= 78849747 && orbit<= 81532531 ? 280
+	    : orbit>= 81672588 && orbit<= 84442221 ? 320
+	    : orbit>= 84637613 && orbit<= 87569623 ? 340
+	    : orbit>= 87737354 && orbit<= 90457916 ? 360
+	    : orbit>= 90623611 && orbit<= 93355955 ? 380
+	    : orbit>= 93522339 && orbit<= 96229970 ? 400
+	    : orbit>= 96368015 && orbit<= 99098219 ? 425
+	    : orbit>= 99434925 && orbit<= 102250856 ? 300
+	      : NOVAL_I;
+	case 370772:
+	  return
+	    orbit>= 52470445 && orbit<= 55333639 ? 10
+	    : orbit>= 55472333 && orbit<= 58213155 ? 25
+	    : orbit>= 58377241 && orbit<= 61089932 ? 50
+	    : orbit>= 61256076 && orbit<= 63986325 ? 75
+	    : orbit>= 64151875 && orbit<= 66856984 ? 100
+	    : orbit>= 67024241 && orbit<= 69745556 ? 120
+	    : orbit>= 69882848 && orbit<= 72642643 ? 140
+	    : orbit>= 72780104 && orbit<= 75513072 ? 160
+	    : orbit>= 75705636 && orbit<= 78389735 ? 180
+	    : orbit>= 78527331 && orbit<= 81287919 ? 200
+	    : orbit>= 81481429 && orbit<= 84417782 ? 220
+	    : orbit>= 84582153 && orbit<= 87299914 ? 240
+	    : orbit>= 87493915 && orbit<= 90188367 ? 260
+	    : orbit>= 90382679 && orbit<= 93075344 ? 280
+	    : orbit>= 93240739 && orbit<= 95958111 ? 320
+	    : orbit>= 96127506 && orbit<= 98855902 ? 340
+	    : orbit>= 98995097 && orbit<= 101722000 ? 360
+	    : orbit>= 101919990 && orbit<= 104619178 ? 380
+	    : orbit>= 104813521 && orbit<= 107747043 ? 400
+	    : orbit>= 107916236 && orbit<= 110656907 ? 425
+	    : orbit>= 110966804 && orbit<= 113797510 ? 300
+	      : NOVAL_I;
+	case 372597:
+	  return
+	    orbit>= 7903752 && orbit<= 13394769 ? 10
+	    : orbit>= 13557899 && orbit<= 18905971 ? 25
+	    : orbit>= 19067942 && orbit<= 24398996 ? 50
+	    : orbit>= 24559026 && orbit<= 29910640 ? 75
+	    : orbit>= 30098947 && orbit<= 35673648 ? 100
+	    : orbit>= 35834767 && orbit<= 41184922 ? 120
+	    : orbit>= 41347438 && orbit<= 46668343 ? 140
+	    : orbit>= 46855827 && orbit<= 52173231 ? 160
+	      : NOVAL_I;
+	case 372598:
+	  return
+	    orbit>= 2746350 && orbit<= 8139349 ? 180
+	    : orbit>= 8273753 && orbit<= 13650923 ? 200
+	    : orbit>= 15111512 && orbit<= 20472285 ? 220
+	      : NOVAL_I;
+	case 372601:
+	  return
+	    orbit>= 490474 && orbit<= 6042138 ? 240
+	    : orbit>= 6176244 && orbit<= 11549929 ? 260
+	      : NOVAL_I;
+	case 372602:
+	  return
+	    orbit>= 361535 && orbit<= 5785597 ? 280
+	    : orbit>= 5948983 && orbit<= 11296711 ? 320
+	    : orbit>= 11459733 && orbit<= 16786650 ? 340
+	    : orbit>= 16923122 && orbit<= 22312993 ? 360
+	    : orbit>= 22477745 && orbit<= 27808336 ? 380
+	    : orbit>= 28000123 && orbit<= 33564939 ? 400
+	    : orbit>= 33759233 && orbit<= 39083698 ? 425
+	    : orbit>= 39385415 && orbit<= 44853027 ? 300
+	      : NOVAL_I;
+	case 375697:
+	  return
+	    orbit>= 14181054 && orbit<= 17056109 ? 10
+	    : orbit>= 17275876 && orbit<= 20193293 ? 50
+	    : orbit>= 20388031 && orbit<= 23095530 ? 100
+	    : orbit>= 23289806 && orbit<= 26236248 ? 140
+	    : orbit>= 26403276 && orbit<= 29104372 ? 180
+	    : orbit>= 29271858 && orbit<= 32013840 ? 220
+	    : orbit>= 32126302 && orbit<= 34880439 ? 240
+	    : orbit>= 35047818 && orbit<= 37760914 ? 260
+	    : orbit>= 37929290 && orbit<= 40658642 ? 280
+	    : orbit>= 40852199 && orbit<= 43809979 ? 320
+	    : orbit>= 43977324 && orbit<= 46666746 ? 340
+	    : orbit>= 46832244 && orbit<= 49562209 ? 360
+	    : orbit>= 49759108 && orbit<= 52723019 ? 380
+	    : orbit>= 52860920 && orbit<= 55597269 ? 400
+	    : orbit>= 55790859 && orbit<= 58751634 ? 425
+	    : orbit>= 59029356 && orbit<= 61896178 ? 300
+	      : NOVAL_I;
     default:
       return NOVAL_I;
     }
   } // end hv_d3
   
   
-  int bias_voltage(int hv_scan_no, int run, int ls, int orbit, int det, int lay, int disk, size_t l1_new_module) {
+  int bias_voltage(int hv_scan_no, int run, int ls, int orbit, int det, int lay, int disk, int ring, size_t l1_new_module) {
     if (hv_scan_no==-1) return det ? 300 : (run<238474 ? 150 : 200);
-    return (det==1) ? ((disk==1) ? hv_d1(run, ls, orbit) : (disk==2) ? hv_d2(run, ls, orbit) : (disk==3) ? hv_d3(run, ls, orbit) : NOVAL_I) :
+    return (det==1) ? ((disk==1) ? hv_d1(run, ls, orbit, ring) : (disk==2) ? hv_d2(run, ls, orbit, ring) : (disk==3) ? hv_d3(run, ls, orbit, ring) : NOVAL_I) :
       ((lay==1) ? hv_l1(run, ls, orbit, l1_new_module) : (lay==2) ? hv_l2(run, ls, orbit) : (lay==3) ? hv_l3(run, ls, orbit) : (lay==4) ? hv_l4(run, ls, orbit) : NOVAL_I);
   }
   
-  bool is_full_hv_scan(int n, int sector, size_t shell) {
+  bool is_full_hv_scan(int n, int layer, int sector, size_t shell) {
     
     //BPix_BpO Sec4 didn't participate in the following scan(s)
-    if ((n==45||n==53||n==55) && !(sector==4 && shell==1)) return 1;
+    if ((n==45||n==53||n==55||n==57) && !(layer==1 && sector==4 && shell==1)) return 1;
     return n==4||n==5||n==6||n==11||n==12||n==13||n==14||n==15||(n>=17&&n<=19)||n==22||n==23||n==24||n==25||n==26||n==27||n==28||n==29||n==35||n==43;
 
   }
@@ -6120,7 +7706,7 @@ namespace scans {
         if (layer==4) returnvalue= module<0 && ladder>8 && ladder<13;
       }
     }
-    else if (hv_scan_no==40 || hv_scan_no==41 || hv_scan_no==42|| hv_scan_no==44|| hv_scan_no==46|| hv_scan_no==47|| hv_scan_no==48|| hv_scan_no==49|| hv_scan_no==50|| hv_scan_no==51|| hv_scan_no==52|| hv_scan_no==54) {
+    else if (hv_scan_no==40 || hv_scan_no==41 || hv_scan_no==42|| hv_scan_no==44|| hv_scan_no==46|| hv_scan_no==47|| hv_scan_no==48|| hv_scan_no==49|| hv_scan_no==50|| hv_scan_no==51|| hv_scan_no==52|| hv_scan_no==54|| hv_scan_no==56|| hv_scan_no==58|| hv_scan_no==59|| hv_scan_no==60|| hv_scan_no==61|| hv_scan_no==62|| hv_scan_no==63|| hv_scan_no==64|| hv_scan_no==65) {
       if (det) {
         //FPix_BpO_D1_RNG1_ROG1
         if (disk==1 && ring==1 && blade<0 && blade>-4) returnvalue=1;

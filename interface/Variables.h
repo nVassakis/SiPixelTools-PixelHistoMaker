@@ -157,6 +157,9 @@ public:
   bool d0;
   bool dz;
   bool pixhit;
+  bool pt_HVscan;
+  bool d0_HVscan;
+  bool dz_HVscan;
   // Module Exclusions
   bool noscan;
   bool goodmod;
@@ -190,6 +193,7 @@ public:
   bool effcut_dz;
   bool effcut_d0_dz;
   bool effcut_scans;
+  bool effcut_HVscans;
   bool effcut_scans_loose;
   bool effcut_startup;
   bool effcut_ly_fid;
@@ -618,9 +622,9 @@ public:
     }
     */
     if (layer==1) {
-      if (ladder==-5 && module==-1) pf_l1_hv_scanned = 0; //BPix_BmO_SEC2_LYR1_LDR5_MOD1
-      if (ladder==-5 && module==-2) pf_l1_hv_scanned = 1; //BPix_BmO_SEC2_LYR1_LDR5_MOD2
-      if (ladder==-6 && module==-4) pf_l1_hv_scanned = 2; //BPix_BmO_SEC2_LYR1_LDR6_MOD4
+      if (ladder==-5 && module==-1) pf_l1_hv_scanned = 0; //BPix_BmO_SEC7_LYR1_LDR5_MOD1
+      if (ladder==-5 && module==-2) pf_l1_hv_scanned = 1; //BPix_BmO_SEC7_LYR1_LDR5_MOD2
+      if (ladder==-6 && module==-4) pf_l1_hv_scanned = 2; //BPix_BmO_SEC7_LYR1_LDR6_MOD4
     }
     pf_bpix_l1_new_2018  = m.rawid == 303054876||
                       m.rawid == 303063068||
@@ -632,10 +636,12 @@ public:
     pf_delay_scan = scans::delay_scan_no(e.run, e.ls);
     delay = scans::delay(e.run, e.ls, e.orb);
     pf_hv_scan = scans::hv_scan_no(e.run);
-    pf_hv_scan_year = (pf_hv_scan>=42) ? pf_hv_scan-42 : (pf_hv_scan>=29) ? pf_hv_scan-29 : (pf_hv_scan>=23) ? pf_hv_scan-23 : (pf_hv_scan>=19) ? pf_hv_scan-19 : (pf_hv_scan>=17) ? pf_hv_scan-17 : pf_hv_scan; 
-    bias_voltage = scans::bias_voltage(pf_hv_scan, e.run, e.ls, e.orb, m.det, m.layer, abs(m.disk), pf_bpix_l1_new_2018);
+    pf_hv_scan_year = (pf_hv_scan>=56) ? pf_hv_scan-56 : (pf_hv_scan>=42) ? pf_hv_scan-42 : (pf_hv_scan>=29) ? pf_hv_scan-29 : (pf_hv_scan>=23) ? pf_hv_scan-23 : (pf_hv_scan>=19) ? pf_hv_scan-19 : (pf_hv_scan>=17) ? pf_hv_scan-17 : pf_hv_scan; 
+    bias_voltage = scans::bias_voltage(pf_hv_scan, e.run, e.ls, e.orb, m.det, m.layer, abs(m.disk), m.ring, pf_bpix_l1_new_2018);
     is_one_hv_group_scan = scans::is_one_hv_group_scan(pf_hv_scan, bias_voltage, m.det, m.layer, m.ladder, m.module, m.disk, m.blade, m.panel, m.ring);
-    is_full_hv_scan = scans::is_full_hv_scan(pf_hv_scan, sector, pf_shell);
+    // Shell - BpI: 0,  BpO: 1, BmI: 2, BmO: 3
+    pf_shell = (m.det==0) ? 2 * (m.module<0) + (m.ladder<0) : 2 * (m.disk<0) + (m.blade<0);
+    is_full_hv_scan = scans::is_full_hv_scan(pf_hv_scan, m.layer, m.sec, pf_shell);
     pf_delay = (delay>=10&&delay<=30&&(int(delay))%2==0) ? (int(delay) -10)/2 : -1;
     pf_voltage = bias_voltage < 20 ? bias_voltage / 5 : 2 + bias_voltage / 10;
     // Sector
@@ -651,8 +657,6 @@ public:
     ring = (m.det==0) ? NOVAL_I : m.ring;
 #endif
     blade = m.blade;
-    // Shell - BpI: 0,  BpO: 1, BmI: 2, BmO: 3
-    pf_shell = (m.det==0) ? 2 * (m.module<0) + (m.ladder<0) : 2 * (m.disk<0) + (m.blade<0);
     pf_sector_rog = (m.det==0) ? sector-1 : 7+rog;
     pf_ring_rog = (m.det==0) ? -1 : rog-1 + (ring>1)*4;
     pf_sector = (m.det==0) ? sector-1 : -1;
@@ -849,6 +853,9 @@ public:
     nstrip = 0;
     d0 = 0;
     dz = 0;
+    pt_HVscan= 0;
+    d0_HVscan= 0;
+    dz_HVscan= 0;
     pixhit = 0;
     noscan = 0;
     goodmod = 0;
@@ -874,6 +881,7 @@ public:
     effcut_dz= 0;
     effcut_d0_dz= 0;
     effcut_scans= 0;
+    effcut_HVscans= 0;
     effcut_scans_loose= 0;
     effcut_ly_fid= 0;
     effcut_lx_fid= 0;
@@ -1620,6 +1628,7 @@ public:
     // BPix - 1.0 GeV
     // 0.6 GeV
     pt = t.trk.pt>2.0; // increased from 1.0
+    pt_HVscan = t.trk.pt>1.0;
     bool pt_dcol = t.trk.pt>0.6;
     pt_new = t.trk.pt>=2.0;
 
@@ -1632,17 +1641,16 @@ public:
     bool trk_beta_cut = std::abs(3.1416/2 - std::abs(t.beta))<0.8;
     
     // Track Impact parameters (track to vertex D0/Z distance)
-    //d0 = m.det==0 ?
-    //  (m.layer==1 ? fabs(t.trk.d0)<0.01 // L1
-    //   : fabs(t.trk.d0)<0.02 ) // L2,3(,4)
-    //  : m.det==1 && fabs(t.trk.d0)<0.05; // FPix
+    d0_HVscan = m.det==0 ?
+      (m.layer==1 ? fabs(t.trk.d0)<0.01 // L1
+       : fabs(t.trk.d0)<0.02 ) // L2,3(,4)
+      : m.det==1 && fabs(t.trk.d0)<0.05; // FPix
     
     d0 = std::abs(t.trk.d0) < 0.002;
     //d0_new = std::abs(t.trk.d0)<0.2;
     d0_new = m.det==0 ? std::abs(t.trk.d0)<0.05 : std::abs(t.trk.d0)<0.2;
     
-    //dz = (m.det==0 && fabs(t.trk.dz)<0.1) 
-    //  ||(m.det==1 && fabs(t.trk.dz)<0.5);
+    dz_HVscan = (m.det==0 && fabs(t.trk.dz)<0.1) || (m.det==1 && fabs(t.trk.dz)<0.5);
     dz = std::abs(t.trk.dz) < 0.01;
     //dz_new = sm.det==0 ? std::abs(t.trk.dz)<0.1 : std::abs(t.trk.dz)<0.5;
     dz_new = std::abs(t.trk.dz)<0.5;
@@ -1973,6 +1981,7 @@ public:
     effcut_dz          =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 &&       pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_d0_dz       =       cut_nvtx && cut_federr && hp && pt && nstrip &&             pixhit && noscan && goodmod && goodroc && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_scans       =       cut_nvtx && cut_federr && hp && pt && nstrip && d0 && dz && pixhit           && goodmod && goodroc_scan && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
+    effcut_HVscans     =       cut_nvtx && cut_federr && hp && pt_HVscan && nstrip && d0_HVscan && dz_HVscan && pixhit && goodmod && goodroc_scan && lx_fid && ly_fid && valmis;
     effcut_scans_loose =                   cut_federr && hp && pt && nstrip &&                                goodmod             && lx_fid && ly_fid && valmis && hitsep && trk_beta_cut; // looser cuts to track selection to be used in case there are missing points in the timing scan as a cross check
     effcut_startup     =       cut_nvtx && cut_federr && hp && pt && nstrip_vloose && d0_vloose && dz_vloose && pixhit &&            lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
     effcut_raw         =       cut_nvtx &&               hp && pt && nstrip && d0 && dz && pixhit && noscan && goodmod &&            lx_fid && ly_fid && valmis && hitsep && trk_beta_cut;
