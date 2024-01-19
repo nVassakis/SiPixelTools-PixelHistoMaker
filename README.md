@@ -25,6 +25,10 @@ If you already made some output (plot containing) files, you can merge them by:
 ## Phase1ScanHistoMaker
 Does the same but for time delay and high voltage bias scans
 
+The option to run on HV scan or timing scan has to be set at compiling:
+HV scan: make USER_CXXFLAGS='-DHV_Scan=1' Phase1ScanHistoMaker
+Timing scan: make USER_CXXFLAGS='-DTiming_Scan=1' Phase1ScanHistoMaker
+
 In order to add new scans, please edit this file: interface/scan_points.h
 
 Also, edit this file Phase1ScanHistoMaker.cc
@@ -50,7 +54,6 @@ Edit interface/scan_points.h
   Repeat for all relevant detector parts
   Full/Mini scan: If full scan, put HV scan number to ```is_full_hv_scan``` function. If mini scan then put HV scan number to ```is_one_hv_group_scan``` function
 Edit Phase1ScanHistoMaker.cc
-  Turn on HV scan ```#define HV_Scan     1```
   Add new scan to HVBiasScans postfix, e.g.:
   ```sh.AddNewPostfix("HVBiasScans_2023",  [&v]{ return (size_t)v.pf_hv_scan_year; }, "HV[1to10]", "06/04 42fb^{-1};22/04 42fb^{-1};09/05 44.9fb^{-1};18/05 50.2fb^{-1};01/06 53.9fb^{-1};09/06 58.1fb^{-1};05/07 62.6fb^{-1};16/07 73.2fb^{-1};01/09 73.4fb^{-1};26/10 73.4fb^{-1} (HeavyIon)", col12+col12_rainbow+col12);```
   Increase the number of scans: ```"HV[1to11]"```
@@ -61,7 +64,7 @@ Edit Phase1ScanHistoMaker.cc
   Also you need to change ```pf_hv_scan_year``` variable in interface/Variables.h to have the proper number propagated to the new postfix (be aware that the hv_scan number coming from scan_points.h is from 0 to X, while the postfix is from 1 to y)
 Run ScanHistoMaker
 ```
-make clean; make Phase1ScanHistoMaker
+make clean; make USER_CXXFLAGS='-DHV_Scan=1' Phase1ScanHistoMaker
 Phase1ScanHistoMaker -o PHM_out/output.root /foo/bar/input*.root
 ```
 Note on badROC exclusion: it is only relevant for the hit efficiency plots, which are the least important plots for HV scans. Even after the badROC exclusion the plots don't change much. If you want to use the badROC exclusion, you have to run it beforehand the Phase1ScanHistoMaker but after you've edited interface/scan_points.h, this way the exclusion will use data from the scan runs, but automatically excluding the scan data. (There's also an option in scan_points.h that you assign a specific run number to the scan run to use as the source of the badROC exclusion, but this is not used anymore)

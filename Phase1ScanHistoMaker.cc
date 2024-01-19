@@ -80,8 +80,9 @@
 //#define COMPLETE 1
 #define EXPRESS 1
 
-#define HV_Scan     1
-#define Timing_Scan 0
+// HV_Scan and Timing_Scan now set at the command line
+//#define HV_Scan     1
+//#define Timing_Scan 0
 
 #define SCANS 1
 #include "interface/TreeLooper.h"
