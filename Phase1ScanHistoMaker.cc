@@ -231,8 +231,13 @@ int main(int argc, char* argv[]) {
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan;   }, "2011;2012;2012NewVana;2012OldVana;2015Coarse;2015Fine;2016_0T;2016_38T;2016Aug;2017May23;2017May24;2017May25;2017May26;2017May27_dac29;2017May27_dac28;Run295371;2017May28;2017May29_dac36_prt15;2017May29_dac35_prt15;2017May29_dac35_prt14;2017May29_dac36_prt14", "2011;2012 April;2012 July (New Vana);2012 July (Old Vana);2015, 0T;2015, 3.8T;2016, 0T;2016, 3.8T;2016 August;;;;;dac29;dac28;295371;dac34;WBC162 -9ns;WBC164 -9ns;WBC164 -6ns;WBC162 -6ns", "1,417,402,800,594,626,601,418,601,633,1,601,418,1,1,1,1,"+col4_cyan_to_red);
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan;   }, "2015Fine;2016_38T", "2015;2016", "418,633");
 
-  //use HVBiasScans for comparing scans accross years, otherwise use yearly postfix
-  sh.AddNewPostfix("HVBiasScans",  [&v]{ return (size_t)v.pf_hv_scan; }, "HV[1to56]", "HV Scan [1to17]; 2015 0T; 2016 HV Scan [19to23]; 2017 May24-25;2017 Aug 14;2017 Sep 23;2017 Oct 04;2017 Oct 27;2017 Nov 09; FullScan April 19 - 0.1pb^{-1};May 05 - 4.6fb^{-1};May 12 - 8.7fb^{-1};May 24 - 14.9fb^{-1};Jun 09 - 21.8fb^{-1};Jul 11 - 25.4fb^{-1};FullScan Jul 30/31 - 31.5fb^{-1};Aug 17 - 40.5fb^{-1};Sep 01 - 48.5fb^{-1};Sep 07 - 53fb^{-1};Sep 26 - 56.4fb^{-1};Oct 20 - 65.8fb^{-1};HI test; 03/06 3nb^{-1};06/06 1pb^{-1};23/08 10.9fb^{-1};26/09 10.9fb^{-1};29/09 11fb^{-1};07/10 14.5fb^{-1};13/10 17.4fb^{-1};20/10 20.3fb^{-1};27/10 25.7fb^{-1};03/11 31.8fb^{-1};10/11 33.3fb^{-1};15/11 35.7fb^{-1};24/11 39.2fb^{-1};26/11 40.4fb^{-1}", col12+col12_rainbow+col12);
+  //use HVBiasScans for the current data taking period (year)
+  //If there's a new period (year):
+  //- create a new yearly postfix (e.g. HVBiasScans_2024) for the pervious period, copying the contents of HVBiasScans for the relevant period
+  //- clear out HVBiasScans, and add the new scan
+  //- update pf_hv_scan_year in interface/Variables.h
+  //For comparing scans accross years use and update HVBiasScans_all
+  sh.AddNewPostfix("HVBiasScans_all",  [&v]{ return (size_t)v.pf_hv_scan; }, "HV[1to66]", "HV Scan [1to17]; 2015 0T; 2016 HV Scan [19to23]; 2017 May24-25;2017 Aug 14;2017 Sep 23;2017 Oct 04;2017 Oct 27;2017 Nov 09; FullScan April 19 - 0.1pb^{-1};May 05 - 4.6fb^{-1};May 12 - 8.7fb^{-1};May 24 - 14.9fb^{-1};Jun 09 - 21.8fb^{-1};Jul 11 - 25.4fb^{-1};FullScan Jul 30/31 - 31.5fb^{-1};Aug 17 - 40.5fb^{-1};Sep 01 - 48.5fb^{-1};Sep 07 - 53fb^{-1};Sep 26 - 56.4fb^{-1};Oct 20 - 65.8fb^{-1};HI test; 03/06 3nb^{-1};06/06 1pb^{-1};23/08 10.9fb^{-1};26/09 10.9fb^{-1};29/09 11fb^{-1};07/10 14.5fb^{-1};13/10 17.4fb^{-1};20/10 20.3fb^{-1};27/10 25.7fb^{-1};03/11 31.8fb^{-1};10/11 33.3fb^{-1};15/11 35.7fb^{-1};24/11 39.2fb^{-1};26/11 40.4fb^{-1};06/04 42fb^{-1};22/04 42fb^{-1};09/05 44.9fb^{-1};18/05 50.2fb^{-1};01/06 53.9fb^{-1};09/06 58.1fb^{-1};05/07 62.6fb^{-1};16/07 73.2fb^{-1};01/09 73.4fb^{-1};26/10 73.4fb^{-1} (HeavyIon)", col12+col12_rainbow+col12);
   sh.AddNewPostfix("HVBiasScans_old",   [&v]{ return (size_t)v.pf_hv_scan_year; }, "HV[1to17]", "HV Scan [1to17]", col12+col12_rainbow+col12);
   sh.AddNewPostfix("HVBiasScans_2015",  [&v]{ return (size_t)v.pf_hv_scan_year; }, "HV1", "2015 (0T)", col12+col12_rainbow+col12);
   sh.AddNewPostfix("HVBiasScans_2016",  [&v]{ return (size_t)v.pf_hv_scan_year; }, "HV[1to5]", "2016 HV Scan [19to23]", col12+col12_rainbow+col12);
@@ -240,6 +245,8 @@ int main(int argc, char* argv[]) {
   sh.AddNewPostfix("HVBiasScans_2018",  [&v]{ return (size_t)v.pf_hv_scan_year; }, "HV[1to13]", "FullScan April 19 - 0.1pb^{-1};May 05 - 4.6fb^{-1};May 12 - 8.7fb^{-1};May 24 - 14.9fb^{-1};Jun 09 - 21.8fb^{-1};Jul 11 - 25.4fb^{-1};FullScan Jul 30/31 - 31.5fb^{-1};Aug 17 - 40.5fb^{-1};Sep 01 - 48.5fb^{-1};Sep 07 - 53fb^{-1};Sep 26 - 56.4fb^{-1};Oct 20 - 65.8fb^{-1};HI test", col12+col12_rainbow+col12);
   sh.AddNewPostfix("HVBiasScans_2022",  [&v]{ return (size_t)v.pf_hv_scan_year; }, "HV[1to14]", "03/06 3nb^{-1};06/06 1pb^{-1};23/08 10.9fb^{-1};26/09 10.9fb^{-1};29/09 11fb^{-1};07/10 14.5fb^{-1};13/10 17.4fb^{-1};20/10 20.3fb^{-1};27/10 25.7fb^{-1};03/11 31.8fb^{-1};10/11 33.3fb^{-1};15/11 35.7fb^{-1};24/11 39.2fb^{-1};26/11 40.4fb^{-1}", col12+col12_rainbow+col12);
   sh.AddNewPostfix("HVBiasScans_2023",  [&v]{ return (size_t)v.pf_hv_scan_year; }, "HV[1to10]", "06/04 42fb^{-1};22/04 42fb^{-1};09/05 44.9fb^{-1};18/05 50.2fb^{-1};01/06 53.9fb^{-1};09/06 58.1fb^{-1};05/07 62.6fb^{-1};16/07 73.2fb^{-1};01/09 73.4fb^{-1};26/10 73.4fb^{-1} (HeavyIon)", col12+col12_rainbow+col12);
+  //
+  sh.AddNewPostfix("HVBiasScans",       [&v]{ return (size_t)v.pf_hv_scan_year; }, "HV[1to1]", "99/99 999fb^{-1} dummy placeholder for new scan", col12+col12_rainbow+col12);
   //sh.AddNewPostfix("FineDelays",        [&v]{ return size_t(v.delay>=20 &&v.delay<=24 ? v.delay-20 : -1); }, "[20to24]nsfine", "[20to24]ns", col6_rainbow_dark);
   //sh.AddNewPostfix("FineDelays",        [&v]{ return size_t(v.delay>=21 &&v.delay<=31 ? v.delay-21 : -1); }, "[21to31]nsfine", "[21to31]ns", col12);
   //sh.AddNewPostfix("FineDelays",        [&v]{ return size_t(v.delay>=0 &&v.delay<=18 ? v.delay : -1); }, "[0to18]nsfine", "[0to18]ns", col18+"1");
@@ -724,223 +731,223 @@ int main(int argc, char* argv[]) {
   
 #if HV_Scan == 1
   // Full HV Scans"TrkPt>0.6&&ValidHit"
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"HVBiasScans_2023","LayersDisks"},             .cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Layers","HVBiasScans_2023"},                  .cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Disks","HVBiasScans_2023"},                   .cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"DisksRings","HVBiasScans_2023"},              .cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"ROCInOut","Disks","Rings","HVBiasScans_2023"},.cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"InnerOuter","Layers","HVBiasScans_2023"},     .cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Mods","InnerOuter","Layers","HVBiasScans_2023"},.cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Disks","Rings","HVBiasScans_2023"},           .cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"HVBiasScans","LayersDisks"},             .cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Layers","HVBiasScans"},                  .cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Disks","HVBiasScans"},                   .cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"DisksRings","HVBiasScans"},              .cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"ROCInOut","Disks","Rings","HVBiasScans"},.cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"InnerOuter","Layers","HVBiasScans"},     .cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Mods","InnerOuter","Layers","HVBiasScans"},.cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Disks","Rings","HVBiasScans"},           .cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
 #if PHASE == 0
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"LayersDisks","NewModules","HVBiasScans_2023"},.cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"LayersDisks","NewModules","HVBiasScans"},.cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
 #endif
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Sectors","Layers","Shell","HVBiasScans_2023"},.cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"RingsROGs","Disks","Shell","HVBiasScans_2023"},.cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Mods","Layers","HVBiasScans_2023"},          .cuts={"FullHVScan","EffCutsHVScans","BPix"}, .draw="PE1", .opt="", .ranges={0,200, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Sectors","Layers","Shell","HVBiasScans"},.cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"RingsROGs","Disks","Shell","HVBiasScans"},.cuts={"FullHVScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Mods","Layers","HVBiasScans"},          .cuts={"FullHVScan","EffCutsHVScans","BPix"}, .draw="PE1", .opt="", .ranges={0,200, 0,1} });
   
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"HVBiasScans_2023","LayersDisks"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"Layers","HVBiasScans_2023"},                 .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"Disks","HVBiasScans_2023"},                  .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"ROCInOut","Disks","Rings","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"InnerOuter","Layers","HVBiasScans_2023"},    .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"Mods","InnerOuter","Layers","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"Disks","Rings","HVBiasScans_2023"},           .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  //sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"LayersDisksInOut","BPixFPix","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  //sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"LayersDisks","BPixFPix","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"HVBiasScans","LayersDisks"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"Layers","HVBiasScans"},                 .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"Disks","HVBiasScans"},                  .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"ROCInOut","Disks","Rings","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"InnerOuter","Layers","HVBiasScans"},    .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"Mods","InnerOuter","Layers","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"Disks","Rings","HVBiasScans"},           .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  //sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"LayersDisksInOut","BPixFPix","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  //sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"LayersDisks","BPixFPix","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
 #if PHASE == 0
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"LayersDisks","NewModules","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"LayersDisks","NewModules","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
 #endif
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"Sectors","Layers","Shell","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"RingsROGs","Disks","Shell","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"Mods","Layers","HVBiasScans_2023"},           .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","BPix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"Sectors","Layers","Shell","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"RingsROGs","Disks","Shell","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluChargeMPV_vs_BiasVoltage", .pfs={"Mods","Layers","HVBiasScans"},           .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","BPix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
   
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"HVBiasScans_2023","LayersDisks"},             .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Layers","HVBiasScans_2023"},                  .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Disks","HVBiasScans_2023"},                   .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"DisksRings","HVBiasScans_2023"},              .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"ROCInOut","Disks","Rings","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"InnerOuter","Layers","HVBiasScans_2023"},     .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Ladders","Layers","HVBiasScans_2023"},        .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Ladders","InnerOuter","Layers","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Mods","InnerOuter","Layers","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Disks","Rings","HVBiasScans_2023"},           .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  //sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"LayersDisksInOut","BPixFPix","HVBiasScans_2023"},       .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  //sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"LayersDisks","BPixFPix","HVBiasScans_2023"},       .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"HVBiasScans","LayersDisks"},             .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Layers","HVBiasScans"},                  .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Disks","HVBiasScans"},                   .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"DisksRings","HVBiasScans"},              .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"ROCInOut","Disks","Rings","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"InnerOuter","Layers","HVBiasScans"},     .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Ladders","Layers","HVBiasScans"},        .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Ladders","InnerOuter","Layers","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Mods","InnerOuter","Layers","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Disks","Rings","HVBiasScans"},           .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  //sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"LayersDisksInOut","BPixFPix","HVBiasScans"},       .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  //sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"LayersDisks","BPixFPix","HVBiasScans"},       .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
 #if PHASE == 0
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"LayersDisks","NewModules","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"LayersDisks","NewModules","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
 #endif
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Sectors","Layers","Shell","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"RingsROGs","Disks","Shell","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Mods","Layers","HVBiasScans_2023"},           .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","BPix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Sectors","Layers","Shell","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"RingsROGs","Disks","Shell","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Mods","Layers","HVBiasScans"},           .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","BPix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
   
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"HVBiasScans_2023","LayersDisks"},             .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"Layers","HVBiasScans_2023"},                  .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"Disks","HVBiasScans_2023"},                   .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"ROCInOut","Disks","Rings","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"InnerOuter","Layers","HVBiasScans_2023"},     .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"Mods","InnerOuter","Layers","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"Disks","Rings","HVBiasScans_2023"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  //sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"LayersDisksInOut","BPixFPix","HVBiasScans_2023"},       .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  //sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"LayersDisks","BPixFPix","HVBiasScans_2023"},       .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"HVBiasScans","LayersDisks"},             .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"Layers","HVBiasScans"},                  .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"Disks","HVBiasScans"},                   .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"ROCInOut","Disks","Rings","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"InnerOuter","Layers","HVBiasScans"},     .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"Mods","InnerOuter","Layers","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"Disks","Rings","HVBiasScans"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  //sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"LayersDisksInOut","BPixFPix","HVBiasScans"},       .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  //sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"LayersDisks","BPixFPix","HVBiasScans"},       .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
 #if PHASE == 0
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"LayersDisks","NewModules","HVBiasScans_2023"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"LayersDisks","NewModules","HVBiasScans"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
 #endif
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"Sectors","Layers","Shell","HVBiasScans_2023"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"RingsROGs","Disks","Shell","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"Mods","Layers","HVBiasScans_2023"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","BPix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"Sectors","Layers","Shell","HVBiasScans"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"RingsROGs","Disks","Shell","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"Mods","Layers","HVBiasScans"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","BPix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
   
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"HVBiasScans_2023","LayersDisks"},              .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Layers","HVBiasScans_2023"},                   .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Disks","HVBiasScans_2023"},                    .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"DisksRings","HVBiasScans_2023"},                .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"ROCInOut","Disks","Rings","HVBiasScans_2023"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"InnerOuter","Layers","HVBiasScans_2023"},      .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Ladders","Layers","HVBiasScans_2023"},         .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Ladders","InnerOuter","Layers","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Mods","InnerOuter","Layers","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Disks","Rings","HVBiasScans_2023"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"HVBiasScans_2023","LayersDisks"},              .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Layers","HVBiasScans_2023"},                   .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Disks","HVBiasScans_2023"},                    .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"DisksRings","HVBiasScans_2023"},               .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",       .pfs={"ROCInOut","Disks","Rings","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"InnerOuter","Layers","HVBiasScans_2023"},      .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Ladders","Layers","HVBiasScans_2023"},         .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Ladders","InnerOuter","Layers","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Mods","InnerOuter","Layers","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Disks","Rings","HVBiasScans_2023"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"HVBiasScans_2023","LayersDisks"},              .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Layers","HVBiasScans_2023"},                   .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Disks","HVBiasScans_2023"},                    .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"DisksRings","HVBiasScans_2023"},               .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",       .pfs={"ROCInOut","Disks","Rings","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"InnerOuter","Layers","HVBiasScans_2023"},      .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Ladders","Layers","HVBiasScans_2023"},         .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Ladders","InnerOuter","Layers","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Mods","InnerOuter","Layers","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Disks","Rings","HVBiasScans_2023"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  //sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"LayersDisksInOut","BPixFPix","HVBiasScans_2023"},       .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  //sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"LayersDisks","BPixFPix","HVBiasScans_2023"},       .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"HVBiasScans","LayersDisks"},              .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Layers","HVBiasScans"},                   .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Disks","HVBiasScans"},                    .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"DisksRings","HVBiasScans"},                .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"ROCInOut","Disks","Rings","HVBiasScans"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"InnerOuter","Layers","HVBiasScans"},      .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Ladders","Layers","HVBiasScans"},         .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Ladders","InnerOuter","Layers","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Mods","InnerOuter","Layers","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Disks","Rings","HVBiasScans"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"HVBiasScans","LayersDisks"},              .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Layers","HVBiasScans"},                   .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Disks","HVBiasScans"},                    .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"DisksRings","HVBiasScans"},               .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",       .pfs={"ROCInOut","Disks","Rings","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"InnerOuter","Layers","HVBiasScans"},      .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Ladders","Layers","HVBiasScans"},         .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Ladders","InnerOuter","Layers","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Mods","InnerOuter","Layers","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Disks","Rings","HVBiasScans"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"HVBiasScans","LayersDisks"},              .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Layers","HVBiasScans"},                   .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Disks","HVBiasScans"},                    .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"DisksRings","HVBiasScans"},               .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",       .pfs={"ROCInOut","Disks","Rings","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"InnerOuter","Layers","HVBiasScans"},      .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Ladders","Layers","HVBiasScans"},         .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Ladders","InnerOuter","Layers","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Mods","InnerOuter","Layers","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Disks","Rings","HVBiasScans"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  //sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"LayersDisksInOut","BPixFPix","HVBiasScans"},       .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  //sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"LayersDisks","BPixFPix","HVBiasScans"},       .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
 #if PHASE == 0
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"LayersDisks","NewModules","HVBiasScans_2023"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"LayersDisks","NewModules","HVBiasScans"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
 #endif
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Sectors","Layers","Shell","HVBiasScans_2023"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"RingsROGs","Disks","Shell","HVBiasScans_2023"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Mods","Layers","HVBiasScans_2023"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","BPix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Sectors","Layers","Shell","HVBiasScans"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"RingsROGs","Disks","Shell","HVBiasScans"},.cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"Mods","Layers","HVBiasScans"},            .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","BPix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
   
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluCharge",                   .pfs={"Voltages","LayersDisks","HVBiasScans_2023"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,100, 0,0} });
-  sh.AddHistos("traj",  { .fill="OnTrkCluCharge",                       .pfs={"Voltages","LayersDisks","HVBiasScans_2023"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,100, 0,0} });
-  sh.AddHistos("traj",  { .fill="OnTrkCluSize",                         .pfs={"Voltages","LayersDisks","HVBiasScans_2023"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,10, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluCharge",                   .pfs={"Voltages","LayersDisks","HVBiasScans"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,100, 0,0} });
+  sh.AddHistos("traj",  { .fill="OnTrkCluCharge",                       .pfs={"Voltages","LayersDisks","HVBiasScans"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,100, 0,0} });
+  sh.AddHistos("traj",  { .fill="OnTrkCluSize",                         .pfs={"Voltages","LayersDisks","HVBiasScans"}, .cuts={"FullHVScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,10, 0,0} });
   
 #if CLUST_LOOP==1
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"HVBiasScans_2023","LayersDisks"},                 .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"Layers","HVBiasScans_2023"},                      .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"Disks","HVBiasScans_2023"},                       .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"InnerOuter","Layers","HVBiasScans_2023"},         .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"Mods","InnerOuter","Layers","HVBiasScans_2023"},  .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"Disks","Rings","HVBiasScans_2023"},               .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  //sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"LayersDisksInOut","BPixFPix","HVBiasScans_2023"},.cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  //sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"LayersDisks","BPixFPix","HVBiasScans_2023"},    .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"HVBiasScans","LayersDisks"},                 .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"Layers","HVBiasScans"},                      .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"Disks","HVBiasScans"},                       .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"InnerOuter","Layers","HVBiasScans"},         .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"Mods","InnerOuter","Layers","HVBiasScans"},  .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"Disks","Rings","HVBiasScans"},               .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  //sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"LayersDisksInOut","BPixFPix","HVBiasScans"},.cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  //sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"LayersDisks","BPixFPix","HVBiasScans"},    .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
 #if PHASE == 0
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"LayersDisks","NewModules","HVBiasScans_2023"},    .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"LayersDisks","NewModules","HVBiasScans"},    .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
 #endif
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"Sectors","Layers","Shell","HVBiasScans_2023"}, .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"RingsROGs","Disks","Shell","HVBiasScans_2023"}, .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"Mods","Layers","HVBiasScans_2023"},               .cuts={"FullHVScan","BPix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"Sectors","Layers","Shell","HVBiasScans"}, .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"RingsROGs","Disks","Shell","HVBiasScans"}, .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"Mods","Layers","HVBiasScans"},               .cuts={"FullHVScan","BPix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
   
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"HVBiasScans_2023","LayersDisks"},                 .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"Layers","HVBiasScans_2023"},                      .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"Disks","HVBiasScans_2023"},                       .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"InnerOuter","Layers","HVBiasScans_2023"},         .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"Mods","InnerOuter","Layers","HVBiasScans_2023"},  .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"Disks","Rings","HVBiasScans_2023"},               .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  //sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"LayersDisksInOut","BPixFPix","HVBiasScans_2023"},.cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  //sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"LayersDisks","BPixFPix","HVBiasScans_2023"},    .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"HVBiasScans","LayersDisks"},                 .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"Layers","HVBiasScans"},                      .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"Disks","HVBiasScans"},                       .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"InnerOuter","Layers","HVBiasScans"},         .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"Mods","InnerOuter","Layers","HVBiasScans"},  .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"Disks","Rings","HVBiasScans"},               .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  //sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"LayersDisksInOut","BPixFPix","HVBiasScans"},.cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  //sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"LayersDisks","BPixFPix","HVBiasScans"},    .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
 #if PHASE == 0
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"LayersDisks","NewModules","HVBiasScans_2023"},    .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"LayersDisks","NewModules","HVBiasScans"},    .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
 #endif
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"Sectors","Layers","Shell","HVBiasScans_2023"}, .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"RingsROGs","Disks","Shell","HVBiasScans_2023"}, .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"Mods","Layers","HVBiasScans_2023"},               .cuts={"FullHVScan","BPix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"Sectors","Layers","Shell","HVBiasScans"}, .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"RingsROGs","Disks","Shell","HVBiasScans"}, .cuts={"FullHVScan"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"Mods","Layers","HVBiasScans"},               .cuts={"FullHVScan","BPix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
   
-  sh.AddHistos("clust", { .fill="NormOnTrkCluCharge",              .pfs={"Voltages","LayersDisks","HVBiasScans_2023"}, .cuts={"FullHVScan"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="CluCharge",                       .pfs={"Voltages","LayersDisks","HVBiasScans_2023"}, .cuts={"FullHVScan"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,400, 0,0} });
-  sh.AddHistos("clust", { .fill="CluSize",                         .pfs={"Voltages","LayersDisks","HVBiasScans_2023"}, .cuts={"FullHVScan"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,10, 0,0} });
+  sh.AddHistos("clust", { .fill="NormOnTrkCluCharge",              .pfs={"Voltages","LayersDisks","HVBiasScans"}, .cuts={"FullHVScan"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="CluCharge",                       .pfs={"Voltages","LayersDisks","HVBiasScans"}, .cuts={"FullHVScan"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,400, 0,0} });
+  sh.AddHistos("clust", { .fill="CluSize",                         .pfs={"Voltages","LayersDisks","HVBiasScans"}, .cuts={"FullHVScan"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,10, 0,0} });
 #endif
 
   // One ROG HV Scans
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"HVBiasScans_2023","HVGroupsScanned"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,300, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"HVGroupsScanned","HVBiasScans_2023"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,300, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"HVBiasScans_2023","Lay1HVScanned"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Lay1HVScanned","HVBiasScans_2023"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"DisksRings","HVBiasScans_2023"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"HVBiasScans_2023","DisksRings"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"LowHighEta","DisksRings","HVBiasScans_2023"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"HVBiasScans","HVGroupsScanned"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,300, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"HVGroupsScanned","HVBiasScans"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,300, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"HVBiasScans","Lay1HVScanned"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"Lay1HVScanned","HVBiasScans"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"DisksRings","HVBiasScans"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"HVBiasScans","DisksRings"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"LowHighEta","DisksRings","HVBiasScans"},.cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,555, 0,1} });
 #if PHASE == 0
-  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"HVGroupsScanned","NewModules","HVBiasScans_2023"}, .cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,300, 0,1} });
+  sh.AddHistos("traj",  { .fill="HitEfficiency_vs_BiasVoltage",         .pfs={"HVGroupsScanned","NewModules","HVBiasScans"}, .cuts={"OneHVGroupScan","EffCutsHVScans"}, .draw="PE1", .opt="", .ranges={0,300, 0,1} });
 #endif
   
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"HVBiasScans_2023","HVGroupsScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"HVGroupsScanned","HVBiasScans_2023"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"HVBiasScans_2023","Lay1HVScanned"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Lay1HVScanned","HVBiasScans_2023"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"HVBiasScans","HVGroupsScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"HVGroupsScanned","HVBiasScans"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"HVBiasScans","Lay1HVScanned"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"Lay1HVScanned","HVBiasScans"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
   
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"HVBiasScans_2023","HVGroupsScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"HVGroupsScanned","HVBiasScans_2023"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"DisksRings","HVBiasScans_2023"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"HVBiasScans_2023","DisksRings"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"LowHighEta","DisksRings","HVBiasScans_2023"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"HVBiasScans","HVGroupsScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"HVGroupsScanned","HVBiasScans"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"DisksRings","HVBiasScans"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"HVBiasScans","DisksRings"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgNormOnTrkCluCharge_vs_BiasVoltage", .pfs={"LowHighEta","DisksRings","HVBiasScans"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
 #if PHASE == 0
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"HVGroupsScanned","NewModules","HVBiasScans_2023"},  .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluCharge_vs_BiasVoltage",     .pfs={"HVGroupsScanned","NewModules","HVBiasScans"},  .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
 #endif
   
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"HVBiasScans_2023","HVGroupsScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"HVGroupsScanned","HVBiasScans_2023"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage", .pfs={"HVBiasScans_2023","Lay1HVScanned"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage", .pfs={"Lay1HVScanned","HVBiasScans_2023"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage", .pfs={"DisksRings","HVBiasScans_2023"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage", .pfs={"HVBiasScans_2023","DisksRings"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage", .pfs={"LowHighEta","DisksRings","HVBiasScans_2023"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"HVBiasScans","HVGroupsScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"HVGroupsScanned","HVBiasScans"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage", .pfs={"HVBiasScans","Lay1HVScanned"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage", .pfs={"Lay1HVScanned","HVBiasScans"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage", .pfs={"DisksRings","HVBiasScans"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage", .pfs={"HVBiasScans","DisksRings"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage", .pfs={"LowHighEta","DisksRings","HVBiasScans"},.cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,555, 0,0} });
 #if PHASE == 0
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"HVGroupsScanned","NewModules","HVBiasScans_2023"},  .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });   
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_BiasVoltage",       .pfs={"HVGroupsScanned","NewModules","HVBiasScans"},  .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });   
 #endif
   
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"HVGroupsScanned","HVBiasScans_2023"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,450, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"HVBiasScans_2023","HVGroupsScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"HVBiasScans_2023","Lay1HVScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Lay1HVScanned","HVBiasScans_2023"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"DisksRings","HVBiasScans_2023"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"HVBiasScans_2023","DisksRings"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"LowHighEta","DisksRings","HVBiasScans_2023"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"HVGroupsScanned","HVBiasScans"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,450, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"HVBiasScans","HVGroupsScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"HVBiasScans","Lay1HVScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"Lay1HVScanned","HVBiasScans"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"DisksRings","HVBiasScans"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"HVBiasScans","DisksRings"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeX_vs_BiasVoltage",      .pfs={"LowHighEta","DisksRings","HVBiasScans"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
   
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"HVGroupsScanned","HVBiasScans_2023"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,450, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"HVBiasScans_2023","HVGroupsScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"HVBiasScans_2023","Lay1HVScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Lay1HVScanned","HVBiasScans_2023"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"DisksRings","HVBiasScans_2023"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"HVBiasScans_2023","DisksRings"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
-  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"LowHighEta","DisksRings","HVBiasScans_2023"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"HVGroupsScanned","HVBiasScans"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,450, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"HVBiasScans","HVGroupsScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"HVBiasScans","Lay1HVScanned"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"Lay1HVScanned","HVBiasScans"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"DisksRings","HVBiasScans"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"HVBiasScans","DisksRings"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
+  sh.AddHistos("traj",  { .fill="AvgOnTrkCluSizeY_vs_BiasVoltage",      .pfs={"LowHighEta","DisksRings","HVBiasScans"},               .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="PE1", .opt="", .ranges={0,400, 0,0} });
   
-  sh.AddHistos("traj",  { .fill="NormOnTrkCluCharge",                   .pfs={"Voltages","HVGroupsScanned","HVBiasScans_2023"}, .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,100, 0,0} });
-  sh.AddHistos("traj",  { .fill="OnTrkCluCharge",                       .pfs={"Voltages","HVGroupsScanned","HVBiasScans_2023"}, .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,100, 0,0} });
-  sh.AddHistos("traj",  { .fill="OnTrkCluSize",                         .pfs={"Voltages","HVGroupsScanned","HVBiasScans_2023"}, .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,10, 0,0} });
+  sh.AddHistos("traj",  { .fill="NormOnTrkCluCharge",                   .pfs={"Voltages","HVGroupsScanned","HVBiasScans"}, .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,100, 0,0} });
+  sh.AddHistos("traj",  { .fill="OnTrkCluCharge",                       .pfs={"Voltages","HVGroupsScanned","HVBiasScans"}, .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,100, 0,0} });
+  sh.AddHistos("traj",  { .fill="OnTrkCluSize",                         .pfs={"Voltages","HVGroupsScanned","HVBiasScans"}, .cuts={"OneHVGroupScan","TrkPt>0.6&&ValidHit","0TLay1HighEtaFix"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,10, 0,0} });
 #if CLUST_LOOP==1
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"HVBiasScans_2023","HVGroupsScanned"},              .cuts={"OneHVGroupScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"HVGroupsScanned","HVBiasScans_2023"},              .cuts={"OneHVGroupScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"HVBiasScans","HVGroupsScanned"},              .cuts={"OneHVGroupScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"HVGroupsScanned","HVBiasScans"},              .cuts={"OneHVGroupScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
 #if PHASE == 0
-  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"HVGroupsScanned","NewModules","HVBiasScans_2023"}, .cuts={"OneHVGroupScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluCharge_vs_BiasVoltage",     .pfs={"HVGroupsScanned","NewModules","HVBiasScans"}, .cuts={"OneHVGroupScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
 #endif
   
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"HVBiasScans_2023","HVGroupsScanned"},              .cuts={"OneHVGroupScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"HVGroupsScanned","HVBiasScans_2023"},              .cuts={"OneHVGroupScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"HVBiasScans","HVGroupsScanned"},              .cuts={"OneHVGroupScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"HVGroupsScanned","HVBiasScans"},              .cuts={"OneHVGroupScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
 #if PHASE == 0
-  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"HVGroupsScanned","NewModules","HVBiasScans_2023"}, .cuts={"OneHVGroupScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
+  sh.AddHistos("clust", { .fill="AvgCluSize_vs_BiasVoltage",       .pfs={"HVGroupsScanned","NewModules","HVBiasScans"}, .cuts={"OneHVGroupScan"}, .draw="PE1", .opt="", .ranges={0,300, 0,0} });
 #endif
   
-  sh.AddHistos("clust", { .fill="NormOnTrkCluCharge",              .pfs={"Voltages","HVGroupsScanned","HVBiasScans_2023"}, .cuts={"OneHVGroupScan"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,100, 0,0} });
-  sh.AddHistos("clust", { .fill="CluCharge",                       .pfs={"Voltages","HVGroupsScanned","HVBiasScans_2023"}, .cuts={"OneHVGroupScan"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,100, 0,0} });
-  sh.AddHistos("clust", { .fill="CluSize",                         .pfs={"Voltages","HVGroupsScanned","HVBiasScans_2023"}, .cuts={"OneHVGroupScan"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,10, 0,0} });
+  sh.AddHistos("clust", { .fill="NormOnTrkCluCharge",              .pfs={"Voltages","HVGroupsScanned","HVBiasScans"}, .cuts={"OneHVGroupScan"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,100, 0,0} });
+  sh.AddHistos("clust", { .fill="CluCharge",                       .pfs={"Voltages","HVGroupsScanned","HVBiasScans"}, .cuts={"OneHVGroupScan"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,100, 0,0} });
+  sh.AddHistos("clust", { .fill="CluSize",                         .pfs={"Voltages","HVGroupsScanned","HVBiasScans"}, .cuts={"OneHVGroupScan"}, .draw="HISTE1", .opt="KeepNormSumw2", .ranges={0,10, 0,0} });
 #endif
 #endif
 

@@ -636,7 +636,7 @@ public:
     pf_delay_scan = scans::delay_scan_no(e.run, e.ls);
     delay = scans::delay(e.run, e.ls, e.orb);
     pf_hv_scan = scans::hv_scan_no(e.run);
-    pf_hv_scan_year = (pf_hv_scan>=56) ? pf_hv_scan-56 : (pf_hv_scan>=42) ? pf_hv_scan-42 : (pf_hv_scan>=29) ? pf_hv_scan-29 : (pf_hv_scan>=23) ? pf_hv_scan-23 : (pf_hv_scan>=19) ? pf_hv_scan-19 : (pf_hv_scan>=17) ? pf_hv_scan-17 : pf_hv_scan; 
+    pf_hv_scan_year = (pf_hv_scan>=66) ? pf_hv_scan-66 : (pf_hv_scan>=56) ? pf_hv_scan-56 : (pf_hv_scan>=42) ? pf_hv_scan-42 : (pf_hv_scan>=29) ? pf_hv_scan-29 : (pf_hv_scan>=23) ? pf_hv_scan-23 : (pf_hv_scan>=19) ? pf_hv_scan-19 : (pf_hv_scan>=17) ? pf_hv_scan-17 : pf_hv_scan; 
     bias_voltage = scans::bias_voltage(pf_hv_scan, e.run, e.ls, e.orb, m.det, m.layer, abs(m.disk), m.ring, pf_bpix_l1_new_2018);
     is_one_hv_group_scan = scans::is_one_hv_group_scan(pf_hv_scan, bias_voltage, m.det, m.layer, m.ladder, m.module, m.disk, m.blade, m.panel, m.ring);
     // Shell - BpI: 0,  BpO: 1, BmI: 2, BmO: 3
