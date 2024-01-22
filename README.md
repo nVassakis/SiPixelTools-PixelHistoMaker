@@ -4,6 +4,19 @@ A set of programs to analyze input files created with the PhaseIPixelNtuplizer
 
 Author: János Karancsi (jkarancsi@gmail.com)
 
+## Checkout recipe
+```bash
+cmsrel CMSSW_10_2_16_UL
+cd CMSSW_10_2_16_UL/src
+cmsenv
+git clone https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker SiPixelTools/PixelHistoMaker
+cd SiPixelTools/PixelHistoMaker
+mkdir PHM_PHASE1_out
+make clean
+make -j8 Phase1PixelHistoMaker
+voms-proxy-init --voms cms:/cms --valid 168:00 --rfc
+```
+
 ## Phase1PixelHistoMaker
 Creates plots for cluster properties and pixel hit efficiency
 Before running, you might want to specify a comparison of two or more different runs,
@@ -78,20 +91,6 @@ Phase1ScanHistoMaker -o PHM_out/output.root /foo/bar/input*.root
 ```
 Note on badROC exclusion:
 it is only relevant for the hit efficiency plots, which are the least important plots for HV scans. Even after the badROC exclusion the plots don't change much. If you want to use the badROC exclusion, you have to run it beforehand the Phase1ScanHistoMaker but after you've edited interface/scan_points.h, this way the exclusion will use data from the scan runs, but automatically excluding the scan data. (There's also an option in scan_points.h that you assign a specific run number to the scan run to use as the source of the badROC exclusion, but this is not used anymore)
-
-
-## Checkout recipe
-```bash
-cmsrel CMSSW_10_2_16_UL
-cd CMSSW_10_2_16_UL/src
-cmsenv
-git clone https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker SiPixelTools/PixelHistoMaker
-cd SiPixelTools/PixelHistoMaker
-mkdir PHM_PHASE1_out
-make clean
-make -j8 Phase1PixelHistoMaker
-voms-proxy-init --voms cms:/cms --valid 168:00 --rfc
-```
 
 ## Local test job
 
