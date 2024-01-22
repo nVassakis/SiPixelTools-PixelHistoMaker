@@ -514,3 +514,7 @@ CXXFLAGS     += $(ROOTCFLAGS)
 LDFLAGS      += $(ROOTLDFLAGS)
 LIBS          = $(ROOTLIBS) $(SYSLIBS)
 GLIBS         = $(ROOTGLIBS) $(SYSLIBS)
+
+ifneq ($(USER_CXXFLAGS),)
+CXXFLAGS     += $(USER_CXXFLAGS)
+endif
