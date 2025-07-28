@@ -958,7 +958,9 @@ public:
     tot_intlumi_invnb = 0;
     //input = fopen ("input/run_ls_instlumi_pileup_2017.txt","r");
     //input = fopen ("input/run_ls_instlumi_pileup_phase1.txt","r");
-    input = fopen ("input/run_ls_intlumi_pileup_phase1_Run3.txt","r");
+    // input = fopen ("input/run_ls_intlumi_pileup_phase1_Run3.txt","r");
+    input = fopen ("input/run_ls_intlumi_pileup_phase1_Run3_2025.txt","r");
+
     a = 1;
     while (a==1) {
       a = fscanf (input, "%d", &run);
@@ -1729,7 +1731,7 @@ public:
     //                                 Bad Module/ROC Exclusions
     
     // Exclude Modules affected by Timing and HV Scans
-    bool excl_hv = (bias_voltage == NOVAL_I);
+    bool excl_hv = (pf_hv_scan == -1);
     bool excl_delay = ( pf_delay_scan == -1 ||
 			(e.run==272762 && delay==24 ) ||
 			(e.run<238474 && delay==13) || 
