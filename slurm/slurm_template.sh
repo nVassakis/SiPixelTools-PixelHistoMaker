@@ -42,10 +42,10 @@ USERDIR=$4
 if [[ ${USERDIR} == /pnfs/* ]]; then
     (
       (! command -v scram &> /dev/null) || eval `scram unsetenv -sh`
-      gfal-mkdir -p root://t3dcachedb.psi.ch:1094/$USERDIR
-      gfal-mkdir -p root://t3dcachedb.psi.ch:1094/$USERDIR/logs
-      gfal-mkdir -p root://t3dcachedb.psi.ch:1094/$USERDIR/merged
-      gfal-mkdir -p root://t3dcachedb.psi.ch:1094/$USERDIR/badrocs
+      xrdfs t3dcachedb03.psi.ch mkdir -p /$USERDIR
+      xrdfs t3dcachedb03.psi.ch mkdir -p /$USERDIR/logs
+      xrdfs t3dcachedb03.psi.ch mkdir -p /$USERDIR/merged
+      xrdfs t3dcachedb03.psi.ch mkdir -p /$USERDIR/badrocs
       sleep 5
     )
 else
@@ -70,13 +70,13 @@ echo "--------------------------------------------------------------------------
 echo "                          Creating JOB ["$2"]"
 echo
 
-export SCRAM_ARCH=slc7_amd64_gcc700
+export SCRAM_ARCH=el9_amd64_gcc12
 cd ${TMPDIR}
 
-scramv1 project CMSSW CMSSW_10_2_16_UL
-cd CMSSW_10_2_16_UL/src
+scramv1 project CMSSW CMSSW_10_5_05
+cd CMSSW_10_5_05/src
 eval `scram runtime -sh`
-git clone https://github.com/TizianoBevilacqua/SiPixelTools-PixelHistoMaker.git SiPixelTools/PixelHistoMaker
+git clone https://github.com/nVassakis/SiPixelTools-PixelHistoMaker.git SiPixelTools/PixelHistoMaker
 cd SiPixelTools/PixelHistoMaker
 
 mkdir PHM_PHASE1_out
@@ -108,7 +108,7 @@ else
     pwd
     if [[ ${USERDIR} == /pnfs/* ]]; then
         echo ./$5 -o PHM_PHASE1_out/$output -a `cat $3`
-        #./$5 -o PHM_PHASE1_out/$output -a root://t3dcachedb.psi.ch:1094//$USERDIR/*.root
+        #./$5 -o PHM_PHASE1_out/$output -a root://t3dcachedb03.psi.ch:1094//$USERDIR/*.root
         ./$5 -o PHM_PHASE1_out/$output -a `cat $3`
     else 
         echo ./$5 -o PHM_PHASE1_out/$output -a $USERDIR/*.root
@@ -125,17 +125,17 @@ echo
 # Copy to Eos
 if [[ ${USERDIR} == /pnfs/* ]]; then
     if [[ $6 != --hadd ]]; then
-        xrdcp -f -N PHM_PHASE1_out/$output root://t3dcachedb.psi.ch:1094//$USERDIR/$output
-        xrdcp -f -N input/Badroc_List.root root://t3dcachedb.psi.ch:1094//$USERDIR/badrocs/Badroc_List_${2}.root
+        xrdcp -f -N PHM_PHASE1_out/$output root://t3dcachedb03.psi.ch:1094//$USERDIR/$output
+        xrdcp -f -N input/Badroc_List.root root://t3dcachedb03.psi.ch:1094//$USERDIR/badrocs/Badroc_List_${2}.root
     else
-        xrdcp -f -N PHM_PHASE1_out/$output root://t3dcachedb.psi.ch:1094//$USERDIR/merged/$output
+        xrdcp -f -N PHM_PHASE1_out/$output root://t3dcachedb03.psi.ch:1094//$USERDIR/merged/$output
     fi
-    xrdcp -f -N /work/${USER}/test/.slurm/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_${2}.out root://t3dcachedb.psi.ch:1094/$USERDIR/logs/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_${2}.out
-    xrdcp -f -N /work/${USER}/test/.slurm/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_${2}.err root://t3dcachedb.psi.ch:1094/$USERDIR/logs/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_${2}.err
+    xrdcp -f -N /work/${USER}/pixel_offline/test/.slurm/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_${2}.out root://t3dcachedb03.psi.ch:1094/$USERDIR/logs/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_${2}.out
+    xrdcp -f -N /work/${USER}/pixel_offline/test/.slurm/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_${2}.err root://t3dcachedb03.psi.ch:1094/$USERDIR/logs/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_${2}.err
 else
     cp  PHM_PHASE1_out/$output $USERDIR/$output
-    cp  /work/${USER}/test/.slurm/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_${2}.out $USERDIR/logs/${SLURM_JOB_ID}_${SLURM_JOB_ID}_${2}.out
-    cp  /work/${USER}/test/.slurm/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_${2}.err $USERDIR/logs/${SLURM_JOB_ID}_${SLURM_JOB_ID}_${2}.err
+    cp  /work/${USER}/pixel_offline/test/.slurm/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_${2}.out $USERDIR/logs/${SLURM_JOB_ID}_${SLURM_JOB_ID}_${2}.out
+    cp  /work/${USER}/pixel_offline/test/.slurm/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_${2}.err $USERDIR/logs/${SLURM_JOB_ID}_${SLURM_JOB_ID}_${2}.err
 fi
 
 echo
@@ -143,7 +143,7 @@ echo "Output: "
 ls -l $USERDIR/$output
 
 cd ../../../..
-rm -rf CMSSW CMSSW_10_2_16_UL
+rm -rf CMSSW CMSSW_10_5_05
 
 echo
 echo "--------------------------------------------------------------------------------"

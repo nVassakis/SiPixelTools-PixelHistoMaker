@@ -84,7 +84,7 @@ parser.add_option("--hadd",        dest="hadd",        action="store_true", defa
 parser.add_option("--step_two",    dest="step_2",      action="store_true", default=False, help="Option to merge merged outputs")
 parser.add_option("--step_three",  dest="step_3",      action="store_true", default=False, help="Option to merge merged merged outputs")
 parser.add_option("--debug",       dest="debug",       action="store_true", default=False, help="Debug verbosity and skip removing of some intermediate files")
-parser.add_option("--outdir",      dest="OUTDIR",      type="string",       default="/pnfs/psi.ch/cms/trivcat/store/user/bevila_t/test2/phys/xpluscharm/pixeltest", help="Output directory (Default: pnfs/.../pxeltest)")
+parser.add_option("--outdir",      dest="OUTDIR",      type="string",       default="/pnfs/psi.ch/cms/trivcat/store/user/nvassaki/pixel2025/histomaker", help="Output directory (Default: pnfs/.../histomaker)")
 parser.add_option("--queue",       dest="queue",       type="string",       default="standard", help="slurm queue to submit jobs to, default: standard, if this needs to be changed one should also have a look at the --time option")
 parser.add_option("--time",        dest="time",        type="string",       default="12:00:00", help="slurm job time limit, default: 12:00:00, make sure not to exceed time limit for each partition (for limits ref to https://wiki.chipp.ch/twiki/bin/view/CmsTier3/SlurmUsage) ")
 parser.add_option("--taskname",    dest="TASKNAME",    type="string",       default="HISTO_MAKER_DEFAULT", help="Output directory (Default: HISTO_MAKER_DEFAULT)")
