@@ -182,7 +182,7 @@ if opt.create:
     print ("")
     print ("Job Script file: "+opt.job_template)
     os.system("ls -l filelists | awk '{ print $NF }' | tail -n +2 | head -n -1 > filelists/job_list.txt")
-    os.system("cat -n filelists/job_list.txt | awk '{ printf \"%.4d %s\\n\", $1, $2 }' | awk '{ print \"sbatch --job-name="+opt.TASKNAME+"_\"$1\" -o /work/%u/test/.slurm/%x_%A_\"$1\".out -e /work/%u/test/.slurm/%x_%A_\"$1\".err slurm_jobscript.sh "+opt.TASKNAME+"_JOB\"$1\" \"$1\" "+EXEC_PATH+"/filelists/\"$2\" "+OUT_PATH+"/"+opt.TASKNAME+" "+opt.PROG+"\"}' > alljobs.sh")
+    os.system("cat -n filelists/job_list.txt | awk '{ printf \"%.4d %s\\n\", $1, $2 }' | awk '{ print \"sbatch --job-name="+opt.TASKNAME+"_\"$1\" -o /work/%u/pixel_offline/test/.slurm/%x_%A_\"$1\".out -e /work/%u/pixel_offline/test/.slurm/%x_%A_\"$1\".err slurm_jobscript.sh "+opt.TASKNAME+"_JOB\"$1\" \"$1\" "+EXEC_PATH+"/filelists/\"$2\" "+OUT_PATH+"/"+opt.TASKNAME+" "+opt.PROG+"\"}' > alljobs.sh")
     os.system("head -1 alljobs.sh | sed \"s;0001;test;g;\" > test.sh")
     print 
     print ("jobs prepared at:", os.getcwd() )
@@ -363,7 +363,7 @@ elif opt.hadd:
     os.system("ls -l filelists | grep merging | grep -v merging_job_list.txt | awk '{ print $NF }' > filelists/merging_job_list.txt")
                                            #$1              $2      $3      $4     $5       $6
     #sbatch jobname .out .log slurm.sh jobname(redundant) job_ID filelist outdir program --hadd
-    os.system("cat -n filelists/merging_job_list.txt | awk '{ printf \"%.4d %s\\n\", $1, $2 }' | awk '{ print \"sbatch --job-name="+TASKNAME+"_MERGING_\"$1\" -o /work/%u/test/.slurm/%x_%A_\"$1\".out -e /work/%u/test/.slurm/%x_%A_\"$1\".err slurm_jobscript.sh "+TASKNAME+"_JOBMERGING\"$1\" \"$1\" "+EXEC_PATH+"/filelists/\"$2\" "+OUT_PATH+"/"+TASKNAME+merged_dir+" "+PROG+" --hadd\"}' > merging_alljobs.sh")
+    os.system("cat -n filelists/merging_job_list.txt | awk '{ printf \"%.4d %s\\n\", $1, $2 }' | awk '{ print \"sbatch --job-name="+TASKNAME+"_MERGING_\"$1\" -o /work/%u/pixel_offline/test/.slurm/%x_%A_\"$1\".out -e /work/%u/pixel_offline/test/.slurm/%x_%A_\"$1\".err slurm_jobscript.sh "+TASKNAME+"_JOBMERGING\"$1\" \"$1\" "+EXEC_PATH+"/filelists/\"$2\" "+OUT_PATH+"/"+TASKNAME+merged_dir+" "+PROG+" --hadd\"}' > merging_alljobs.sh")
     os.system("head -1 merging_alljobs.sh | sed \"s;0001;test;g;\" > merging_test.sh")
 
     if opt.queue != "standard":
