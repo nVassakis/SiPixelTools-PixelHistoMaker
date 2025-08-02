@@ -135,6 +135,7 @@ int main(int argc, char* argv[]) {
   // -b option:
   // Former BADROC_RUN
   // Do not create any histos (except for ROC efficiency) to run faster
+
   bool BADROC_RUN = 0;
   bool is_o = false, is_n = false, is_a = false, is_b = false;
   for(int i=1; i<argc; i++) {
@@ -572,7 +573,7 @@ int main(int argc, char* argv[]) {
   sh.AddNewFillParams("NBx",              { .nbin= 360, .bins={      0,   3600}, .fill=[&v]{ return v.nbx;             }, .axis_title="Number of bunch-crossings"});
   sh.AddNewFillParams("IntLumi",          { .nbin= 250, .bins={      0,    250}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity [fb^{-1}]"});
   sh.AddNewFillParams("IntLumiRunII",     { .nbin= 200, .bins={      0,    200}, .fill=[&v]{ return v.intlumi-29.9261; }, .axis_title="Delivered luminosity - Run 2 [fb^{-1}]"});
-  sh.AddNewFillParams("IntLumiRunIII",    { .nbin= 252, .bins={      0,    252}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity - Run 3 [fb^{-1}]"});
+  sh.AddNewFillParams("IntLumiRunIII",    { .nbin= 250, .bins={      0,    250}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity - Run 3 [fb^{-1}]"});
   sh.AddNewFillParams("IntLumi2016",      { .nbin= 200, .bins={      0,    200}, .fill=[&v]{ return v.intlumi-34.1252; }, .axis_title="Delivered luminosity - 2016 [fb^{-1}]", .def_range={0,150}});
   sh.AddNewFillParams("IntLumi2017",      { .nbin= 100, .bins={      0,    200}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity - Phase-1 [fb^{-1}]", .def_range={0,125}});
   sh.AddNewFillParams("IntLumi2017Fine",  { .nbin=1000, .bins={      0,    200}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity - Phase-1 [fb^{-1}]", .def_range={0,125}});
@@ -1007,6 +1008,7 @@ int main(int argc, char* argv[]) {
     //__________________________________________________________________________________
     //                           New Hit Efficiency Plots
     
+    sh.SetHistoWeights({});
 #if DATASTRUCT_VER >= 108
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_LayersDisks", .pfs={},       .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_LayersDisks", .pfs={main12}, .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
@@ -1019,18 +1021,18 @@ int main(int argc, char* argv[]) {
     //                                  Event Plots
     
 #if PU_REWEIGHT_MC == 1
-    // sh.AddHistos("evt", { .fill="NVerticesRwg", .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,60, 0,0, 0.5,0.9} });
-    // sh.AddHistos("evt", { .fill="NPileupRwg",   .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,60, 0,0, 0.5,0.9} });
-    // sh.AddHistos("evt", { .fill="NTracks",      .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
-    // sh.AddHistos("evt", { .fill="NTracksLay1",  .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
-    // sh.AddHistos("evt", { .fill="NTracksDsk1",  .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
+    sh.AddHistos("evt", { .fill="NVerticesRwg", .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,60, 0,0, 0.5,0.9} });
+    sh.AddHistos("evt", { .fill="NPileupRwg",   .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,60, 0,0, 0.5,0.9} });
+    sh.AddHistos("evt", { .fill="NTracks",      .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
+    sh.AddHistos("evt", { .fill="NTracksLay1",  .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
+    sh.AddHistos("evt", { .fill="NTracksDsk1",  .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
 #if DATASTRUCT_VER > 28
-    // sh.AddHistos("evt", { .fill="NClu",         .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
-    // sh.AddHistos("evt", { .fill="NPix",         .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
-    // sh.AddHistos("evt", { .fill="NCluBPix",     .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
-    // sh.AddHistos("evt", { .fill="NPixBPix",     .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
-    // sh.AddHistos("evt", { .fill="NCluFPix",     .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
-    // sh.AddHistos("evt", { .fill="NPixFPix",     .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
+    sh.AddHistos("evt", { .fill="NClu",         .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
+    sh.AddHistos("evt", { .fill="NPix",         .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
+    sh.AddHistos("evt", { .fill="NCluBPix",     .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
+    sh.AddHistos("evt", { .fill="NPixBPix",     .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
+    sh.AddHistos("evt", { .fill="NCluFPix",     .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
+    sh.AddHistos("evt", { .fill="NPixFPix",     .pfs={main12}, .cuts={"ZeroBias","Nvtx"}, .draw="HIST", .opt="LogNorm", .ranges={0,0,  0,0, 0.5,0.9} });
 #endif
 #endif
     
@@ -1070,7 +1072,7 @@ int main(int argc, char* argv[]) {
     if (debug) std::cout<<"Phase1PixelHistoMaker - event plots ok"<<std::endl;
     
     //__________________________________________________________________________________
-    //
+    ///
     //                     Cluster Plots (traj - on-track, clust - all)
     
 #if PHASE == 0
@@ -1084,12 +1086,12 @@ int main(int argc, char* argv[]) {
     sh.AddHistos("clust", { .fill="ROCBinY_vs_ROCBinX",                 .pfs={main12,"LayersAllDisks"},  .cuts=AllCluCuts,             .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
 #elif PHASE == 1
 #if CLUST_LOOP==1
-    // sh.AddHistos("clust", { .fill="ROC_L1_Ladder_vs_Module",                             .pfs={main12},          .cuts={"ZeroBias","Nvtx","Lay1"},  .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
-    // sh.AddHistos("clust", { .fill="ROC_L2_Ladder_vs_Module",                             .pfs={main12},          .cuts={"ZeroBias","Nvtx","Lay2"},  .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
-    // sh.AddHistos("clust", { .fill="ROC_L3_Ladder_vs_Module",                             .pfs={main12},          .cuts={"ZeroBias","Nvtx","Lay3"},  .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
-    // sh.AddHistos("clust", { .fill="ROC_L4_Ladder_vs_Module",                             .pfs={main12},          .cuts={"ZeroBias","Nvtx","Lay4"},  .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
-    // sh.AddHistos("clust", { .fill="ROC_Ring1_BladePanel_vs_Disk",                        .pfs={main12},          .cuts={"ZeroBias","Nvtx","Ring1"}, .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
-    // sh.AddHistos("clust", { .fill="ROC_Ring2_BladePanel_vs_Disk",                        .pfs={main12},          .cuts={"ZeroBias","Nvtx","Ring2"}, .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
+    sh.AddHistos("clust", { .fill="ROC_L1_Ladder_vs_Module",                             .pfs={main12},          .cuts={"ZeroBias","Nvtx","Lay1"},  .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
+    sh.AddHistos("clust", { .fill="ROC_L2_Ladder_vs_Module",                             .pfs={main12},          .cuts={"ZeroBias","Nvtx","Lay2"},  .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
+    sh.AddHistos("clust", { .fill="ROC_L3_Ladder_vs_Module",                             .pfs={main12},          .cuts={"ZeroBias","Nvtx","Lay3"},  .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
+    sh.AddHistos("clust", { .fill="ROC_L4_Ladder_vs_Module",                             .pfs={main12},          .cuts={"ZeroBias","Nvtx","Lay4"},  .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
+    sh.AddHistos("clust", { .fill="ROC_Ring1_BladePanel_vs_Disk",                        .pfs={main12},          .cuts={"ZeroBias","Nvtx","Ring1"}, .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
+    sh.AddHistos("clust", { .fill="ROC_Ring2_BladePanel_vs_Disk",                        .pfs={main12},          .cuts={"ZeroBias","Nvtx","Ring2"}, .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
 #endif
     sh.AddHistos("traj", { .fill="ROC_L1_Ladder_vs_Module",                             .pfs={main12,"OnTrack"},          .cuts={"ZeroBias","Nvtx","Pt>1.0GeV","ValidHit","Lay1"},  .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
     sh.AddHistos("traj", { .fill="ROC_L2_Ladder_vs_Module",                             .pfs={main12,"OnTrack"},          .cuts={"ZeroBias","Nvtx","Pt>1.0GeV","ValidHit","Lay2"},  .draw="COLZ", .opt="Log", .ranges={0,0, 0,0, 0,0} });
@@ -1111,30 +1113,30 @@ int main(int argc, char* argv[]) {
     sh.AddHistos("traj",  { .fill="OnCluSizeY",      .pfs={"DataYears","MainFills","LayersAllDisks"},  .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
     sh.AddHistos("traj",  { .fill="OnCluChargeNorm", .pfs={"DataYears","LayersAllDisks"},              .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm", .ranges={  0,60, 0,0, 0.6,0.8} });
     // Months
-    // sh.AddHistos("clust", { .fill="CluSize",         .pfs={"Layers", "DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
-    // sh.AddHistos("clust", { .fill="CluSizeX",        .pfs={"Layers", "DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,10, 0,0, 0.6,0.8} });
-    // sh.AddHistos("clust", { .fill="CluSizeY",        .pfs={"Layers", "DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
-    // sh.AddHistos("clust", { .fill="CluCharge",       .pfs={"Layers", "DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={ 0,250, 0,0, 0.6,0.8} });
-    // sh.AddHistos("clust", { .fill="CluSize",         .pfs={"DisksRings","DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
-    // sh.AddHistos("clust", { .fill="CluSizeX",        .pfs={"DisksRings","DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,10, 0,0, 0.6,0.8} });
-    // sh.AddHistos("clust", { .fill="CluSizeY",        .pfs={"DisksRings","DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
-    // sh.AddHistos("clust", { .fill="CluCharge",       .pfs={"DisksRings","DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={ 0,250, 0,0, 0.6,0.8} });
-    // sh.AddHistos("clust", { .fill="CluSize",         .pfs={"Months",    "DataYears","LayersAllDisks"}, .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
-    // sh.AddHistos("clust", { .fill="CluSizeX",        .pfs={"Months",    "DataYears","LayersAllDisks"}, .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,10, 0,0, 0.6,0.8} });
-    // sh.AddHistos("clust", { .fill="CluSizeY",        .pfs={"Months",    "DataYears","LayersAllDisks"}, .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
-    // sh.AddHistos("clust", { .fill="CluCharge",       .pfs={"Months",    "DataYears","LayersAllDisks"}, .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={ 0,250, 0,0, 0.6,0.8} });
-    // sh.AddHistos("traj",  { .fill="OnCluSize",       .pfs={"Layers","DataYears","Months"},           .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,20, 0,0, 0.6,0.8} });
-    // sh.AddHistos("traj",  { .fill="OnCluSizeX",      .pfs={"Layers","DataYears","MainFills","Months"},.cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,10, 0,0, 0.6,0.8} });
-    // sh.AddHistos("traj",  { .fill="OnCluSizeY",      .pfs={"Layers","DataYears","MainFills","Months"},.cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,20, 0,0, 0.6,0.8} });
-    // sh.AddHistos("traj",  { .fill="OnCluChargeNorm", .pfs={"Layers","DataYears","Months"},           .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,60, 0,0, 0.6,0.8} });
-    // sh.AddHistos("traj",  { .fill="OnCluSize",       .pfs={"DisksRings","DataYears","Months"},           .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,20, 0,0, 0.6,0.8} });
-    // sh.AddHistos("traj",  { .fill="OnCluSizeX",      .pfs={"DisksRings","DataYears","MainFills","Months"},.cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,10, 0,0, 0.6,0.8} });
-    // sh.AddHistos("traj",  { .fill="OnCluSizeY",      .pfs={"DisksRings","DataYears","MainFills","Months"},.cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,20, 0,0, 0.6,0.8} });
-    // sh.AddHistos("traj",  { .fill="OnCluChargeNorm", .pfs={"DisksRings","DataYears","Months"},           .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,60, 0,0, 0.6,0.8} });
-    // sh.AddHistos("traj",  { .fill="OnCluSize",       .pfs={"Months",    "DataYears","LayersAllDisks"}, .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,20, 0,0, 0.6,0.8} });
-    // sh.AddHistos("traj",  { .fill="OnCluSizeX",      .pfs={"Months",    "DataYears","MainFills","LayersAllDisks"}, .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,10, 0,0, 0.6,0.8} });
-    // sh.AddHistos("traj",  { .fill="OnCluSizeY",      .pfs={"Months",    "DataYears","MainFills","LayersAllDisks"}, .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,20, 0,0, 0.6,0.8} });
-    // sh.AddHistos("traj",  { .fill="OnCluChargeNorm", .pfs={"Months",    "DataYears","LayersAllDisks"}, .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,60, 0,0, 0.6,0.8} });
+    sh.AddHistos("clust", { .fill="CluSize",         .pfs={"Layers", "DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
+    sh.AddHistos("clust", { .fill="CluSizeX",        .pfs={"Layers", "DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,10, 0,0, 0.6,0.8} });
+    sh.AddHistos("clust", { .fill="CluSizeY",        .pfs={"Layers", "DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
+    sh.AddHistos("clust", { .fill="CluCharge",       .pfs={"Layers", "DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={ 0,250, 0,0, 0.6,0.8} });
+    sh.AddHistos("clust", { .fill="CluSize",         .pfs={"DisksRings","DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
+    sh.AddHistos("clust", { .fill="CluSizeX",        .pfs={"DisksRings","DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,10, 0,0, 0.6,0.8} });
+    sh.AddHistos("clust", { .fill="CluSizeY",        .pfs={"DisksRings","DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
+    sh.AddHistos("clust", { .fill="CluCharge",       .pfs={"DisksRings","DataYears","Months"},           .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={ 0,250, 0,0, 0.6,0.8} });
+    sh.AddHistos("clust", { .fill="CluSize",         .pfs={"Months",    "DataYears","LayersAllDisks"}, .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
+    sh.AddHistos("clust", { .fill="CluSizeX",        .pfs={"Months",    "DataYears","LayersAllDisks"}, .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,10, 0,0, 0.6,0.8} });
+    sh.AddHistos("clust", { .fill="CluSizeY",        .pfs={"Months",    "DataYears","LayersAllDisks"}, .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
+    sh.AddHistos("clust", { .fill="CluCharge",       .pfs={"Months",    "DataYears","LayersAllDisks"}, .cuts=AllCluCuts, .draw="HIST", .opt="Norm", .ranges={ 0,250, 0,0, 0.6,0.8} });
+    sh.AddHistos("traj",  { .fill="OnCluSize",       .pfs={"Layers","DataYears","Months"},           .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,20, 0,0, 0.6,0.8} });
+    sh.AddHistos("traj",  { .fill="OnCluSizeX",      .pfs={"Layers","DataYears","MainFills","Months"},.cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,10, 0,0, 0.6,0.8} });
+    sh.AddHistos("traj",  { .fill="OnCluSizeY",      .pfs={"Layers","DataYears","MainFills","Months"},.cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,20, 0,0, 0.6,0.8} });
+    sh.AddHistos("traj",  { .fill="OnCluChargeNorm", .pfs={"Layers","DataYears","Months"},           .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,60, 0,0, 0.6,0.8} });
+    sh.AddHistos("traj",  { .fill="OnCluSize",       .pfs={"DisksRings","DataYears","Months"},           .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,20, 0,0, 0.6,0.8} });
+    sh.AddHistos("traj",  { .fill="OnCluSizeX",      .pfs={"DisksRings","DataYears","MainFills","Months"},.cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,10, 0,0, 0.6,0.8} });
+    sh.AddHistos("traj",  { .fill="OnCluSizeY",      .pfs={"DisksRings","DataYears","MainFills","Months"},.cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,20, 0,0, 0.6,0.8} });
+    sh.AddHistos("traj",  { .fill="OnCluChargeNorm", .pfs={"DisksRings","DataYears","Months"},           .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,60, 0,0, 0.6,0.8} });
+    sh.AddHistos("traj",  { .fill="OnCluSize",       .pfs={"Months",    "DataYears","LayersAllDisks"}, .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,20, 0,0, 0.6,0.8} });
+    sh.AddHistos("traj",  { .fill="OnCluSizeX",      .pfs={"Months",    "DataYears","MainFills","LayersAllDisks"}, .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,10, 0,0, 0.6,0.8} });
+    sh.AddHistos("traj",  { .fill="OnCluSizeY",      .pfs={"Months",    "DataYears","MainFills","LayersAllDisks"}, .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,20, 0,0, 0.6,0.8} });
+    sh.AddHistos("traj",  { .fill="OnCluChargeNorm", .pfs={"Months",    "DataYears","LayersAllDisks"}, .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm",  .ranges={  0,60, 0,0, 0.6,0.8} });
     // New Modules (Data)
     //sh.AddHistos("traj",  { .fill="OnCluSize",       .pfs={"NewModules","Layers","DataYears","MainFills"}, .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm", .ranges={ 0,20, 0,0, 0.6,0.8} });
     //sh.AddHistos("traj",  { .fill="OnCluSizeX",      .pfs={"NewModules","Layers","DataYears","MainFills"}, .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm", .ranges={ 0,20, 0,0, 0.6,0.8} });
@@ -1375,17 +1377,17 @@ int main(int argc, char* argv[]) {
       
       sh.AddHistos("traj", { .fill="HitEfficiency_vs_LayersDisks",   .pfs={"Runs"},                        .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1} });
       sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumi",      .pfs={"Runs","LayersDisks"},          .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-      // sh.AddHistos("traj", { .fill="HitEfficiency_vs_Pileup",        .pfs={"Runs","LayersDisks"},          .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-      // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NPixL1",        .pfs={"Runs"},                        .cuts={"ZeroBias","EffCuts","Lay1"}, .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-      // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCluL1",        .pfs={"Runs"},                        .cuts={"ZeroBias","EffCuts","Lay1"}, .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-      // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",   .pfs={"Runs","LayersDisks"},          .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-      // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",   .pfs={"Runs","Layers","InnerOuter"},  .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-      // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",   .pfs={"LayersDisks","Runs"},          .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="TwoCol43", .ranges={0,0, 0,1, 0.4,0.4} });
-      // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",   .pfs={"InnerOuter","Layers","Runs"},  .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-      // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"Runs","LayersDisks"},          .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-      // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"Runs","Layers","InnerOuter"},  .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-      // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"LayersDisks","Runs"},          .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="TwoCol43", .ranges={0,0, 0,1, 0.4,0.4} });
-      // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"InnerOuter","Layers","Runs"},  .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+      sh.AddHistos("traj", { .fill="HitEfficiency_vs_Pileup",        .pfs={"Runs","LayersDisks"},          .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+      sh.AddHistos("traj", { .fill="HitEfficiency_vs_NPixL1",        .pfs={"Runs"},                        .cuts={"ZeroBias","EffCuts","Lay1"}, .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+      sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCluL1",        .pfs={"Runs"},                        .cuts={"ZeroBias","EffCuts","Lay1"}, .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+      sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",   .pfs={"Runs","LayersDisks"},          .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+      sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",   .pfs={"Runs","Layers","InnerOuter"},  .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+      sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",   .pfs={"LayersDisks","Runs"},          .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="TwoCol43", .ranges={0,0, 0,1, 0.4,0.4} });
+      sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",   .pfs={"InnerOuter","Layers","Runs"},  .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+      sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"Runs","LayersDisks"},          .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+      sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"Runs","Layers","InnerOuter"},  .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+      sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"LayersDisks","Runs"},          .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="TwoCol43", .ranges={0,0, 0,1, 0.4,0.4} });
+      sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"InnerOuter","Layers","Runs"},  .cuts={"ZeroBias","EffCuts"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
       //sh.AddHistos("traj", { .fill="DColEfficiency_vs_LayersDisks",  .pfs={"Runs"},                        .cuts={"ZeroBias","DColEffCuts"},    .draw="PE1", .opt="", .ranges={0.5,4.5, 0,0} });
       //sh.AddHistos("traj", { .fill="DColEfficiency_vs_InstLumi",     .pfs={"Runs","Layers"},               .cuts={"ZeroBias","DColEffCuts"},    .draw="PE1", .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
       //sh.AddHistos("traj", { .fill="DColEfficiency_vs_Pileup",       .pfs={"Runs","Layers"},               .cuts={"ZeroBias","DColEffCuts"},    .draw="PE1", .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
@@ -1427,16 +1429,16 @@ int main(int argc, char* argv[]) {
       sh.AddHistos("traj",  { .fill="OnCluSizeY",      .pfs={"Runs","LayersAllDisks"}, .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm", .ranges={  0,20, 0,0, 0.6,0.8} });
       sh.AddHistos("traj",  { .fill="OnCluChargeNorm", .pfs={"Runs","LayersAllDisks"}, .cuts=OnCluCutsPt1p0, .draw="HIST", .opt="Norm", .ranges={  0,60, 0,0, 0.6,0.8} });
       
-      // sh.AddHistos("traj", { .fill="TrackD0",     .pfs={"Runs"},                    .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
-      // sh.AddHistos("traj", { .fill="TrackD0",     .pfs={"Runs","LayersDisks"},      .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
-      // sh.AddHistos("traj", { .fill="TrackDZ",     .pfs={"Runs"},                    .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
-      // sh.AddHistos("traj", { .fill="TrackDZ",     .pfs={"Runs","LayersDisks"},      .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
-      // sh.AddHistos("traj", { .fill="TrackPt",     .pfs={"Runs"},                    .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
-      // sh.AddHistos("traj", { .fill="TrackPt",     .pfs={"Runs","LayersDisks"},      .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
-      // sh.AddHistos("traj", { .fill="TrackEta",    .pfs={"Runs"},                    .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
-      // sh.AddHistos("traj", { .fill="TrackEta",    .pfs={"Runs","LayersDisks"},      .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
-      // sh.AddHistos("traj", { .fill="TrackNStrip", .pfs={"Runs"},                    .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
-      // sh.AddHistos("traj", { .fill="TrackNStrip", .pfs={"Runs","LayersDisks"},      .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
+      sh.AddHistos("traj", { .fill="TrackD0",     .pfs={"Runs"},                    .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
+      sh.AddHistos("traj", { .fill="TrackD0",     .pfs={"Runs","LayersDisks"},      .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
+      sh.AddHistos("traj", { .fill="TrackDZ",     .pfs={"Runs"},                    .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
+      sh.AddHistos("traj", { .fill="TrackDZ",     .pfs={"Runs","LayersDisks"},      .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
+      sh.AddHistos("traj", { .fill="TrackPt",     .pfs={"Runs"},                    .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
+      sh.AddHistos("traj", { .fill="TrackPt",     .pfs={"Runs","LayersDisks"},      .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
+      sh.AddHistos("traj", { .fill="TrackEta",    .pfs={"Runs"},                    .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
+      sh.AddHistos("traj", { .fill="TrackEta",    .pfs={"Runs","LayersDisks"},      .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
+      sh.AddHistos("traj", { .fill="TrackNStrip", .pfs={"Runs"},                    .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
+      sh.AddHistos("traj", { .fill="TrackNStrip", .pfs={"Runs","LayersDisks"},      .cuts={"ZeroBias"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
       // try not to override histos sh.AddHistos("traj", { .fill="DClu",        .pfs={"Runs"},                    .cuts={"ZeroBias","EffCutsScans"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
       // try not to override histos sh.AddHistos("traj", { .fill="DClu",        .pfs={"Runs","LayersDisks"},      .cuts={"ZeroBias","EffCutsScans"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
       // try not to override histos sh.AddHistos("traj", { .fill="DClu",        .pfs={"Layers","Runs"},           .cuts={"ZeroBias","EffCutsScans"}, .draw="HIST", .opt="Norm", .ranges={0,0, 0,0} });
@@ -1635,49 +1637,49 @@ int main(int argc, char* argv[]) {
     sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrkPt",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","EffCutsNoPt"},         .draw="PE1",  .opt="logXTwoCol43", .ranges={0,0,   0.99,1, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackAlpha",    .pfs={main1, "LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackAlpha",    .pfs={main2, "LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackAlpha",    .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackAlpha",    .pfs={"Layers",main12},           .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackAlpha",    .pfs={"DisksRings",main12},            .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackAlpha",    .pfs={"InnerOuter","Layers",main12}, .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackAlpha",    .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackAlpha",    .pfs={"Layers",main12},           .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackAlpha",    .pfs={"DisksRings",main12},            .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackAlpha",    .pfs={"InnerOuter","Layers",main12}, .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={main1, "LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={main2, "LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={main12,"LayersDisks"},                    .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={main12,"Layers","InstLumi"},              .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={main12,"Layers","InnerOuter"},            .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={main12,"Layers","InnerOuter","InstLumi"}, .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={"Layers",main12},                         .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={"InnerOuter","Layers",main12},            .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBetaBins", .pfs={"Mods",    "Layers",main12},              .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBetaBins", .pfs={"InstLumi","Layers",main12},              .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBetaBins", .pfs={"InstLumi","Layers","InnerOuter",main12}, .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBetaBins", .pfs={"Pileup4", "Layers",main12},              .cuts={"ZeroBias","EffCutsNoBeta","MainFills"}, .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={"DisksRings",main12},                     .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={main12,"LayersDisks"},                    .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={main12,"Layers","InstLumi"},              .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={main12,"Layers","InnerOuter"},            .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={main12,"Layers","InnerOuter","InstLumi"}, .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={"Layers",main12},                         .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={"InnerOuter","Layers",main12},            .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBetaBins", .pfs={"Mods",    "Layers",main12},              .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBetaBins", .pfs={"InstLumi","Layers",main12},              .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBetaBins", .pfs={"InstLumi","Layers","InnerOuter",main12}, .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBetaBins", .pfs={"Pileup4", "Layers",main12},              .cuts={"ZeroBias","EffCutsNoBeta","MainFills"}, .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackBeta",     .pfs={"DisksRings",main12},                     .cuts={"ZeroBias","EffCutsNoBeta"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_TracksTheta",   .pfs={main1, "LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={main2, "LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={main12,"Layers","InstLumi"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={main12,"Layers","InnerOuter"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={main12,"Layers","InnerOuter","InstLumi"}, .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={"Layers",main12},           .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={"InnerOuter","Layers",main12}, .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={"InstLumi","Layers",main12}, .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={"InstLumi","Layers","InnerOuter",main12}, .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={"DisksRings",main12},            .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={main12,"Layers","InstLumi"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={main12,"Layers","InnerOuter"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={main12,"Layers","InnerOuter","InstLumi"}, .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={"Layers",main12},           .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={"InnerOuter","Layers",main12}, .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={"InstLumi","Layers",main12}, .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={"InstLumi","Layers","InnerOuter",main12}, .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackTheta",    .pfs={"DisksRings",main12},            .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackEta",      .pfs={main1, "LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="logX", .ranges={0,0,   0.99,1, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackEta",      .pfs={main2, "LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="logX", .ranges={0,0,   0.99,1, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackEta",      .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="logX", .ranges={0,0,   0.99,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackEta",      .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="logXTwoCol43", .ranges={0,0,   0.99,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrackEta",      .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="logXTwoCol43", .ranges={0,0,   0.99,1, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrkD0",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","EffCutsNoD0"},         .draw="PE1",  .opt="logX", .ranges={0,0.1, 0.98,1, 0.2,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrkD0",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","EffCutsNoD0"},         .draw="PE1",  .opt="logXTwoCol43", .ranges={0,0.1, 0.98,1, 0.2,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrkD0",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","EffCutsNoD0"},         .draw="PE1",  .opt="logXTwoCol43", .ranges={0,0.1, 0.98,1, 0.2,0.4} });
 
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrkDZ",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","EffCutsNoDZ"},         .draw="PE1",  .opt="logX", .ranges={0,1,   0.99,1, 0.2,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrkDZ",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","EffCutsNoDZ"},         .draw="PE1",  .opt="logXTwoCol43", .ranges={0,1,   0.99,1, 0.2,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TrkDZ",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","EffCutsNoDZ"},         .draw="PE1",  .opt="logXTwoCol43", .ranges={0,1,   0.99,1, 0.2,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_DRTrk",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,1,   0.7,1, 0.2,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_DRTrk",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="TwoCol43", .ranges={0,1,   0.7,1, 0.2,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_DRTrk",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="TwoCol43", .ranges={0,1,   0.7,1, 0.2,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_DTraj",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","EffCutsNoHitSep"},     .draw="PE1",  .opt="logX", .ranges={0,1,   0.7,1, 0.2,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_DTraj",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","EffCutsNoHitSep"},     .draw="PE1",  .opt="logXTwoCol43", .ranges={0,1,   0.7,1, 0.2,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_DTraj",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","EffCutsNoHitSep"},     .draw="PE1",  .opt="logXTwoCol43", .ranges={0,1,   0.7,1, 0.2,0.4} });
     
-    // sh.AddHistos("traj", { .fill="DColEfficiency_vs_TrkNStrip",     .pfs={main12,"Layers"},         .cuts={"ZeroBias","DColEffCuts"},         .draw="PE1",  .opt="",     .ranges={0,30,  0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="DColEfficiency_vs_TrkNStrip",     .pfs={main12,"Layers"},         .cuts={"ZeroBias","DColEffCuts"},         .draw="PE1",  .opt="",     .ranges={0,30,  0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_TrkNStrip",     .pfs={"Layers",main12},         .cuts={"ZeroBias","DColEffCuts"},         .draw="PE1",  .opt="",     .ranges={0,30,  0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_TrkPt",         .pfs={main12,"Layers"},         .cuts={"ZeroBias","DColEffCutsNoPt"},     .draw="PE1",  .opt="",     .ranges={0,5,   0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_TrkPt",         .pfs={"Layers",main12},         .cuts={"ZeroBias","DColEffCutsNoPt"},     .draw="PE1",  .opt="",     .ranges={0,5,   0,0, 0.4,0.4} });
@@ -1831,17 +1833,17 @@ int main(int argc, char* argv[]) {
     // Normalized by fluence
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={main1,       "Layer1"        },                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={main1,       "Layer1","TrkBeta"},               .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={main12,      "Layer1"        },                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={main12,      "Layer1","TrkBeta"},               .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={             "Layer1", main12},                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // //sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={             "TBMReset2"     },                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={"InnerOuter","Layer1", main12},                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={"Ladders",   "Layer1", main12},                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // //sh.AddHistos("traj", { .fill="HitEfficiency_vs_PileupNorm",    .pfs={main1,       "Layer1"        },                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_PileupNorm",    .pfs={main12,      "Layer1"        },                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_PileupNorm",    .pfs={             "Layer1", main12},                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_PileupNorm",    .pfs={"InnerOuter","Layer1", main12},                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_PileupNorm",    .pfs={"Ladders",   "Layer1", main12},                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={main12,      "Layer1"        },                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={main12,      "Layer1","TrkBeta"},               .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={             "Layer1", main12},                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    //sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={             "TBMReset2"     },                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={"InnerOuter","Layer1", main12},                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={"Ladders",   "Layer1", main12},                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    //sh.AddHistos("traj", { .fill="HitEfficiency_vs_PileupNorm",    .pfs={main1,       "Layer1"        },                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_PileupNorm",    .pfs={main12,      "Layer1"        },                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_PileupNorm",    .pfs={             "Layer1", main12},                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_PileupNorm",    .pfs={"InnerOuter","Layer1", main12},                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_PileupNorm",    .pfs={"Ladders",   "Layer1", main12},                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_InstLumiNorm", .pfs={main1,       "Layer1"        },                 .cuts={"ZeroBias","DColEffCuts"},         .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_InstLumiNorm", .pfs={main12,      "Layer1"        },                 .cuts={"ZeroBias","DColEffCuts"},         .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_InstLumiNorm", .pfs={             "Layer1", main12},                 .cuts={"ZeroBias","DColEffCuts"},         .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
@@ -1854,33 +1856,33 @@ int main(int argc, char* argv[]) {
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_PileupNorm",   .pfs={"Ladders",   "Layer1", main12},                 .cuts={"ZeroBias","DColEffCuts"},         .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
 
     // InstLumi vs Ladders/Modules
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_Modules_vs_InstLumi0p5", .pfs={main12,"Layers"},                      .cuts={"ZeroBias","EffCuts"},             .draw="COLZ", .opt="", .ranges={0,0, -4,4, 0,0} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_Ladders_vs_InstLumi0p5", .pfs={main12,"Layers"},                      .cuts={"ZeroBias","EffCuts"},             .draw="COLZ", .opt="", .ranges={0,0,  0,0, 0,0} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_Ladders_vs_InstLumi0p5", .pfs={main12,"Layers","Mods"},              .cuts={"ZeroBias","EffCuts"},             .draw="COLZ", .opt="", .ranges={0,0,  0,0, 0,0} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_Modules_vs_InstLumi0p5", .pfs={main12,"Layers"},                      .cuts={"ZeroBias","EffCuts"},             .draw="COLZ", .opt="", .ranges={0,0, -4,4, 0,0} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_Ladders_vs_InstLumi0p5", .pfs={main12,"Layers"},                      .cuts={"ZeroBias","EffCuts"},             .draw="COLZ", .opt="", .ranges={0,0,  0,0, 0,0} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_Ladders_vs_InstLumi0p5", .pfs={main12,"Layers","Mods"},              .cuts={"ZeroBias","EffCuts"},             .draw="COLZ", .opt="", .ranges={0,0,  0,0, 0,0} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_Modules_vs_InstLumi0p5", .pfs={main12,"Layers"},                      .cuts={"ZeroBias","DColEffCuts"},             .draw="COLZ", .opt="", .ranges={0,0, -4,4, 0,0} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_Ladders_vs_InstLumi0p5", .pfs={main12,"Layers"},                      .cuts={"ZeroBias","DColEffCuts"},             .draw="COLZ", .opt="", .ranges={0,0,  0,0, 0,0} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_Ladders_vs_InstLumi0p5", .pfs={main12,"Layers","Mods"},              .cuts={"ZeroBias","DColEffCuts"},              .draw="COLZ", .opt="", .ranges={0,0,  0,0, 0,0} });
 
     // BunchCrossing
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing5",    .pfs={main12, "LayersDisks"},                     .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing12",   .pfs={main12, "LayersDisks"},                     .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={main12, "LayersDisks"},                     .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing5",    .pfs={main12, "Layers", "Pileup3"},               .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol55", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing12",   .pfs={main12, "Layers", "Pileup3"},               .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol55", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={main12, "Layers", "Pileup3"},               .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol55", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing5",    .pfs={"LayersDisks","DataYears"},                 .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing12",   .pfs={"LayersDisks","DataYears"},                 .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"LayersDisks","DataYears"},                 .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing5",    .pfs={"InnerOuter","Layers","DataYears"},         .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing12",   .pfs={"InnerOuter","Layers","DataYears"},         .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"InnerOuter","Layers","DataYears"},         .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing5",    .pfs={"Pileup5","LayersDisks","DataYears"},       .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing12",   .pfs={"Pileup5","LayersDisks","DataYears"},       .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"Pileup5","LayersDisks","DataYears"},       .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"Pileup3",    "LayersDisks","DataYears"},   .cuts={"ZeroBias","EffCuts","MainFills"}, .draw="PE1",  .opt="",                .ranges={0,0, 0.98,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"InstLumi",   "LayersDisks","DataYears"},   .cuts={"ZeroBias","EffCuts","MainFills"}, .draw="PE1",  .opt=prelim2017,        .ranges={0,0, 0.80,1, 0.3,0.5} }); // APPROVAL
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"SelectedNBx","LayersDisks","DataYears"},           .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="Keep",            .ranges={0,0, 0.98,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"SelectedNBx","Pileup3","LayersDisks","DataYears"}, .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt=prelim2017+"Keep", .ranges={0,0, 0.98,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing5",    .pfs={main12, "LayersDisks"},                     .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing12",   .pfs={main12, "LayersDisks"},                     .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={main12, "LayersDisks"},                     .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing5",    .pfs={main12, "Layers", "Pileup3"},               .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol55", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing12",   .pfs={main12, "Layers", "Pileup3"},               .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol55", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={main12, "Layers", "Pileup3"},               .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol55", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing5",    .pfs={"LayersDisks","DataYears"},                 .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing12",   .pfs={"LayersDisks","DataYears"},                 .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"LayersDisks","DataYears"},                 .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing5",    .pfs={"InnerOuter","Layers","DataYears"},         .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing12",   .pfs={"InnerOuter","Layers","DataYears"},         .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"InnerOuter","Layers","DataYears"},         .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing5",    .pfs={"Pileup5","LayersDisks","DataYears"},       .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing12",   .pfs={"Pileup5","LayersDisks","DataYears"},       .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"Pileup5","LayersDisks","DataYears"},       .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"Pileup3",    "LayersDisks","DataYears"},   .cuts={"ZeroBias","EffCuts","MainFills"}, .draw="PE1",  .opt="",                .ranges={0,0, 0.98,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"InstLumi",   "LayersDisks","DataYears"},   .cuts={"ZeroBias","EffCuts","MainFills"}, .draw="PE1",  .opt=prelim2017,        .ranges={0,0, 0.80,1, 0.3,0.5} }); // APPROVAL
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"SelectedNBx","LayersDisks","DataYears"},           .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="Keep",            .ranges={0,0, 0.98,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_BunchCrossing60",   .pfs={"SelectedNBx","Pileup3","LayersDisks","DataYears"}, .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt=prelim2017+"Keep", .ranges={0,0, 0.98,1, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_BunchCrossing5",   .pfs={"Layers","DataYears"},                      .cuts={"ZeroBias","DColEffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_BunchCrossing12",  .pfs={"Layers","DataYears"},                      .cuts={"ZeroBias","DColEffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_BunchCrossing60",  .pfs={"Layers","DataYears"},                      .cuts={"ZeroBias","DColEffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
@@ -1896,40 +1898,40 @@ int main(int argc, char* argv[]) {
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_BunchCrossing60",  .pfs={"SelectedNBx","Pileup3","Layers","DataYears"},      .cuts={"ZeroBias","DColEffCuts"},             .draw="PE1",  .opt=prelim2017+"Keep", .ranges={0,0, 0,0, 0.4,0.4} });
 
     // Trigger Rate
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"InnerOuter","Layers","InstLumi",main12}, .cuts={"ZeroBias","EffCuts"},       .draw="PE1",  .opt="", .ranges={0,0, 0.9,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"InstLumi","Layers","InnerOuter",main12}, .cuts={"ZeroBias","EffCuts"},       .draw="PE1",  .opt="", .ranges={0,0, 0.9,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"LayersDisks"},                           .cuts={"ZeroBias","EffCuts"},       .draw="PE1", .opt="TwoCol43", .ranges={0,0, 0.9,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"Mods","Layers"},                         .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0.9,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"Mods","Layers","Mod12/34"},              .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0.9,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"InnerOuter","Layers"},                   .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0.9,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"InnerOuter","Layers","Mod12/34"},        .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0.9,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"InnerOuter","Layers","InstLumi",main12}, .cuts={"ZeroBias","EffCuts"},       .draw="PE1",  .opt="", .ranges={0,0, 0.9,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"InstLumi","Layers","InnerOuter",main12}, .cuts={"ZeroBias","EffCuts"},       .draw="PE1",  .opt="", .ranges={0,0, 0.9,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"LayersDisks"},                           .cuts={"ZeroBias","EffCuts"},       .draw="PE1", .opt="TwoCol43", .ranges={0,0, 0.9,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"Mods","Layers"},                         .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0.9,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"Mods","Layers","Mod12/34"},              .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0.9,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"InnerOuter","Layers"},                   .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0.9,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRate",  .pfs={"InnerOuter","Layers","Mod12/34"},        .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0.9,1, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_TriggerRate", .pfs={"InnerOuter","Layers","InstLumi",main12}, .cuts={"ZeroBias","DColEffCuts"},   .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_TriggerRate", .pfs={"InstLumi","Layers","InnerOuter",main12}, .cuts={"ZeroBias","DColEffCuts"},   .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRateBins_vs_InstLumi0p5",       .pfs={"Layers",main12}, .cuts={"ZeroBias","EffCuts"},       .draw="COLZ", .opt="", .ranges={0,0, 0,0, 0,1} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_TriggerRateBins_vs_InstLumi0p5",       .pfs={"Layers",main12}, .cuts={"ZeroBias","EffCuts"},       .draw="COLZ", .opt="", .ranges={0,0, 0,0, 0,1} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_TriggerRateBins_vs_InstLumi0p5",      .pfs={"Layers",main12}, .cuts={"ZeroBias","DColEffCuts"},   .draw="COLZ", .opt="", .ranges={0,0, 0,0, 0,1} });
 
     // Collisions per Trigger
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"InnerOuter","Layers","InstLumi",main12}, .cuts={"ZeroBias","EffCuts"},       .draw="PE1",  .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"InstLumi","Layers","InnerOuter",main12}, .cuts={"ZeroBias","EffCuts"},       .draw="PE1",  .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"LayersDisks"},                           .cuts={"ZeroBias","EffCuts"},       .draw="PE1", .opt="TwoCol43", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"Mods","Layers"},                         .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"Mods","Layers","Mod12/34"},              .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"InnerOuter","Layers"},                   .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"InnerOuter","Layers","Mod12/34"},        .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });    
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"InnerOuter","Layers","InstLumi",main12}, .cuts={"ZeroBias","EffCuts"},       .draw="PE1",  .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"InstLumi","Layers","InnerOuter",main12}, .cuts={"ZeroBias","EffCuts"},       .draw="PE1",  .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"LayersDisks"},                           .cuts={"ZeroBias","EffCuts"},       .draw="PE1", .opt="TwoCol43", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"Mods","Layers"},                         .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"Mods","Layers","Mod12/34"},              .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"InnerOuter","Layers"},                   .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCollPerTrig",  .pfs={"InnerOuter","Layers","Mod12/34"},        .cuts={"ZeroBias","EffCuts","Lay1"},.draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });    
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_NCollPerTrig", .pfs={"InnerOuter","Layers","InstLumi",main12}, .cuts={"ZeroBias","DColEffCuts"},   .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
     //sh.AddHistos("traj", { .fill="DColEfficiency_vs_NCollPerTrig", .pfs={"InstLumi","Layers","InnerOuter",main12}, .cuts={"ZeroBias","DColEffCuts"},   .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
 
     // L1 Occupancy
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NPixL1",      .pfs={main12},                  .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCluL1",      .pfs={main12},                  .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NPixL1",      .pfs={"Mods"},                  .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCluL1",      .pfs={"Mods"},                  .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NPixL1",      .pfs={"Mods","Mod12/34"},       .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCluL1",      .pfs={"Mods","Mod12/34"},       .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NPixL1",      .pfs={"InnerOuter"},            .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCluL1",      .pfs={"InnerOuter"},            .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NPixL1",      .pfs={"InnerOuter","Mod12/34"}, .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
-    // sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCluL1",      .pfs={"InnerOuter","Mod12/34"}, .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NPixL1",      .pfs={main12},                  .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCluL1",      .pfs={main12},                  .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NPixL1",      .pfs={"Mods"},                  .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCluL1",      .pfs={"Mods"},                  .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NPixL1",      .pfs={"Mods","Mod12/34"},       .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCluL1",      .pfs={"Mods","Mod12/34"},       .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NPixL1",      .pfs={"InnerOuter"},            .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCluL1",      .pfs={"InnerOuter"},            .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NPixL1",      .pfs={"InnerOuter","Mod12/34"}, .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_NCluL1",      .pfs={"InnerOuter","Mod12/34"}, .cuts={"ZeroBias","EffCuts","Lay1"},       .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
     if (debug) std::cout<<"Phase1PixelHistoMaker - special hiteff plots ok"<<std::endl;
 
     // Historical and Time evolution plots (IntLumi, Date, etc)

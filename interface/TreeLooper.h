@@ -339,7 +339,7 @@ class TreeLooper {
       process_lumi_(lumientry);
       // Get same ls as in trajTree
       while ((tr_->lumi().ls!=tr_->traj_evt().ls||tr_->lumi().run!=tr_->traj_evt().run)&&lumientry<tr_->nls()-1) {
-	lumientry++; process_lumi_(lumientry);
+	      lumientry++; process_lumi_(lumientry);
       }
     }
 #endif
@@ -371,9 +371,9 @@ class TreeLooper {
     if (succ!=-1) {
       if (debug) { std::cout<<"successful read ok\n"; }
       sh->Fill("traj");
-      if (var_->effcut_badroc) {
-	int validhit = (tr_->traj().missing==1 ? tr_->traj().d_cl>=0 && tr_->traj().d_cl<DCL_MISSING : 1);
-	++run_rocid_validhit_[tr_->traj_evt().run][var_->rocid][validhit];
+      if (var_->effcut_allmod) {
+	      int validhit = (tr_->traj().missing==1 ? tr_->traj().d_cl>=0 && tr_->traj().d_cl<DCL_MISSING : 1);
+	      ++run_rocid_validhit_[tr_->traj_evt().run][var_->rocid][validhit];
       }
       // if (var_->no_double_ls)  ah.fill_traj(tr,var);
       // else if (var_->traj_isnewls==1&&!var_->no_double_ls)
@@ -527,31 +527,31 @@ class TreeLooper {
       TH1D* roceff_dist = new TH1D(name2.str().c_str(), ";Hit Efficiency;ROCs", 1001,-0.0005,1.0005);
       TH1D for_mean_rms("h", ";Hit Efficiency;ROCs", 1000,-0.0005,0.9995);
       for (auto& rocid_hitcount : run_roclist.second) { // loop on ROC IDs
-	double mis = rocid_hitcount.second[0], val = rocid_hitcount.second[1];
-	stat += val+mis;
-	roceff_dist->Fill(val/(val+mis));
-	for_mean_rms.Fill(val/(val+mis));
+	      double mis = rocid_hitcount.second[0], val = rocid_hitcount.second[1];
+	      stat += val+mis;
+	      roceff_dist->Fill(val/(val+mis));
+	      for_mean_rms.Fill(val/(val+mis));
       }
       // If old list is not found or equal or more statistics is available make a new bad ROC list
       // Or the list was made earlier with higher threshold, which could cause to exclude too many ROCs
       if (stat>=old_stat||old_thr>1) {
-	delete badroc_list;
-	badroc_list = new TH1D(name.str().c_str(), ";ROCs;ROC ID (id1*1e4 + id2*1e2 + id3)", 1000,0,1000);
-	double mean = for_mean_rms.GetMean(), rms = for_mean_rms.GetRMS();
-	double threshold = std::min(mean - N_sig_threshold*rms, 0.95);
-	//std::cout<<"Run "<<run<<" mean "<<mean<<" rms "<<rms<<std::endl;
-	for (auto& rocid_hitcount : run_roclist.second) { // loop on ROC IDs
-	  size_t rocid = rocid_hitcount.first;
-	  double mis = rocid_hitcount.second[0], val = rocid_hitcount.second[1];
-	  if (val/(val+mis)<threshold&&(val+mis)>1) badroc_list->SetBinContent(++nbad, rocid);
-	}
-	badroc_list->SetBinContent(0, nbad);
-	badroc_list->SetBinError(0, threshold);
-	badroc_list->SetEntries(stat);
-	std::cout<<(old_stat ? "Updating Bad ROC list" : "New Bad ROC list created")<<" for run="<<run<<" Mean="<<mean<<" RMS="<<rms<<" Thr="<<threshold
-		 <<" Nbad="<<nbad<<" stat="<<stat; if (old_stat) std::cout<<" old stat="<<old_stat<<" old thr="<<old_thr; std::cout<<std::endl;
-	badroc_list->Write(badroc_list->GetName(), TObject::kOverwrite);
-	roceff_dist->Write(roceff_dist->GetName(), TObject::kOverwrite);
+	      delete badroc_list;
+	      badroc_list = new TH1D(name.str().c_str(), ";ROCs;ROC ID (id1*1e4 + id2*1e2 + id3)", 1000,0,1000);
+	      double mean = for_mean_rms.GetMean(), rms = for_mean_rms.GetRMS();
+	      double threshold = std::min(mean - N_sig_threshold*rms, 0.95);
+	      //std::cout<<"Run "<<run<<" mean "<<mean<<" rms "<<rms<<std::endl;
+	      for (auto& rocid_hitcount : run_roclist.second) { // loop on ROC IDs
+	        size_t rocid = rocid_hitcount.first;
+	        double mis = rocid_hitcount.second[0], val = rocid_hitcount.second[1];
+	        if (val/(val+mis)<threshold&&(val+mis)>1) badroc_list->SetBinContent(++nbad, rocid);
+	      }
+	      badroc_list->SetBinContent(0, nbad);
+	      badroc_list->SetBinError(0, threshold);
+	      badroc_list->SetEntries(stat);
+	      std::cout<<(old_stat ? "Updating Bad ROC list" : "New Bad ROC list created")<<" for run="<<run<<" Mean="<<mean<<" RMS="<<rms<<" Thr="<<threshold
+	      	 <<" Nbad="<<nbad<<" stat="<<stat; if (old_stat) std::cout<<" old stat="<<old_stat<<" old thr="<<old_thr; std::cout<<std::endl;
+	      badroc_list->Write(badroc_list->GetName(), TObject::kOverwrite);
+	      roceff_dist->Write(roceff_dist->GetName(), TObject::kOverwrite);
       }
     }
     f->Close();
