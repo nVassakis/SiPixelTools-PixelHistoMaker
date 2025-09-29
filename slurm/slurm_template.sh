@@ -76,7 +76,7 @@ cd ${TMPDIR}
 scramv1 project CMSSW CMSSW_15_0_5
 cd CMSSW_15_0_5/src
 eval `scram runtime -sh`
-git clone --branch older_version https://github.com/nVassakis/SiPixelTools-PixelHistoMaker.git SiPixelTools/PixelHistoMaker
+git clone --branch fixed_bugs_slurm_updated https://github.com/nVassakis/SiPixelTools-PixelHistoMaker.git SiPixelTools/PixelHistoMaker
 cd SiPixelTools/PixelHistoMaker
 
 mkdir PHM_PHASE1_out
