@@ -37,8 +37,8 @@
 #define TRAJ_LOOP 1
 #define CLUST_LOOP 1
 
-#define DCL_MISSING     0.1 // 1000 um
-#define DCL_MISSING_NEW 0.1 // 1000 um - same for new hit efficiency
+#define DCL_MISSING     0.0 // 1000 um
+#define DCL_MISSING_NEW 0.0 // 1000 um - same for new hit efficiency
 
 #define APPROVAL 0
 
@@ -1488,6 +1488,13 @@ int main(int argc, char* argv[]) {
 
     sh.AddHistos("traj", { .fill="HitEfficiency_vs_Modules",            .pfs={main12,"Layers"},                        .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0.98,1, 0.4,0.4} });
     sh.AddHistos("traj", { .fill="HitEfficiency_vs_Modules",            .pfs={main12,"InstLumi","Layers"},             .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0.98,1, 0.4,0.4} });
+
+    // Adding NewHitEfficiency plots
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Modules",         .pfs={"Layers",main12},                        .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0.7,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Ladders",         .pfs={"Layers",main12},                        .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0.7,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Modules",         .pfs={main12,"Layers"},                        .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0.7,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Modules",         .pfs={main12,"InstLumi","Layers"},             .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0.7,1, 0.4,0.4} });
+
     sh.AddHistos("traj", { .fill="HitEfficiency_vs_Ladders",            .pfs={main12,"Layers"},                        .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0.98,1, 0.4,0.4} });
     sh.AddHistos("traj", { .fill="HitEfficiency_vs_Ladders",            .pfs={main12,"Layers","Mod12/34"},            .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0.98,1, 0.4,0.4} });
     sh.AddHistos("traj", { .fill="HitEfficiency_vs_Ladders",            .pfs={main12,"InstLumi","Layers"},             .cuts={"ZeroBias","EffCuts"}, .draw="PE1",  .opt="", .ranges={0,0, 0.98,1, 0.4,0.4} });
@@ -1541,6 +1548,7 @@ int main(int argc, char* argv[]) {
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_LayersDisks",   .pfs={"DcolScan"},                  .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Ladders",       .pfs={"Layers","DcolScan"},         .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Modules",       .pfs={"Layers","DcolScan"},         .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Modules",       .pfs={"Layers"},                    .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Ladders_vs_Modules",   .pfs={"Layers","DcolScan"},  .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
     // New Efficiency N-1 plots
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkNStrip",     .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoNStrip"},     .draw="PE1",  .opt="",     .ranges={0,30,  0.7,1, 0.4,0.4} });
