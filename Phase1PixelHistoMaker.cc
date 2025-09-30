@@ -37,8 +37,8 @@
 #define TRAJ_LOOP 1
 #define CLUST_LOOP 1
 
-#define DCL_MISSING     0.0 // 1000 um
-#define DCL_MISSING_NEW 0.0 // 1000 um - same for new hit efficiency
+#define DCL_MISSING     0.1 // 1000 um
+#define DCL_MISSING_NEW 0.1 // 1000 um - same for new hit efficiency
 
 #define APPROVAL 0
 
