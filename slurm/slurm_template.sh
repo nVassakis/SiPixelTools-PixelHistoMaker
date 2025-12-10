@@ -73,8 +73,8 @@ echo
 export SCRAM_ARCH=el9_amd64_gcc12
 cd ${TMPDIR}
 
-scramv1 project CMSSW CMSSW_15_0_5
-cd CMSSW_15_0_5/src
+scramv1 project CMSSW CMSSW_15_0_15_patch4
+cd CMSSW_15_0_15_patch4/src
 eval `scram runtime -sh`
 git clone --branch fixed_bugs_slurm_updated https://github.com/nVassakis/SiPixelTools-PixelHistoMaker.git SiPixelTools/PixelHistoMaker
 cd SiPixelTools/PixelHistoMaker
@@ -143,7 +143,7 @@ echo "Output: "
 ls -l $USERDIR/$output
 
 cd ../../../..
-rm -rf CMSSW CMSSW_15_0_5
+rm -rf CMSSW CMSSW_15_0_15_patch4
 
 echo
 echo "--------------------------------------------------------------------------------"
